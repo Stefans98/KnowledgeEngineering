@@ -1,31 +1,31 @@
 likelihood(carryOff_GPS_Attack, low).
 likelihood(terrestrial_Jamming, low).
-likelihood(evil_Twin_WiFi_Attack).
-likelihood(cellular_Rogue_Base_Station).
-likelihood(sniffing_Network_Traffic).
+likelihood(evil_Twin_WiFi_Attack, unspecified).
+likelihood(cellular_Rogue_Base_Station, unspecified).
+likelihood(sniffing_Network_Traffic, unspecified).
 likelihood(accessing_Intercepting_Modifying_HTTP_Cookies, high).
 likelihood(utilizing_RESTs_Trust_in_the_System_Resource_to_Obtain_Sensitive_Data, medium).
-likelihood(cellular_Traffic_Intercept).
+likelihood(cellular_Traffic_Intercept, unspecified).
 likelihood(sniff_Application_Code, low).
 likelihood(probe_Audio_and_Video_Peripherals, low).
 likelihood(wiFi_MAC_Address_Tracking, low).
-likelihood(wiFi_SSID_Tracking).
-likelihood(cellular_Broadcast_Message_Request).
-likelihood(signal_Strength_Tracking).
-likelihood(tcp_SYN_Scan).
-likelihood(tcp_Connect_Scan).
-likelihood(tcp_FIN_Scan).
-likelihood(tcp_Xmas_Scan).
-likelihood(tcp_Null_Scan).
-likelihood(tcp_ACK_Scan).
-likelihood(tcp_Window_Scan).
-likelihood(tcp_RPC_Scan).
-likelihood(udp_Scan).
-likelihood(padding_Oracle_Crypto_Attack).
-likelihood(cryptanalysis_of_Cellular_Encryption).
+likelihood(wiFi_SSID_Tracking, unspecified).
+likelihood(cellular_Broadcast_Message_Request, unspecified).
+likelihood(signal_Strength_Tracking, unspecified).
+likelihood(tcp_SYN_Scan, unspecified).
+likelihood(tcp_Connect_Scan, unspecified).
+likelihood(tcp_FIN_Scan, unspecified).
+likelihood(tcp_Xmas_Scan, unspecified).
+likelihood(tcp_Null_Scan, unspecified).
+likelihood(tcp_ACK_Scan, unspecified).
+likelihood(tcp_Window_Scan, unspecified).
+likelihood(tcp_RPC_Scan, unspecified).
+likelihood(udp_Scan, unspecified).
+likelihood(padding_Oracle_Crypto_Attack, unspecified).
+likelihood(cryptanalysis_of_Cellular_Encryption, unspecified).
 likelihood(xml_Routing_Detour_Attacks, high).
-likelihood(transaction_or_Event_Tampering_via_Application_API_Manipulation).
-likelihood(content_Spoofing_Via_Application_API_Manipulation).
-likelihood(navigation_Remapping_To_Propagate_Malicious_Content).
-likelihood(aplication_API_Button_Hijacking).
-likelihood(leveraging_Active_Man_in_the_Middle_Attacks_to_Bypass_Same_Origin_Policy).
+likelihood(transaction_or_Event_Tampering_via_Application_API_Manipulation, unspecified).
+likelihood(content_Spoofing_Via_Application_API_Manipulation, unspecified).
+likelihood(navigation_Remapping_To_Propagate_Malicious_Content, unspecified).
+likelihood(aplication_API_Button_Hijacking, unspecified).
+likelihood(leveraging_Active_Man_in_the_Middle_Attacks_to_Bypass_Same_Origin_Policy, unspecified).
