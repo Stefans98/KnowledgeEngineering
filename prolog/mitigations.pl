@@ -1,5 +1,5 @@
-mitigations(carryOff_GPS_Attack, []).
-mitigations(terrestrial_Jamming, []).
+mitigations(carryOff_GPS_Attack, [unspecified]).
+mitigations(terrestrial_Jamming, [unspecified]).
 mitigations(evil_Twin_WiFi_Attack, [commercial_defensive_technology_that_monitors_for_rogue_WiFi_access_points_man_in_the_middle_attacks_and_anomalous_activity_with_the_mobile_device_baseband_radios]).
 mitigations(cellular_Rogue_Base_Station, [passively_monitor_cellular_network_connection_for_real_time_threat_detection_and_logging_for_manual_review]).
 mitigations(sniffing_Network_Traffic, [obfuscate_network_traffic_through_encryption_to_prevent_its_readability_by_network_sniffers, employ_appropriate_levels_of_segmentation_to_your_network_in_accordance_with_best_practices]).
@@ -11,21 +11,21 @@ mitigations(probe_Audio_and_Video_Peripherals, [use_allowlist_policy_to_prevent_
 mitigations(wiFi_MAC_Address_Tracking, [automatic_randomization_of_WiFi_MAC_addresses, frequent_changing_of_handset_and_retransmission_device]).
 mitigations(wiFi_SSID_Tracking, [do_not_enable_the_feature_of_Hidden_SSIDs, frequently_change_SSID_to_new_and_unrelated_values]).
 mitigations(cellular_Broadcast_Message_Request, [frequent_changing_of_mobile_number]).
-mitigations(signal_Strength_Tracking, []).
-mitigations(tcp_SYN_Sca, []).
+mitigations(signal_Strength_Tracking, [unspecified]).
+mitigations(tcp_SYN_Scan, [unspecified]).
 mitigations(tcp_Connect_Scan, [employ_robust_network_defense_posture_that_includes_IDS_IPS_system]).
 mitigations(tcp_FIN_Scan, [use_IDS_IPS_system_with_heuristic_algorithms]).
 mitigations(tcp_Xmas_Scan, [employ_robust_network_defensive_posture_that_includes_managed_IDS_IP]).
 mitigations(tcp_Null_Scan, [employ_robust_network_defensive_posture_that_includes_managed_IDS_IP]).
-mitigations(tcp_ACK_Scan, []).
-mitigations(tcp_Window_Sca, []).
+mitigations(tcp_ACK_Scan, [unspecified]).
+mitigations(tcp_Window_Scan, [unspecified]).
 mitigations(tcp_RPC_Scan, [use_IDS_IPS_system]).
 mitigations(udp_Scan, [use_firewalls_or_ACLs_which_block_egress_ICMP_error_types]).
 mitigations(padding_Oracle_Crypto_Attack, [use_message_authentication_code_or_another_mechanism_to_perform_verification_of_message_authenticity_or_integrity_prior_to_decryption, do_not_leak_information_back_to_user_as_to_any_cryptography_encountered_during_decryption]).
 mitigations(cryptanalysis_of_Cellular_Encryption, [use_of_hardened_baseband_firmware_on_retransmission_device_to_detect_and_prevent_the_use_of_weak_cellular_encryption, monitor_cellular_RF_interface_to_detect_the_usage_of_weaker_than_expected_cellular_encryption]).
 mitigations(xml_Routing_Detour_Attacks, [specify_maximum_number_intermediate_nodes_for_the_request_and_require_SSL_connections_with_mutual_authentication, use_SSL_for_connections_between_all_parties_with_mutual_authentication]).
-mitigations(transaction_or_Event_Tampering_via_Application_API_Manipulation, []).
-mitigations(content_Spoofing_Via_Application_API_Manipulation, []).
-mitigations(navigation_Remapping_To_Propagate_Malicious_Content, []).
-mitigations(aplication_API_Button_Hijacking, []).
+mitigations(transaction_or_Event_Tampering_via_Application_API_Manipulation, [unspecified]).
+mitigations(content_Spoofing_Via_Application_API_Manipulation, [unspecified]).
+mitigations(navigation_Remapping_To_Propagate_Malicious_Content, [unspecified]).
+mitigations(aplication_API_Button_Hijacking, [unspecified]).
 mitigations(leveraging_Active_Man_in_the_Middle_Attacks_to_Bypass_Same_Origin_Policy, [tunnel_communications_through_secure_proxy, trust_level_separation_for_privileged_or_non_privileged_interactions]).
