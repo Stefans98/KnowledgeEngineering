@@ -15,7 +15,7 @@ weaknesses(terrestrial_Jamming, [improper_Authentication]).
 mitigations(terrestrial_Jamming, [unspecified]).
 
 attack(evil_Twin_WiFi_Attack).
-likelihood(evil_Twin_WiFi_Attack, unspecified).
+likelihood(evil_Twin_WiFi_Attack, medium).
 severity(evil_Twin_WiFi_Attack, low).
 prerequisites(evil_Twin_WiFi_Attack, [none]).
 consequences(evil_Twin_WiFi_Attack, [read_data]).
@@ -23,7 +23,7 @@ weaknesses(evil_Twin_WiFi_Attack, [channel_Accessible_by_Non_Endpoint]).
 mitigations(evil_Twin_WiFi_Attack, [commercial_defensive_technology_that_monitors_for_rogue_WiFi_access_points_man_in_the_middle_attacks_and_anomalous_activity_with_the_mobile_device_baseband_radios]).
 
 attack(cellular_Rogue_Base_Station).
-likelihood(cellular_Rogue_Base_Station, unspecified).
+likelihood(cellular_Rogue_Base_Station, low).
 severity(cellular_Rogue_Base_Station, low).
 prerequisites(cellular_Rogue_Base_Station, [none]).
 consequences(cellular_Rogue_Base_Station, [read_data]).
@@ -31,7 +31,7 @@ weaknesses(cellular_Rogue_Base_Station, [exposure_of_Sensitive_Information_to_an
 mitigations(cellular_Rogue_Base_Station, [passively_monitor_cellular_network_connection_for_real_time_threat_detection_and_logging_for_manual_review]).
 
 attack(sniffing_Network_Traffic).
-likelihood(sniffing_Network_Traffic, unspecified).
+likelihood(sniffing_Network_Traffic, high).
 severity(sniffing_Network_Traffic, medium).
 prerequisites(sniffing_Network_Traffic, [target_communicating_on_a_network_protocol_visible_by_a_network_sniffing_application, target_sender_recipient_adversary_must_be_on_same_subnet]).
 consequences(sniffing_Network_Traffic, [read_data]).
@@ -48,14 +48,14 @@ mitigations(accessing_Intercepting_Modifying_HTTP_Cookies, [validation_for_cooki
 
 attack(utilizing_RESTs_Trust_in_the_System_Resource_to_Obtain_Sensitive_Data).
 likelihood(utilizing_RESTs_Trust_in_the_System_Resource_to_Obtain_Sensitive_Data, medium).
-severity(utilizing_RESTs_Trust_in_the_System_Resource_to_Obtain_Sensitive_Data, very_high).
+severity(utilizing_RESTs_Trust_in_the_System_Resource_to_Obtain_Sensitive_Data, high).
 prerequisites(utilizing_RESTs_Trust_in_the_System_Resource_to_Obtain_Sensitive_Data, [opportunity_to_intercept_must_exist_beyond_the_point_where_SSL_is_terminated, insert_listener_actively_in_client_server_communication_path, insert_listener_passively_in_client_server_communication_path]).
 consequences(utilizing_RESTs_Trust_in_the_System_Resource_to_Obtain_Sensitive_Data, [gain_privileges]).
 weaknesses(utilizing_RESTs_Trust_in_the_System_Resource_to_Obtain_Sensitive_Data, [channel_Accessible_by_Non_Endpoint, improper_Authentication, broken_Authentication_and_Session_Management, protection_Mechanism_Failure]). 
 mitigations(utilizing_RESTs_Trust_in_the_System_Resource_to_Obtain_Sensitive_Data, [implement_message_level_security_such_as_HMAC_in_the_HTTP_communication, utilize_defense_in_depth_do_not_rely_on_single_security_mechanism_like_SSL, enforce_principle_of_least_privilege]).
 
 attack(cellular_Traffic_Intercept).
-likelihood(cellular_Traffic_Intercept, unspecified).
+likelihood(cellular_Traffic_Intercept, medium).
 severity(cellular_Traffic_Intercept, low).
 prerequisites(cellular_Traffic_Intercept, [none]).
 consequences(cellular_Traffic_Intercept, [read_data]).
@@ -87,7 +87,7 @@ weaknesses(wiFi_MAC_Address_Tracking, [insertion_of_Sensitive_Information_Into_S
 mitigations(wiFi_MAC_Address_Tracking, [automatic_randomization_of_WiFi_MAC_addresses, frequent_changing_of_handset_and_retransmission_device]).
 
 attack(wiFi_SSID_Tracking).
-likelihood(wiFi_SSID_Tracking, unspecified).
+likelihood(wiFi_SSID_Tracking, medium).
 severity(wiFi_SSID_Tracking, low).
 prerequisites(wiFi_SSID_Tracking, [none]).
 consequences(wiFi_SSID_Tracking, [unspecified]).
@@ -95,7 +95,7 @@ weaknesses(wiFi_SSID_Tracking, [insertion_of_Sensitive_Information_Into_Sent_Dat
 mitigations(wiFi_SSID_Tracking, [do_not_enable_the_feature_of_Hidden_SSIDs, frequently_change_SSID_to_new_and_unrelated_values]).
 
 attack(cellular_Broadcast_Message_Request).
-likelihood(cellular_Broadcast_Message_Request, unspecified).
+likelihood(cellular_Broadcast_Message_Request, high).
 severity(cellular_Broadcast_Message_Request, low).
 prerequisites(cellular_Broadcast_Message_Request, [attacker_must_have_knowledge_of_targets_mobile_phone_number]).
 consequences(cellular_Broadcast_Message_Request, [unspecified]).
@@ -103,7 +103,7 @@ weaknesses(cellular_Broadcast_Message_Request, [insertion_of_Sensitive_Informati
 mitigations(cellular_Broadcast_Message_Request, [frequent_changing_of_mobile_number]).
 
 attack(signal_Strength_Tracking).
-likelihood(signal_Strength_Tracking, unspecified).
+likelihood(signal_Strength_Tracking, high).
 severity(signal_Strength_Tracking, low).
 prerequisites(signal_Strength_Tracking, [none]).
 consequences(signal_Strength_Tracking, [unspecified]).
@@ -127,7 +127,7 @@ weaknesses(tcp_Connect_Scan, [exposure_of_Sensitive_Information_to_an_Unauthoriz
 mitigations(tcp_Connect_Scan, [employ_robust_network_defense_posture_that_includes_IDS_IPS_system]).
 
 attack(tcp_FIN_Scan).
-likelihood(tcp_FIN_Scan, unspecified).
+likelihood(tcp_FIN_Scan, medium).
 severity(tcp_FIN_Scan, low).
 prerequisites(tcp_FIN_Scan, [on_Unix_and_Linux_raw_socket_manipulations_require_root_privileges]).
 consequences(tcp_FIN_Scan, [bypass_protection_mechanism, hide_activities]).
@@ -135,7 +135,7 @@ weaknesses(tcp_FIN_Scan, [exposure_of_Sensitive_Information_to_an_Unauthorized_A
 mitigations(tcp_FIN_Scan, [use_IDS_IPS_system_with_heuristic_algorithms]).
 
 attack(tcp_Xmas_Scan).
-likelihood(tcp_Xmas_Scan, unspecified).
+likelihood(tcp_Xmas_Scan, medium).
 severity(tcp_Xmas_Scan, low).
 prerequisites(tcp_Xmas_Scan, [adversary_needs_logical_access_to_the_target_network, requires_the_use_of_raw_sockets, on_Unix_and_Linux_raw_socket_manipulations_require_root_privileges]).
 consequences(tcp_Xmas_Scan, [bypass_protection_mechanism, hide_activities, unreliable_execution]).
@@ -143,7 +143,7 @@ weaknesses(tcp_Xmas_Scan, [exposure_of_Sensitive_Information_to_an_Unauthorized_
 mitigations(tcp_Xmas_Scan, [employ_robust_network_defensive_posture_that_includes_managed_IDS_IP]).
 
 attack(tcp_Null_Scan).
-likelihood(tcp_Null_Scan, unspecified).
+likelihood(tcp_Null_Scan, medium).
 severity(tcp_Null_Scan, low).
 prerequisites(tcp_Null_Scan, [adversary_needs_logical_access_to_the_target_network, requires_the_use_of_raw_sockets, on_Unix_and_Linux_raw_socket_manipulations_require_root_privileges]).
 consequences(tcp_Null_Scan, [bypass_protection_mechanism, hide_activities]).
@@ -151,7 +151,7 @@ weaknesses(tcp_Null_Scan, [exposure_of_Sensitive_Information_to_an_Unauthorized_
 mitigations(tcp_Null_Scan, [employ_robust_network_defensive_posture_that_includes_managed_IDS_IP]).
 
 attack(tcp_ACK_Scan).
-likelihood(tcp_ACK_Scan, unspecified).
+likelihood(tcp_ACK_Scan, medium).
 severity(tcp_ACK_Scan, low).
 prerequisites(tcp_ACK_Scan, [adversary_needs_logical_access_to_the_target_network, requires_the_use_of_raw_sockets, on_Unix_and_Linux_raw_socket_manipulations_require_root_privileges]).
 consequences(tcp_ACK_Scan, [bypass_protection_mechanism, hide_activities]).
@@ -159,7 +159,7 @@ weaknesses(tcp_ACK_Scan, [exposure_of_Sensitive_Information_to_an_Unauthorized_A
 mitigations(tcp_ACK_Scan, [unspecified]).
 
 attack(tcp_Window_Scan).
-likelihood(tcp_Window_Scan, unspecified).
+likelihood(tcp_Window_Scan, medium).
 severity(tcp_Window_Scan, low).
 prerequisites(tcp_Window_Scan, [requires_the_use_of_raw_sockets, on_Unix_and_Linux_raw_socket_manipulations_require_root_privileges]).
 consequences(tcp_Window_Scan, [bypass_protection_mechanism, hide_activities]).
@@ -167,7 +167,7 @@ weaknesses(tcp_Window_Scan, [exposure_of_Sensitive_Information_to_an_Unauthorize
 mitigations(tcp_Window_Sca, [unspecified]).
 
 attack(tcp_RPC_Scan).
-likelihood(tcp_RPC_Scan, unspecified).
+likelihood(tcp_RPC_Scan, medium).
 severity(tcp_RPC_Scan, low).
 prerequisites(tcp_RPC_Scan, [no_special_privileges_when_it_is_performed_via_native_system_utility]).
 consequences(tcp_RPC_Scan, [bypass_protection_mechanism, hide_activities]).
@@ -175,7 +175,7 @@ weaknesses(tcp_RPC_Scan, [exposure_of_Sensitive_Information_to_an_Unauthorized_A
 mitigations(tcp_RPC_Scan, [use_IDS_IPS_system]).
 
 attack(udp_Scan).
-likelihood(udp_Scan, unspecified).
+likelihood(udp_Scan, medium).
 severity(udp_Scan, low).
 prerequisites(udp_Scan, [ability_to_send_UDP_datagrams_to_host_and_receive_ICMP_error_messages_from_that_host]).
 consequences(udp_Scan, [bypass_protection_mechanism, hide_activities]).
@@ -183,7 +183,7 @@ weaknesses(udp_Scan, [exposure_of_Sensitive_Information_to_an_Unauthorized_Actor
 mitigations(udp_Scan, [use_firewalls_or_ACLs_which_block_egress_ICMP_error_types]).
 
 attack(padding_Oracle_Crypto_Attack).
-likelihood(padding_Oracle_Crypto_Attack, unspecified).
+likelihood(padding_Oracle_Crypto_Attack, low).
 severity(padding_Oracle_Crypto_Attack, high).
 prerequisites(padding_Oracle_Crypto_Attack, [inproperly_authenticatation_prior_to_performing_decryption_operation]).
 consequences(padding_Oracle_Crypto_Attack, [unspecified]).
@@ -191,7 +191,7 @@ weaknesses(padding_Oracle_Crypto_Attack, [generation_of_Error_Message_Containing
 mitigations(padding_Oracle_Crypto_Attack, [use_message_authentication_code_or_another_mechanism_to_perform_verification_of_message_authenticity_or_integrity_prior_to_decryption, do_not_leak_information_back_to_user_as_to_any_cryptography_encountered_during_decryption]).
 
 attack(cryptanalysis_of_Cellular_Encryption).
-likelihood(cryptanalysis_of_Cellular_Encryption, unspecified).
+likelihood(cryptanalysis_of_Cellular_Encryption, high).
 severity(cryptanalysis_of_Cellular_Encryption, high).
 prerequisites(cryptanalysis_of_Cellular_Encryption, [none]).
 consequences(cryptanalysis_of_Cellular_Encryption, [unspecified]).
@@ -199,7 +199,6 @@ weaknesses(cryptanalysis_of_Cellular_Encryption, [use_of_a_Broken_or_Risky_Crypt
 mitigations(cryptanalysis_of_Cellular_Encryption, [use_of_hardened_baseband_firmware_on_retransmission_device_to_detect_and_prevent_the_use_of_weak_cellular_encryption, monitor_cellular_RF_interface_to_detect_the_usage_of_weaker_than_expected_cellular_encryption]).
 
 attack(xml_Routing_Detour_Attacks).
-likelihood(xml_Routing_Detour_Attacks, unspecified).
 likelihood(xml_Routing_Detour_Attacks, high).
 severity(xml_Routing_Detour_Attacks, medium).
 prerequisites(xml_Routing_Detour_Attacks, [targeted_system_must_have_multiple_stages_processing_of_XML_content]).
@@ -208,7 +207,7 @@ weaknesses(xml_Routing_Detour_Attacks, [unintended_Proxy_or_Intermediary, extern
 mitigations(xml_Routing_Detour_Attacks, [specify_maximum_number_intermediate_nodes_for_the_request_and_require_SSL_connections_with_mutual_authentication, use_SSL_for_connections_between_all_parties_with_mutual_authentication]).
 
 attack(transaction_or_Event_Tampering_via_Application_API_Manipulation).
-likelihood(transaction_or_Event_Tampering_via_Application_API_Manipulation, unspecified).
+likelihood(transaction_or_Event_Tampering_via_Application_API_Manipulation, medium).
 severity(transaction_or_Event_Tampering_via_Application_API_Manipulation, medium).
 prerequisites(transaction_or_Event_Tampering_via_Application_API_Manipulation, [targeted_software_is_utilizing_application_framework_APIs]).
 consequences(transaction_or_Event_Tampering_via_Application_API_Manipulation, [unspecified]).
@@ -216,7 +215,7 @@ weaknesses(transaction_or_Event_Tampering_via_Application_API_Manipulation, [mod
 mitigations(transaction_or_Event_Tampering_via_Application_API_Manipulation, [unspecified]).
 
 attack(content_Spoofing_Via_Application_API_Manipulation).
-likelihood(content_Spoofing_Via_Application_API_Manipulation, unspecified).
+likelihood(content_Spoofing_Via_Application_API_Manipulation, low).
 severity(content_Spoofing_Via_Application_API_Manipulation, low).
 prerequisites(content_Spoofing_Via_Application_API_Manipulation, [targeted_software_is_utilizing_application_framework_APIs]).
 consequences(content_Spoofing_Via_Application_API_Manipulation, [unspecified]).
@@ -224,7 +223,7 @@ weaknesses(content_Spoofing_Via_Application_API_Manipulation, [missing_Support_f
 mitigations(content_Spoofing_Via_Application_API_Manipulation, [unspecified]).
 
 attack(navigation_Remapping_To_Propagate_Malicious_Content).
-likelihood(navigation_Remapping_To_Propagate_Malicious_Content, unspecified).
+likelihood(navigation_Remapping_To_Propagate_Malicious_Content, high).
 severity(navigation_Remapping_To_Propagate_Malicious_Content, medium).
 prerequisites(navigation_Remapping_To_Propagate_Malicious_Content, [targeted_software_is_utilizing_application_framework_APIs]).
 consequences(navigation_Remapping_To_Propagate_Malicious_Content, [unspecified]).
@@ -232,7 +231,7 @@ weaknesses(navigation_Remapping_To_Propagate_Malicious_Content, [modification_of
 mitigations(navigation_Remapping_To_Propagate_Malicious_Content, [unspecified]).
 
 attack(aplication_API_Button_Hijacking).
-likelihood(aplication_API_Button_Hijacking, unspecified).
+likelihood(aplication_API_Button_Hijacking, high).
 severity(aplication_API_Button_Hijacking, medium).
 prerequisites(aplication_API_Button_Hijacking, [targeted_software_is_utilizing_application_framework_APIs]).
 consequences(aplication_API_Button_Hijacking, [unspecified]).
@@ -240,7 +239,7 @@ weaknesses(aplication_API_Button_Hijacking, [modification_of_Assumed_Immutable_D
 mitigations(aplication_API_Button_Hijacking, [unspecified]).
 
 attack(leveraging_Active_Man_in_the_Middle_Attacks_to_Bypass_Same_Origin_Policy).
-likelihood(leveraging_Active_Man_in_the_Middle_Attacks_to_Bypass_Same_Origin_Policy, unspecified).
+likelihood(leveraging_Active_Man_in_the_Middle_Attacks_to_Bypass_Same_Origin_Policy, medium).
 severity(leveraging_Active_Man_in_the_Middle_Attacks_to_Bypass_Same_Origin_Policy, medium).
 prerequisites(leveraging_Active_Man_in_the_Middle_Attacks_to_Bypass_Same_Origin_Policy, [victim_and_the_attacker_are_in_environment_where_active_man_in_the_middle_attack_is_possible, victim_visits_website_that_does_not_use_TLS_SSL]).
 consequences(leveraging_Active_Man_in_the_Middle_Attacks_to_Bypass_Same_Origin_Policy, [read_data, execute_unauthorized_commands]).
@@ -265,7 +264,7 @@ mitigations(sniffing_Attacks, [encrypt_sensitive_information_when_transmitted_on
 
 attack(cryptanalysis).
 likelihood(cryptanalysis, low).
-severity(cryptanalysis, very_high).
+severity(cryptanalysis, high).
 prerequisites(cryptanalysis, [target_software_utilizes_some_sort_of_cryptographic_algorithm, attacker_has_access_to_the_ciphertext]).
 consequences(cryptanalysis, [read_data]).
 weaknesses(cryptanalysis, [use_of_a_Broken_or_Risky_Cryptographic_Algorithm, use_of_a_Risky_Cryptographic_Primitive, use_of_Predictable_Algorithm_in_Random_Number_Generator, cryptographic_Operations_are_run_Before_Supporting_Units_are_Ready]).
