@@ -4,7 +4,7 @@ severity(evil_Twin_WiFi_Attack, low).
 severity(cellular_Rogue_Base_Station, low).
 severity(sniffing_Network_Traffic, medium).
 severity(accessing_Intercepting_Modifying_HTTP_Cookies, high).
-severity(utilizing_RESTs_Trust_in_the_System_Resource_to_Obtain_Sensitive_Data, very_high).
+severity(utilizing_RESTs_Trust_in_the_System_Resource_to_Obtain_Sensitive_Data, high).
 severity(cellular_Traffic_Intercept, low).
 severity(sniff_Application_Code, high).
 severity(probe_Audio_and_Video_Peripherals, high).
@@ -31,7 +31,7 @@ severity(aplication_API_Button_Hijacking, medium).
 severity(leveraging_Active_Man_in_the_Middle_Attacks_to_Bypass_Same_Origin_Policy, medium).
 severity(establish_Rogue_Location, medium).
 severity(sniffing_Attacks, medium).
-severity(cryptanalysis, very_high).
+severity(cryptanalysis, high).
 severity(reflection_Attack_in_Authentication_Protocol, high).
 severity(data_Serialization_External_Entities_Blowup, medium).
 severity(eavesdropping, medium).
