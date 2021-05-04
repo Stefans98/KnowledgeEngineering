@@ -29,3 +29,12 @@ likelihood(content_Spoofing_Via_Application_API_Manipulation, unspecified).
 likelihood(navigation_Remapping_To_Propagate_Malicious_Content, unspecified).
 likelihood(aplication_API_Button_Hijacking, unspecified).
 likelihood(leveraging_Active_Man_in_the_Middle_Attacks_to_Bypass_Same_Origin_Policy, unspecified).
+likelihood(establish_Rogue_Location, medium).
+likelihood(sniffing_Attacks, medium).
+likelihood(cryptanalysis, low).
+likelihood(reflection_Attack_in_Authentication_Protocol, high).
+likelihood(data_Serialization_External_Entities_Blowup, high).
+likelihood(eavesdropping, low).
+likelihood(manipulating_Opaque_Client_based_Data_Tokens, high).
+
+

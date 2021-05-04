@@ -29,3 +29,10 @@ attack(content_Spoofing_Via_Application_API_Manipulation).
 attack(navigation_Remapping_To_Propagate_Malicious_Content).
 attack(aplication_API_Button_Hijacking).
 attack(leveraging_Active_Man_in_the_Middle_Attacks_to_Bypass_Same_Origin_Policy).
+attack(establish_Rogue_Location).
+attack(sniffing_Attacks).
+attack(cryptanalysis).
+attack(reflection_Attack_in_Authentication_Protocol).
+attack(data_Serialization_External_Entities_Blowup).
+attack(eavesdropping).
+attack(manipulating_Opaque_Client_based_Data_Tokens).

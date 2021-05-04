@@ -29,3 +29,12 @@ consequences(content_Spoofing_Via_Application_API_Manipulation, [unspecified]).
 consequences(navigation_Remapping_To_Propagate_Malicious_Content, [unspecified]).
 consequences(aplication_API_Button_Hijacking, [unspecified]).
 consequences(leveraging_Active_Man_in_the_Middle_Attacks_to_Bypass_Same_Origin_Policy, [read_data, execute_unauthorized_commands]).
+consequences(establish_Rogue_Location, [read_data]).
+consequences(sniffing_Attacks, [read_data]).
+consequences(cryptanalysis, [read_data]).
+consequences(reflection_Attack_in_Authentication_Protocol, [gain_privileges, bypass_protection_mechanism, read_data]).
+consequences(data_Serialization_External_Entities_Blowup, [execute_unauthorized_commands, resource_consumption]).
+consequences(eavesdropping, [read_data]).
+consequences(manipulating_Opaque_Client_based_Data_Tokens, [modify_data, gain_privileges]).
+
+

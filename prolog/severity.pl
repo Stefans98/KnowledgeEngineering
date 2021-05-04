@@ -29,3 +29,13 @@ severity(content_Spoofing_Via_Application_API_Manipulation, low).
 severity(navigation_Remapping_To_Propagate_Malicious_Content, medium).
 severity(aplication_API_Button_Hijacking, medium).
 severity(leveraging_Active_Man_in_the_Middle_Attacks_to_Bypass_Same_Origin_Policy, medium).
+severity(establish_Rogue_Location, medium).
+severity(sniffing_Attacks, medium).
+severity(cryptanalysis, very_high).
+severity(reflection_Attack_in_Authentication_Protocol, high).
+severity(data_Serialization_External_Entities_Blowup, medium).
+severity(eavesdropping, medium).
+severity(manipulating_Opaque_Client_based_Data_Tokens, medium).
+
+
+
