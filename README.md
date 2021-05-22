@@ -11,7 +11,7 @@ This project represents support system for information security department.
 | 3  | Stefan | Beljic  |
 | 4  | Matija | Mijalkovic  |
 
-## Domain of Attacts - Communications
+## Domain of Attacks - Communications
 * **Mechanisms of Attacks:**
   * Collect and Analyze Information
   * Subvert Access Control
