@@ -11,6 +11,7 @@ import ucm.gaia.jcolibri.method.retrieve.NNretrieval.NNScoringMethod;
 import ucm.gaia.jcolibri.method.retrieve.NNretrieval.similarity.global.Average;
 import ucm.gaia.jcolibri.method.retrieve.NNretrieval.similarity.local.EnumDistance;
 import ucm.gaia.jcolibri.method.retrieve.NNretrieval.similarity.local.Equal;
+import ucm.gaia.jcolibri.method.retrieve.NNretrieval.similarity.local.MaxString;
 import ucm.gaia.jcolibri.method.retrieve.RetrievalResult;
 import ucm.gaia.jcolibri.method.retrieve.selection.SelectCases;
 
@@ -36,13 +37,13 @@ public class CbrApplication implements StandardCBRApplication {
 		simConfig.addMapping(new Attribute("likelihood", Attack.class), new EnumDistance());
 		simConfig.addMapping(new Attribute("severity", Attack.class), new EnumDistance());
 		simConfig.addMapping(new Attribute("prerequisites", Attack.class), new Average());
-		simConfig.addMapping(new Attribute("name", Prerequisites.class), new Equal());
+		simConfig.addMapping(new Attribute("name", Prerequisites.class), new MaxString());
 		simConfig.addMapping(new Attribute("consequences", Attack.class), new Average());
-		simConfig.addMapping(new Attribute("name", Consequences.class), new Equal());
+		simConfig.addMapping(new Attribute("name", Consequences.class), new MaxString());
 		simConfig.addMapping(new Attribute("weaknesses", Attack.class), new Average());
-		simConfig.addMapping(new Attribute("name", Weaknesses.class), new Equal());
+		simConfig.addMapping(new Attribute("name", Weaknesses.class), new MaxString());
 		simConfig.addMapping(new Attribute("mitigations", Attack.class), new Average());
-		simConfig.addMapping(new Attribute("name", Mitigations.class), new Equal());
+		simConfig.addMapping(new Attribute("name", Mitigations.class), new MaxString());
 
 		// Equal - returns 1 if both individuals are equal, otherwise returns 0
 		// Interval - returns the similarity of two number inside an interval: sim(x,y) = 1-(|x-y|/interval)
@@ -86,32 +87,24 @@ public class CbrApplication implements StandardCBRApplication {
 
 			Attack attack = new Attack();
 
-			List<Prerequisites> prerequisitesList = new ArrayList<Prerequisites>();
-			List<Consequences> consequencesList = new ArrayList<Consequences>();
-			List<Weaknesses> weaknessesList = new ArrayList<Weaknesses>();
-			List<Mitigations> mitigationsList = new ArrayList<Mitigations>();
+			attack.setLikelihood(Level.HIGH);
+			attack.setSeverity(Level.MEDIUM);
 
 			Prerequisites prerequisites = new Prerequisites();
-			prerequisites.setName("target_relying_on_valid_GPS_signal");
+			prerequisites.setName("cookie_is_contained_in_reply_to_adversary");
+			attack.setPrerequisites(prerequisites);
+
 			Consequences consequences = new Consequences();
-			consequences.setName("unspecified");
+			consequences.setName("gain_privileges");
+			attack.setConsequences(consequences);
+
 			Weaknesses weaknesses = new Weaknesses();
-			weaknesses.setName("insufficient_Verification_of_Data_Authenticity");
+			weaknesses.setName("missing_Encryption_of_Sensitive_Data");
+			attack.setWeaknesses(weaknesses);
+
 			Mitigations mitigations = new Mitigations();
-			mitigations.setName("commercial_defensive_technology_that_monitors_for_rogue_WiFi_access_points_man_in_the_middle_attacks_and_anomalous_activity_with_the_mobile_device_baseband_radios");
-
-			prerequisitesList.add(prerequisites);
-			consequencesList.add(consequences);
-			weaknessesList.add(weaknesses);
-			mitigationsList.add(mitigations);
-
-			attack.setLikelihood(Level.LOW);
-			attack.setSeverity(Level.HIGH);
-
-			attack.setPrerequisites(prerequisitesList);
-			attack.setConsequences(consequencesList);
-			attack.setWeaknesses(weaknessesList);
-			attack.setMitigations(mitigationsList);
+			mitigations.setName("unspecified");
+			attack.setMitigations(mitigations);
 
 			query.setDescription( attack );
 			recommender.cycle(query);

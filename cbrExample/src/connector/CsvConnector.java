@@ -53,61 +53,33 @@ public class CsvConnector implements Connector {
 					attack.setSeverity(Level.HIGH);
 				}
 
-				List<Prerequisites> prerequisitesList = new ArrayList<Prerequisites>();
 				Prerequisites prerequisites = new Prerequisites();
-				if(values[4].contains(",")) {
-					String[] elements = values[4].split(",");
-					for(String el : elements) {
-						prerequisites.setName(el);
-						prerequisitesList.add(prerequisites);
-					}
-				} else {
-					prerequisites.setName(values[4]);
-					prerequisitesList.add(prerequisites);
-				}
-				attack.setPrerequisites(prerequisitesList);
+				prerequisites.setName(values[4]);
+				attack.setPrerequisites(prerequisites);
 
-				List<Consequences> consequencesList = new ArrayList<Consequences>();
 				Consequences consequences = new Consequences();
-				if(values[5].contains(",")) {
-					String[] elements = values[5].split(",");
-					for(String el : elements) {
-						consequences.setName(el);
-						consequencesList.add(consequences);
-					}
-				} else if(!values[5].equals("unspecified")) {
+				if(!values[5].equals("unspecified")) {
 					consequences.setName(values[5]);
-					consequencesList.add(consequences);
+				} else {
+					consequences.setName("");
 				}
-				attack.setConsequences(consequencesList);
+				attack.setConsequences(consequences);
 
-				List<Weaknesses> weaknessesList = new ArrayList<Weaknesses>();
 				Weaknesses weaknesses = new Weaknesses();
-				if(values[6].contains(",")) {
-					String[] elements = values[6].split(",");
-					for(String el : elements) {
-						weaknesses.setName(el);
-						weaknessesList.add(weaknesses);
-					}
-				} else if(!values[6].equals("unspecified")) {
+				if(!values[6].equals("unspecified")) {
 					weaknesses.setName(values[6]);
-					weaknessesList.add(weaknesses);
+				} else {
+					weaknesses.setName("");
 				}
-				attack.setWeaknesses(weaknessesList);
+				attack.setWeaknesses(weaknesses);
 
-				List<Mitigations> mitigationsList = new ArrayList<Mitigations>();
 				Mitigations mitigations = new Mitigations();
-				if(values[7].contains(",")) {
-					String[] elements = values[7].split(",");
-					for(String el : elements) {
-						mitigations.setName(el);
-						mitigationsList.add(mitigations);
-					}
-				} else if(!values[7].equals("unspecified")) {
+				if(!values[7].equals("unspecified")) {
 					mitigations.setName(values[7]);
-					mitigationsList.add(mitigations);
+				} else {
+					mitigations.setName("");
 				}
-				attack.setMitigations(mitigationsList);
+				attack.setMitigations(mitigations);
 
 				cbrCase.setDescription(attack);
 				cases.add(cbrCase);

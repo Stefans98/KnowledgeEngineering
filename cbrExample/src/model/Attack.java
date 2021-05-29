@@ -3,18 +3,16 @@ package model;
 import ucm.gaia.jcolibri.cbrcore.Attribute;
 import ucm.gaia.jcolibri.cbrcore.CaseComponent;
 
-import java.util.List;
-
 public class Attack implements CaseComponent {
 
     private int id;
     private String name;
     private Level likelihood;
     private Level severity;
-    private List<Prerequisites> prerequisites;
-    private List<Consequences> consequences;
-    private List<Weaknesses> weaknesses;
-    private List<Mitigations> mitigations;
+    private Prerequisites prerequisites;
+    private Consequences consequences;
+    private Weaknesses weaknesses;
+    private Mitigations mitigations;
 
     public int getId() {
         return id;
@@ -48,35 +46,35 @@ public class Attack implements CaseComponent {
         this.severity = severity;
     }
 
-    public List<Prerequisites> getPrerequisites() {
+    public Prerequisites getPrerequisites() {
         return prerequisites;
     }
 
-    public void setPrerequisites(List<Prerequisites> prerequisites) {
+    public void setPrerequisites(Prerequisites prerequisites) {
         this.prerequisites = prerequisites;
     }
 
-    public List<Consequences> getConsequences() {
+    public Consequences getConsequences() {
         return consequences;
     }
 
-    public void setConsequences(List<Consequences> consequences) {
+    public void setConsequences(Consequences consequences) {
         this.consequences = consequences;
     }
 
-    public List<Weaknesses> getWeaknesses() {
+    public Weaknesses getWeaknesses() {
         return weaknesses;
     }
 
-    public void setWeaknesses(List<Weaknesses> weaknesses) {
+    public void setWeaknesses(Weaknesses weaknesses) {
         this.weaknesses = weaknesses;
     }
 
-    public List<Mitigations> getMitigations() {
+    public Mitigations getMitigations() {
         return mitigations;
     }
 
-    public void setMitigations(List<Mitigations> mitigations) {
+    public void setMitigations(Mitigations mitigations) {
         this.mitigations = mitigations;
     }
 
