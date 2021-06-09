@@ -109,7 +109,7 @@ public class CbrApplication implements StandardCBRApplication {
 			query.setDescription( attack );
 			recommender.cycle(query);
 
-			recommender.postCycle();
+			//recommender.postCycle();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
