@@ -1,24 +1,27 @@
 import React, { Component } from "react";
+//import "../assets/styles/attacks.css";
 
 export default class Attacks extends Component {
   render() {
     return (
       <div>
-        <div class="container">
+        <div class="container" style={{ maxWidth: "98%", marginLeft: "25px" }}>
           <div class="row">
             <div class="col-lg-12">
               <div class="card">
                 <div class="card-body">
                   <div class="table-responsive project-list">
-                    <table class="table project-table table-centered table-nowrap">
+                    <table class="table project-table table-centered table-nowrap fixed_header">
                       <thead>
                         <tr>
-                          <th scope="col">#</th>
-                          <th scope="col">Projects</th>
-                          <th scope="col">Start Date</th>
-                          <th scope="col">Status</th>
-                          <th scope="col">Team</th>
-                          <th scope="col">Progress</th>
+                          <th scope="col">ID</th>
+                          <th scope="col">Attack name</th>
+                          <th scope="col">Likelihood</th>
+                          <th scope="col">Severity</th>
+                          <th scope="col">Prerequisites</th>
+                          <th scope="col">Consequences</th>
+                          <th scope="col">Weaknesses</th>
+                          <th scope="col">Mitigations</th>
                           <th scope="col">Action</th>
                         </tr>
                       </thead>
@@ -33,27 +36,7 @@ export default class Attacks extends Component {
                               Pending
                             </span>
                           </td>
-                          <td>
-                            <div class="team">
-                              <a
-                                href="javascript: void(0);"
-                                class="team-member"
-                                data-toggle="tooltip"
-                                data-placement="top"
-                                title=""
-                                data-original-title="Deborah Mixon"
-                              ></a>
-
-                              <a
-                                href="javascript: void(0);"
-                                class="team-member"
-                                data-toggle="tooltip"
-                                data-placement="top"
-                                title=""
-                                data-original-title="Scott Jessie"
-                              ></a>
-                            </div>
-                          </td>
+                          <td>aaaa</td>
                           <td>
                             <p class="mb-0">
                               Progress<span class="float-right">78%</span>
@@ -73,7 +56,8 @@ export default class Attacks extends Component {
                               ></div>
                             </div>
                           </td>
-
+                          <td>Landing page Design</td>
+                          <td>Landing page Design</td>
                           <td>
                             <div class="action">
                               <a
@@ -151,7 +135,8 @@ export default class Attacks extends Component {
                               ></div>
                             </div>
                           </td>
-
+                          <td>Landing page Design</td>
+                          <td>Landing page Design</td>
                           <td>
                             <div class="action">
                               <a
@@ -246,7 +231,8 @@ export default class Attacks extends Component {
                               ></div>
                             </div>
                           </td>
-
+                          <td>Landing page Design</td>
+                          <td>Landing page Design</td>
                           <td>
                             <div class="action">
                               <a

@@ -1,39 +1,44 @@
 import React, { Component } from "react";
+import Switch from "react-bootstrap/esm/Switch";
+import { Route, withRouter } from "react-router";
 import "../assets/styles/mainLayout.css";
 import Attacks from "./Attacks";
+import BayesReasoning from "./BayesReasoning";
+import CaseBaseReasoning from "./CaseBaseReasoning";
+import VulnerabilityCalculator from "./VulnerabilityCalculator";
 
-export default class MainLayout extends Component {
+class MainLayout extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
-  showAttacks1 = () => {
-    if (
-      (document.getElementById("div1").className = "col-md-4 col-xl-3 opacity")
-    ) {
-      document.getElementById("div1").className = "col-md-4 col-xl-3";
-      document.getElementById("div2").className = "col-md-4 col-xl-3 opacity";
-      document.getElementById("div3").className = "col-md-4 col-xl-3 opacity";
-      document.getElementById("div4").className = "col-md-4 col-xl-3 opacity";
-    }
+  showAttacks = () => {
+    this.props.history.push("/attacks");
+    document.getElementById("div1").className = "col-md-4 col-xl-3";
+    document.getElementById("div2").className = "col-md-4 col-xl-3 opacity";
+    document.getElementById("div3").className = "col-md-4 col-xl-3 opacity";
+    document.getElementById("div4").className = "col-md-4 col-xl-3 opacity";
   };
 
-  showAttacks2 = () => {
+  showCaseBaseReasoning = () => {
+    this.props.history.push("/caseBaseReasoning");
     document.getElementById("div2").className = "col-md-4 col-xl-3";
     document.getElementById("div1").className = "col-md-4 col-xl-3 opacity";
     document.getElementById("div3").className = "col-md-4 col-xl-3 opacity";
     document.getElementById("div4").className = "col-md-4 col-xl-3 opacity";
   };
 
-  showAttacks3 = () => {
+  showBayesReasoning = () => {
+    this.props.history.push("/bayesReasoning");
     document.getElementById("div3").className = "col-md-4 col-xl-3";
     document.getElementById("div1").className = "col-md-4 col-xl-3 opacity";
     document.getElementById("div2").className = "col-md-4 col-xl-3 opacity";
     document.getElementById("div4").className = "col-md-4 col-xl-3 opacity";
   };
 
-  showAttacks4 = () => {
+  showVulnerabilityCalculator = () => {
+    this.props.history.push("/vulnerabilityCalculator");
     document.getElementById("div4").className = "col-md-4 col-xl-3";
     document.getElementById("div1").className = "col-md-4 col-xl-3 opacity";
     document.getElementById("div2").className = "col-md-4 col-xl-3 opacity";
@@ -43,12 +48,12 @@ export default class MainLayout extends Component {
   render() {
     return (
       <div>
-        <div class="container" style={{ marginTop: "20px" }}>
+        <div class="container" style={{ marginTop: "20px", maxWidth: "85%" }}>
           <div class="row">
             <div
               className="col-md-4 col-xl-3"
               id="div1"
-              onClick={this.showAttacks1}
+              onClick={this.showAttacks}
               style={{ cursor: "pointer" }}
             >
               <div class="card bg-c-pink order-card">
@@ -66,7 +71,7 @@ export default class MainLayout extends Component {
             <div
               class="col-md-4 col-xl-3 opacity"
               id="div2"
-              onClick={this.showAttacks2}
+              onClick={this.showCaseBaseReasoning}
               style={{ cursor: "pointer" }}
             >
               <div class="card bg-c-blue order-card">
@@ -75,7 +80,7 @@ export default class MainLayout extends Component {
                     <h2 class="text-right">
                       <i class="fa fa-shield-virus f-left"></i>
                     </h2>
-                    &emsp;New Attack
+                    &emsp;Case Base Reasoning
                   </h5>
                 </div>
               </div>
@@ -84,16 +89,16 @@ export default class MainLayout extends Component {
             <div
               class="col-md-4 col-xl-3 opacity"
               id="div3"
-              onClick={this.showAttacks3}
+              onClick={this.showBayesReasoning}
               style={{ cursor: "pointer" }}
             >
               <div class="card bg-c-yellow order-card">
                 <div class="card-block">
                   <h5 class="m-b-20">
                     <h2 class="text-right">
-                      <i class="fa fa-globe-americas f-left"></i>
+                      <i class="fab fa-battle-net f-left"></i>
                     </h2>
-                    &emsp;Bayes
+                    &emsp;Bayes Reasoning
                   </h5>
                 </div>
               </div>
@@ -102,7 +107,7 @@ export default class MainLayout extends Component {
             <div
               class="col-md-4 col-xl-3 opacity"
               id="div4"
-              onClick={this.showAttacks4}
+              onClick={this.showVulnerabilityCalculator}
               style={{ cursor: "pointer" }}
             >
               <div class="card bg-c-green order-card">
@@ -111,7 +116,7 @@ export default class MainLayout extends Component {
                     <h2 class="text-right">
                       <i class="fa fa-calculator f-left"></i>
                     </h2>
-                    &emsp;Calculator
+                    &emsp;Vulnerability Calculator
                   </h5>
                 </div>
               </div>
@@ -119,9 +124,27 @@ export default class MainLayout extends Component {
           </div>
         </div>
         <div class="dashboard">
-          <Attacks />
+          <Switch>
+            <Route path="/attacks">
+              <Attacks />
+            </Route>
+            <Route path="/caseBaseReasoning">
+              <CaseBaseReasoning />{" "}
+            </Route>
+            <Route path="/bayesReasoning">
+              <BayesReasoning />{" "}
+            </Route>
+            <Route path="/vulnerabilityCalculator">
+              <VulnerabilityCalculator />
+            </Route>
+            {/* <Route path="/">
+              <NotFound />
+            </Route> */}
+          </Switch>
         </div>
       </div>
     );
   }
 }
+
+export default withRouter(MainLayout);
