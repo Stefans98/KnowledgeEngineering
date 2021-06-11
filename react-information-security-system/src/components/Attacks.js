@@ -4,56 +4,282 @@ export default class Attacks extends Component {
   render() {
     return (
       <div>
-        <div class="bg-white rounded shadow-sm p-4 rating-review-select-page">
-          <h5 class="mb-4">Leave Comment</h5>
-          <p class="mb-2">Rate the Place</p>
-          <div class="mb-4">
-            <span class="star-rating">
-              <a href="#">
-                <i class="icofont-ui-rating icofont-2x"></i>
-              </a>
-              <a href="#">
-                <i class="icofont-ui-rating icofont-2x"></i>
-              </a>
-              <a href="#">
-                <i class="icofont-ui-rating icofont-2x"></i>
-              </a>
-              <a href="#">
-                <i class="icofont-ui-rating icofont-2x"></i>
-              </a>
-              <a href="#">
-                <i class="icofont-ui-rating icofont-2x"></i>
-              </a>
-            </span>
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="card">
+                <div class="card-body">
+                  <div class="table-responsive project-list">
+                    <table class="table project-table table-centered table-nowrap">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Projects</th>
+                          <th scope="col">Start Date</th>
+                          <th scope="col">Status</th>
+                          <th scope="col">Team</th>
+                          <th scope="col">Progress</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row">1</th>
+                          <td>Landing page Design</td>
+                          <td>04/6/2019</td>
+                          <td>
+                            <span class="text-primary font-12">
+                              <i class="mdi mdi-checkbox-blank-circle mr-1"></i>{" "}
+                              Pending
+                            </span>
+                          </td>
+                          <td>
+                            <div class="team">
+                              <a
+                                href="javascript: void(0);"
+                                class="team-member"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title=""
+                                data-original-title="Deborah Mixon"
+                              ></a>
+
+                              <a
+                                href="javascript: void(0);"
+                                class="team-member"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title=""
+                                data-original-title="Scott Jessie"
+                              ></a>
+                            </div>
+                          </td>
+                          <td>
+                            <p class="mb-0">
+                              Progress<span class="float-right">78%</span>
+                            </p>
+
+                            <div
+                              class="progress mt-2"
+                              style={{ height: "5px" }}
+                            >
+                              <div
+                                class="progress-bar bg-primary"
+                                role="progressbar"
+                                style={{ width: "78%" }}
+                                aria-valuenow="78"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                              ></div>
+                            </div>
+                          </td>
+
+                          <td>
+                            <div class="action">
+                              <a
+                                href="#"
+                                class="text-success mr-4"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title=""
+                                data-original-title="Edit"
+                              >
+                                {" "}
+                                <i class="fas fa-pencil-alt"></i>
+                              </a>
+                              <a
+                                href="#"
+                                class="text-danger"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title=""
+                                data-original-title="Close"
+                              >
+                                <i class="fa fa-trash-alt"></i>
+                              </a>
+                            </div>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <th scope="row">2</th>
+                          <td>Brand logo design</td>
+                          <td>08/6/2019</td>
+                          <td>
+                            <span class="text-primary font-12">
+                              <i class="mdi mdi-checkbox-blank-circle mr-1"></i>{" "}
+                              Pending
+                            </span>
+                          </td>
+                          <td>
+                            <div class="team">
+                              <a
+                                href="javascript: void(0);"
+                                class="team-member"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title=""
+                                data-original-title="Deborah Mixon"
+                              ></a>
+
+                              <a
+                                href="javascript: void(0);"
+                                class="team-member"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title=""
+                                data-original-title="Scott Jessie"
+                              ></a>
+                            </div>
+                          </td>
+                          <td>
+                            <p class="mb-0">
+                              Progress<span class="float-right">54%</span>
+                            </p>
+
+                            <div
+                              class="progress mt-2"
+                              style={{ height: "5px" }}
+                            >
+                              <div
+                                class="progress-bar bg-success"
+                                role="progressbar"
+                                style={{ width: "54%" }}
+                                aria-valuenow="54"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                              ></div>
+                            </div>
+                          </td>
+
+                          <td>
+                            <div class="action">
+                              <a
+                                href="#"
+                                class="text-success mr-4"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title=""
+                                data-original-title="Edit"
+                              >
+                                {" "}
+                                <i class="fas fa-pencil-alt"></i>
+                              </a>
+                              <a
+                                href="#"
+                                class="text-danger"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title=""
+                                data-original-title="Close"
+                              >
+                                <i class="fa fa-trash-alt"></i>
+                              </a>
+                            </div>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <th scope="row">3</th>
+                          <td>Redesign - Landing page</td>
+                          <td>10/6/2019</td>
+                          <td>
+                            <span class="text-primary font-12">
+                              <i class="mdi mdi-checkbox-blank-circle mr-1"></i>{" "}
+                              Pending
+                            </span>
+                          </td>
+                          <td>
+                            <div class="team">
+                              <a
+                                href="javascript: void(0);"
+                                class="team-member"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title=""
+                                data-original-title="Neil Wing"
+                              ></a>
+
+                              <a
+                                href="javascript: void(0);"
+                                class="team-member"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title=""
+                                data-original-title="Stanley Barber"
+                              ></a>
+                              <a
+                                href="javascript: void(0);"
+                                class="team-member"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title=""
+                                data-original-title="Roger Drake"
+                              ></a>
+
+                              <a
+                                href="javascript: void(0);"
+                                class="team-member"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title=""
+                                data-original-title="Jack Krier"
+                              ></a>
+                            </div>
+                          </td>
+                          <td>
+                            <p class="mb-0">
+                              Progress<span class="float-right">41%</span>
+                            </p>
+
+                            <div
+                              class="progress mt-2"
+                              style={{ height: "5px" }}
+                            >
+                              <div
+                                class="progress-bar bg-primary"
+                                role="progressbar"
+                                style={{ width: "41%" }}
+                                aria-valuenow="41"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                              ></div>
+                            </div>
+                          </td>
+
+                          <td>
+                            <div class="action">
+                              <a
+                                href="#"
+                                class="text-success mr-4"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title=""
+                                data-original-title="Edit"
+                              >
+                                {" "}
+                                <i class="fas fa-pencil-alt"></i>
+                              </a>
+                              <a
+                                href="#"
+                                class="text-danger"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title=""
+                                data-original-title="Close"
+                              >
+                                <i class="fa fa-trash-alt"></i>
+                              </a>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <form>
-            <div class="form-group">
-              <label>Your Comment</label>
-              <textarea class="form-control"></textarea>
-            </div>
-            <div class="form-group">
-              <label>Your Comment</label>
-              <textarea class="form-control"></textarea>
-            </div>
-            <div class="form-group">
-              <label>Your Comment</label>
-              <textarea class="form-control"></textarea>
-            </div>
-            <div class="form-group">
-              <label>Your Comment</label>
-              <textarea class="form-control"></textarea>
-            </div>
-            <div class="form-group">
-              <label>Your Comment</label>
-              <textarea class="form-control"></textarea>
-            </div>
-            <div class="form-group">
-              <button class="btn btn-primary btn-sm" type="button">
-                {" "}
-                Submit Comment{" "}
-              </button>
-            </div>
-          </form>
         </div>
       </div>
     );
