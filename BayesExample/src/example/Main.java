@@ -30,15 +30,13 @@ public class Main {
 		varContinent.appendState("North America");
 		varContinent.appendState("South America");
 		varContinent.appendState("Australia");
-		varContinent.appendState("Africa");
 		PotentialTable probContinent = varContinent.getProbabilityFunction();
 		probContinent.addVariable(varContinent);
 		probContinent.setValue(0, 0.25f);
 		probContinent.setValue(1, 0.20f);
 		probContinent.setValue(2, 0.35f);
-		probContinent.setValue(3, 0.05f);
+		probContinent.setValue(3, 0.10f);
 		probContinent.setValue(4, 0.10f);
-		probContinent.setValue(5, 0.05f);
 		net.addNode(varContinent);
 
 		// Industry
@@ -73,34 +71,139 @@ public class Main {
 		probCompanySize.setValue(3, 0.40f);
 		net.addNode(varCompanySize);
 
-		// Causes of data breaches
-		ProbabilisticNode varCausesOfDataBreaches = new ProbabilisticNode();
-		varCausesOfDataBreaches.setName("Causes_of_data_breaches");
-		varCausesOfDataBreaches.appendState("Theft of Data");
-		varCausesOfDataBreaches.appendState("Network Disruption or DDoS");
-		varCausesOfDataBreaches.appendState("Loss or Theft of Device");
-		varCausesOfDataBreaches.appendState("Identity Theft or Fraud");
-		PotentialTable probCausesOfDataBreaches = varCausesOfDataBreaches.getProbabilityFunction();
-		probCausesOfDataBreaches.addVariable(varCausesOfDataBreaches);
-		probCausesOfDataBreaches.setValue(0, 0.40f);
-		probCausesOfDataBreaches.setValue(1, 0.25f);
-		probCausesOfDataBreaches.setValue(2, 0.20f);
-		probCausesOfDataBreaches.setValue(3, 0.15f);
-		net.addNode(varCausesOfDataBreaches);
+		// Theft of data
+		ProbabilisticNode varTheftOfData = new ProbabilisticNode();
+		varTheftOfData.setName("Theft_of_data");
+		varTheftOfData.appendState("Yes");
+		varTheftOfData.appendState("No");
+		PotentialTable probTheftOfData = varTheftOfData.getProbabilityFunction();
+		probTheftOfData.addVariable(varTheftOfData);
+		probTheftOfData.setValue(0, 0.50f);
+		probTheftOfData.setValue(1, 0.50f);
+		net.addNode(varTheftOfData);
 
-		// Operating system
-		ProbabilisticNode varOperatingSystem = new ProbabilisticNode();
-		varOperatingSystem.setName("Operating_system");
-		varOperatingSystem.appendState("Windows");
-		varOperatingSystem.appendState("MacOS");
-		varOperatingSystem.appendState("Linux");
-		PotentialTable probOperatingSystem = varOperatingSystem.getProbabilityFunction();
-		probOperatingSystem.addVariable(varOperatingSystem);
-		probOperatingSystem.setValue(0, 0.50f);
-		probOperatingSystem.setValue(1, 0.35f);
-		probOperatingSystem.setValue(2, 0.15f);
-		net.addNode(varOperatingSystem);
+		// Identity theft or fraud
+		ProbabilisticNode varIdentityTheftOrFraud = new ProbabilisticNode();
+		varIdentityTheftOrFraud.setName("Identity_theft_or_fraud");
+		varIdentityTheftOrFraud.appendState("Yes");
+		varIdentityTheftOrFraud.appendState("No");
+		PotentialTable probIdentityTheftOrFraud = varIdentityTheftOrFraud.getProbabilityFunction();
+		probIdentityTheftOrFraud.addVariable(varIdentityTheftOrFraud);
+		probIdentityTheftOrFraud.setValue(0, 0.50f);
+		probIdentityTheftOrFraud.setValue(1, 0.50f);
+		net.addNode(varIdentityTheftOrFraud);
 
+		// Network disruption or DDoS
+		ProbabilisticNode varNetworkDisruptionOrDDoS = new ProbabilisticNode();
+		varNetworkDisruptionOrDDoS.setName("Network_disruption_or_DDoS");
+		varNetworkDisruptionOrDDoS.appendState("Yes");
+		varNetworkDisruptionOrDDoS.appendState("No");
+		PotentialTable probNetworkDisruptionOrDDoS = varNetworkDisruptionOrDDoS.getProbabilityFunction();
+		probNetworkDisruptionOrDDoS.addVariable(varNetworkDisruptionOrDDoS);
+		probNetworkDisruptionOrDDoS.setValue(0, 0.50f);
+		probNetworkDisruptionOrDDoS.setValue(1, 0.50f);
+		net.addNode(varNetworkDisruptionOrDDoS);
+
+		// Incorrectly configured firewalls
+		ProbabilisticNode varIncorrectlyConfiguredFirewalls = new ProbabilisticNode();
+		varIncorrectlyConfiguredFirewalls.setName("Incorrectly_configured_firewalls");
+		varIncorrectlyConfiguredFirewalls.appendState("Yes");
+		varIncorrectlyConfiguredFirewalls.appendState("No");
+		PotentialTable probIncorrectlyConfiguredFirewalls = varIncorrectlyConfiguredFirewalls.getProbabilityFunction();
+		probIncorrectlyConfiguredFirewalls.addVariable(varIncorrectlyConfiguredFirewalls);
+		probIncorrectlyConfiguredFirewalls.setValue(0, 0.50f);
+		probIncorrectlyConfiguredFirewalls.setValue(1, 0.50f);
+		net.addNode(varIncorrectlyConfiguredFirewalls);
+
+		// Signal level alerts
+		ProbabilisticNode varSignalLevelAlerts = new ProbabilisticNode();
+		varSignalLevelAlerts.setName("Signal_level_alerts");
+		varSignalLevelAlerts.appendState("Yes");
+		varSignalLevelAlerts.appendState("No");
+		PotentialTable probSignalLevelAlerts = varSignalLevelAlerts.getProbabilityFunction();
+		probSignalLevelAlerts.addVariable(varSignalLevelAlerts);
+		probSignalLevelAlerts.setValue(0, 0.50f);
+		probSignalLevelAlerts.setValue(1, 0.50f);
+		net.addNode(varSignalLevelAlerts);
+
+		// Sensitive information
+		ProbabilisticNode varSensitiveInformation = new ProbabilisticNode();
+		varSensitiveInformation.setName("Sensitive_information");
+		varSensitiveInformation.appendState("Protected");
+		varSensitiveInformation.appendState("Not protected");
+		PotentialTable probSensitiveInformation = varSensitiveInformation.getProbabilityFunction();
+		probSensitiveInformation.addVariable(varSensitiveInformation);
+		probSensitiveInformation.setValue(0, 0.50f);
+		probSensitiveInformation.setValue(1, 0.50f);
+		net.addNode(varSensitiveInformation);
+
+		// Covert timing channel
+		ProbabilisticNode varCovertTimingChannel = new ProbabilisticNode();
+		varCovertTimingChannel.setName("Covert_timing_channel");
+		varCovertTimingChannel.appendState("Yes");
+		varCovertTimingChannel.appendState("No");
+		PotentialTable probCovertTimingChannel = varCovertTimingChannel.getProbabilityFunction();
+		probCovertTimingChannel.addVariable(varCovertTimingChannel);
+		probCovertTimingChannel.setValue(0, 0.50f);
+		probCovertTimingChannel.setValue(1, 0.50f);
+		net.addNode(varCovertTimingChannel);
+
+		// Security checks
+		ProbabilisticNode varSecurityChecks = new ProbabilisticNode();
+		varSecurityChecks.setName("Security_checks");
+		varSecurityChecks.appendState("Yes");
+		varSecurityChecks.appendState("No");
+		PotentialTable probSecurityChecks = varSecurityChecks.getProbabilityFunction();
+		probSecurityChecks.addVariable(varSecurityChecks);
+		probSecurityChecks.setValue(0, 0.50f);
+		probSecurityChecks.setValue(1, 0.50f);
+		net.addNode(varSecurityChecks);
+
+		// Loss or theft of device
+		ProbabilisticNode varLossOrTheftOfDevice = new ProbabilisticNode();
+		varLossOrTheftOfDevice.setName("Loss_or_theft_of_device");
+		varLossOrTheftOfDevice.appendState("Yes");
+		varLossOrTheftOfDevice.appendState("No");
+		PotentialTable probLossOrTheftOfDevice = varLossOrTheftOfDevice.getProbabilityFunction();
+		probLossOrTheftOfDevice.addVariable(varLossOrTheftOfDevice);
+		probLossOrTheftOfDevice.setValue(0, 0.50f);
+		probLossOrTheftOfDevice.setValue(1, 0.50f);
+		net.addNode(varLossOrTheftOfDevice);
+
+		// Interacting with system
+		ProbabilisticNode varInteractingWithSystem = new ProbabilisticNode();
+		varInteractingWithSystem.setName("Interacting_with_system");
+		varInteractingWithSystem.appendState("Yes");
+		varInteractingWithSystem.appendState("No");
+		PotentialTable probInteractingWithSystem = varInteractingWithSystem.getProbabilityFunction();
+		probInteractingWithSystem.addVariable(varInteractingWithSystem);
+		probInteractingWithSystem.setValue(0, 0.50f);
+		probInteractingWithSystem.setValue(1, 0.50f);
+		net.addNode(varInteractingWithSystem);
+
+		// Communication paths
+		ProbabilisticNode varCommunicationPaths = new ProbabilisticNode();
+		varCommunicationPaths.setName("Communication_paths");
+		varCommunicationPaths.appendState("Trusted");
+		varCommunicationPaths.appendState("Untrusted");
+		PotentialTable probCommunicationPaths = varCommunicationPaths.getProbabilityFunction();
+		probCommunicationPaths.addVariable(varCommunicationPaths);
+		probCommunicationPaths.setValue(0, 0.50f);
+		probCommunicationPaths.setValue(1, 0.50f);
+		net.addNode(varCommunicationPaths);
+
+		// Configuration
+		ProbabilisticNode varConfiguration = new ProbabilisticNode();
+		varConfiguration.setName("Configuration");
+		varConfiguration.appendState("Good");
+		varConfiguration.appendState("Bad");
+		PotentialTable probConfiguration = varConfiguration.getProbabilityFunction();
+		probConfiguration.addVariable(varConfiguration);
+		probConfiguration.setValue(0, 0.50f);
+		probConfiguration.setValue(1, 0.50f);
+		net.addNode(varConfiguration);
+
+		//*************//
 		// Taxi
 		ProbabilisticNode varTaxi = new ProbabilisticNode();
 		varTaxi.setName("taxi");
