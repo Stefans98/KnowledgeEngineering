@@ -1,7 +1,7 @@
 package example;
 
 import java.io.File;
-import java.util.List;
+import java.util.*;
 
 import unbbayes.io.BaseIO;
 import unbbayes.io.NetIO;
@@ -17,13 +17,13 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 
-		ProbabilisticNetwork net = new ProbabilisticNetwork("example");
+		// ProbabilisticNetwork net = new ProbabilisticNetwork("example");
 		// loading from file
-		// BaseIO io = new NetIO();
-		// net = (ProbabilisticNetwork)io.load(new File("example.net"));
+		BaseIO io = new NetIO();
+		ProbabilisticNetwork net = (ProbabilisticNetwork)io.load(new File("data/bayes.net"));
 
 		// Continent
-		ProbabilisticNode varContinent = new ProbabilisticNode();
+		/*ProbabilisticNode varContinent = new ProbabilisticNode();
 		varContinent.setName("Continent");
 		varContinent.appendState("Europe");
 		varContinent.appendState("Asia");
@@ -203,8 +203,7 @@ public class Main {
 		probConfiguration.setValue(1, 0.50f);
 		net.addNode(varConfiguration);
 
-		//*************//
-		// Taxi
+
 		ProbabilisticNode varTaxi = new ProbabilisticNode();
 		varTaxi.setName("taxi");
 		varTaxi.appendState("blue");
@@ -230,20 +229,85 @@ public class Main {
 		probWitness.setValue(2, 0.2f);  // taxi is blue & witness observed as green
 		probWitness.setValue(3, 0.8f);  // taxi is green & witness observed as green
 
+
+		// ATTACK
+		// CarryOff_GPS_Attack
+		ProbabilisticNode varCarryOffGPSAttack = new ProbabilisticNode();
+		varCarryOffGPSAttack.setName("CarryOff_GPS_Attack");
+		varCarryOffGPSAttack.appendState("It happened");
+		varCarryOffGPSAttack.appendState("It didn't happen");
+		net.addNode(varCarryOffGPSAttack);
+		PotentialTable probCarryOffGPSAttack = varCarryOffGPSAttack.getProbabilityFunction();
+		probCarryOffGPSAttack.addVariable(varCarryOffGPSAttack);
+
+		// CarryOff_GPS_Attack -> Continent
+		net.addEdge( new Edge(varContinent, varCarryOffGPSAttack) );
+		probCarryOffGPSAttack.setValue(0, 0.7f);
+		probCarryOffGPSAttack.setValue(1, 0.5f);
+		probCarryOffGPSAttack.setValue(2, 0.25f);
+		probCarryOffGPSAttack.setValue(3, 0.4f);
+		probCarryOffGPSAttack.setValue(4, 0.8f);
+		probCarryOffGPSAttack.setValue(5, 0.3f);
+		probCarryOffGPSAttack.setValue(6, 0.5f);
+		probCarryOffGPSAttack.setValue(7, 0.75f);
+		probCarryOffGPSAttack.setValue(8, 0.6f);
+		probCarryOffGPSAttack.setValue(9, 0.2f);
+
+		// CarryOff_GPS_Attack -> Industry
+		net.addEdge( new Edge(varIndustry, varCarryOffGPSAttack) );
+		probCarryOffGPSAttack.setValue(0, 0.15f);
+		probCarryOffGPSAttack.setValue(1, 0.55f);
+		probCarryOffGPSAttack.setValue(2, 0.20f);
+		probCarryOffGPSAttack.setValue(3, 0.90f);
+		probCarryOffGPSAttack.setValue(4, 0.75f);
+		probCarryOffGPSAttack.setValue(5, 0.85f);
+		probCarryOffGPSAttack.setValue(6, 0.45f);
+		probCarryOffGPSAttack.setValue(7, 0.80f);
+		probCarryOffGPSAttack.setValue(8, 0.10f);
+		probCarryOffGPSAttack.setValue(9, 0.25f);
+
+		// CarryOff_GPS_Attack -> Company_size
+		net.addEdge( new Edge(varCompanySize, varCarryOffGPSAttack) );
+		probCarryOffGPSAttack.setValue(0, 0.25f);
+		probCarryOffGPSAttack.setValue(1, 0.15f);
+		probCarryOffGPSAttack.setValue(2, 0.40f);
+		probCarryOffGPSAttack.setValue(3, 0.10f);
+		probCarryOffGPSAttack.setValue(4, 0.75f);
+		probCarryOffGPSAttack.setValue(5, 0.85f);
+		probCarryOffGPSAttack.setValue(6, 0.60f);
+		probCarryOffGPSAttack.setValue(7, 0.90f);
+
+		// CarryOff_GPS_Attack -> Loss_or_theft_of_device
+		net.addEdge( new Edge(varLossOrTheftOfDevice, varCarryOffGPSAttack) );
+		probCarryOffGPSAttack.setValue(0, 0.45f);
+		probCarryOffGPSAttack.setValue(1, 0.88f);
+		probCarryOffGPSAttack.setValue(2, 0.55f);
+		probCarryOffGPSAttack.setValue(3, 0.12f);
+
+		// CarryOff_GPS_Attack -> Security_checks
+		net.addEdge( new Edge(varSecurityChecks, varCarryOffGPSAttack) );
+		probCarryOffGPSAttack.setValue(0, 0.20f);
+		probCarryOffGPSAttack.setValue(1, 0.70f);
+		probCarryOffGPSAttack.setValue(2, 0.80f);
+		probCarryOffGPSAttack.setValue(3, 0.30f);
+		*/
+
 		// compiling
+
 		IInferenceAlgorithm algorithm = new JunctionTreeAlgorithm();
 		algorithm.setNetwork(net);
 		algorithm.run();
 		
 		// states overview
 		List<Node> nodeList = net.getNodes();
-		for (Node node: nodeList) {
+		/*for (Node node: nodeList) {
 			System.out.println(node.getName());
 			for (int i = 0; i < node.getStatesSize(); i++) {
 				System.out.println(node.getStateAt(i) + ": " + ((ProbabilisticNode)node).getMarginalAt(i));
 			}
 		}
-		
+		*/
+		/*
 		// adding an evidence
 		ProbabilisticNode factNode = (ProbabilisticNode)net.getNode("witness");
 		int stateIndex = 1; // index of state "green"
@@ -267,6 +331,78 @@ public class Main {
 		}
 		// saving to file
 		// new NetIO().save(new File("example.net"), net);
-	}	
+		*/
 
+
+		// adding an evidence
+		ProbabilisticNode factNode = (ProbabilisticNode)net.getNode("Continent");
+		int stateIndex = 0;
+		factNode.addFinding(stateIndex);
+
+		ProbabilisticNode factNode1 = (ProbabilisticNode)net.getNode("Industry");
+		int stateIndex1 = 0;
+		factNode.addFinding(stateIndex);
+
+		ProbabilisticNode factNode2 = (ProbabilisticNode)net.getNode("Company_size");
+		int stateIndex2 = 0;
+		factNode.addFinding(stateIndex);
+
+		ProbabilisticNode factNode3 = (ProbabilisticNode)net.getNode("Loss_or_theft_of_device");
+		int stateIndex3 = 0;
+		factNode.addFinding(stateIndex);
+
+		ProbabilisticNode factNode4 = (ProbabilisticNode)net.getNode("Security_checks");
+		int stateIndex4 = 0;
+		factNode.addFinding(stateIndex);
+
+		System.out.println();
+
+		// propagation
+		try {
+			net.updateEvidences();
+		} catch (Exception e) {
+			//System.out.println(e.getMessage());
+		}
+
+		// states overview after propagation
+		ArrayList<BayesDto> result = new ArrayList<>();
+		for (Node node : nodeList) {
+			//System.out.println(node.getName());
+			for (int i = 0; i < node.getStatesSize(); i++) {
+				if (node.getStateAt(i).equals("It happened")) {
+					BayesDto dto = new BayesDto();
+					dto.setAttackName(node.getName());
+					dto.setItHappenPercentage(((ProbabilisticNode) node).getMarginalAt(i));
+					result.add(dto);
+					System.out.println(dto.getAttackName() + ":" + dto.getItHappenPercentage());
+					//System.out.println(node.getStateAt(i) + ": " + ((ProbabilisticNode) node).getMarginalAt(i));
+				}
+			}
+
+		}
+
+		result.sort(Comparator.comparing(BayesDto::getItHappenPercentage).reversed());
+
+		System.out.println("SORTED:");
+		for(BayesDto dto : result){
+			System.out.println(dto.getAttackName() + ":" + dto.getItHappenPercentage());
+		}
+
+		List<BayesDto> finalResult = new ArrayList<>();
+		for(int i=0; i < result.size(); i++){
+			if(i < 5) {
+				finalResult.add(result.get(i));
+			}
+		}
+
+		System.out.println("TOP 5:");
+		for(BayesDto dto : finalResult){
+			System.out.println(dto.getAttackName() + ":" + dto.getItHappenPercentage());
+		}
+
+
+		// saving to file
+		// new NetIO().save(new File("example.net"), net);
+	}
 }
+

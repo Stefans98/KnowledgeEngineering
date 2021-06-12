@@ -83,10 +83,10 @@ public class CbrApplication implements StandardCBRApplication {
     public void cycle(CBRQuery query) throws ExecutionException {
         Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_caseBase.getCases(), query, simConfig);
         eval = SelectCases.selectTopKRR(eval, 5);
-        //System.out.println("Retrieved cases:");
+        // System.out.println("Retrieved cases:");
         List<CbrDto> result = new ArrayList<CbrDto>();
         for (RetrievalResult nse : eval) {
-            //System.out.println(nse.get_case().getDescription() + " -> " + nse.getEval());
+            // System.out.println(nse.get_case().getDescription() + " -> " + nse.getEval());
             CbrDto cbrDto = new CbrDto();
 
             String attackString = nse.get_case().getDescription().toString();
@@ -109,7 +109,7 @@ public class CbrApplication implements StandardCBRApplication {
     }
 
     public void recommend(Level likelihood, Level severity, String p, String c, String w, String m) {
-        //StandardCBRApplication recommender = new CbrApplication();
+        // StandardCBRApplication recommender = new CbrApplication();
         try {
             this.configure();
 
