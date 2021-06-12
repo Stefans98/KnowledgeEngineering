@@ -1,0 +1,23 @@
+.rating-list {
+  display: inline-flex;
+  margin-bottom: 15px;
+  width: 98%;
+}
+.rating-list-left {
+  height: 16px;
+  width: 40%;
+  margin-top: -10px;
+}
+.rating-list-center {
+  width: 30%;
+}
+.rating-list-right {
+  text-align: center;
+  width: 10%;
+  margin-top: -5px;
+}
+.rating-list-end {
+  text-align: center;
+  width: 20%;
+  margin-top: -5px;
+}
