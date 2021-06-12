@@ -29,7 +29,7 @@ import java.util.List;
 public class BayesController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<BayesDto>> calculateVulnerabilityRisk(@RequestBody BayesParameters bayesParameters) throws IOException {
+    public ResponseEntity<List<BayesDto>> propagateAttacks(@RequestBody BayesParameters bayesParameters) throws IOException {
         BaseIO io = new NetIO();
         ProbabilisticNetwork net = (ProbabilisticNetwork)io.load(new File("./src/main/resources/data/bayes.net"));
 
@@ -39,7 +39,7 @@ public class BayesController {
 
         List<Node> nodeList = net.getNodes();
 
-        if(bayesParameters.getContinent() != null) {
+        if(bayesParameters.getContinent() != null ) {
             ProbabilisticNode factNode = (ProbabilisticNode) net.getNode("Continent");
             int stateIndex = bayesParameters.getContinent();
             factNode.addFinding(stateIndex);
