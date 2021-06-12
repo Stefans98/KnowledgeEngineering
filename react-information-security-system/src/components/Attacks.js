@@ -5,7 +5,7 @@ export default class Attacks extends Component {
   render() {
     return (
       <div>
-        <div class="container" style={{ maxWidth: "98%", marginLeft: "25px" }}>
+        <div class="container" style={{ maxWidth: "100%" }}>
           <div class="row">
             <div class="col-lg-12">
               <div class="card">
