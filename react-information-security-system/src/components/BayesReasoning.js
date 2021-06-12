@@ -9,10 +9,13 @@ import {
   Radio,
   RadioGroup,
 } from "@material-ui/core";
+import "../assets/styles/bayesReasoning.css";
+import { Button, Modal } from "react-bootstrap";
 
 export default class BayesReasoning extends Component {
   constructor(props) {
     super(props);
+    this.messagesEndRef = React.createRef();
     this.state = {
       theftOfData: "none",
       signalLevelAlerts: "none",
@@ -29,6 +32,8 @@ export default class BayesReasoning extends Component {
       inputContinentsValue: "",
       inputIndustryValue: "",
       inputCompanySizeValue: "",
+      isOpenMitigationsModal: false,
+      propagated: false,
     };
   }
 
@@ -80,6 +85,29 @@ export default class BayesReasoning extends Component {
     this.setState({ identityTheftOrFraud: event.target.value });
   };
 
+  openMitigationsModal = () => {
+    this.setState({
+      isOpenMitigationsModal: true,
+    });
+  };
+
+  closeMitigationsModal = () =>
+    this.setState({ isOpenMitigationsModal: false });
+
+  propagate = () => {
+    this.setState({ propagated: true }, () => {
+      this.scrollToBottom();
+    });
+  };
+
+  closeOverview = () => {
+    this.setState({ propagated: false });
+  };
+
+  scrollToBottom = () => {
+    this.messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
   render() {
     const continets = [
       { state: "Europe" },
@@ -104,8 +132,237 @@ export default class BayesReasoning extends Component {
       { state: "1000+" },
     ];
 
+    const mitigationsModalDialog = (
+      <Modal
+        show={this.state.isOpenMitigationsModal}
+        onHide={this.closeMitigationsModal}
+        style={{ marginTop: "120px", minHeight: "560px", overflow: "hidden" }}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title style={{ marginLeft: "165px", color: "#74767a" }}>
+            Mitigations
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div style={{ overflow: "auto", height: "300px" }}>
+            <Grid container spacing={20}>
+              <Grid container item xs spacing={20}>
+                <p style={{ color: "#74767a" }}>- mitigation 1</p>
+              </Grid>
+            </Grid>
+            <Grid container spacing={20}>
+              <Grid container item xs spacing={20}>
+                <p style={{ color: "#74767a" }}>- mitigation 2</p>
+              </Grid>
+            </Grid>
+            <Grid container spacing={20}>
+              <Grid container item xs spacing={20}>
+                <p style={{ color: "#74767a" }}>- mitigation 3</p>
+              </Grid>
+            </Grid>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={this.closeMitigationsModal}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
+
+    const attacks = (
+      <div class="bg-white rounded shadow-sm p-4 mb-4 clearfix graph-star-rating">
+        <h4
+          style={{
+            textAlign: "left",
+            color: "#74767a",
+            paddingBottom: "50px",
+          }}
+        >
+          Attacks overview after propagation:
+        </h4>
+        <div class="graph-star-rating-body">
+          <div class="rating-list">
+            <div class="rating-list-left text-black">
+              <h5 style={{ textAlign: "left", color: "#74767a" }}>
+                1. aaaaaaaaaa aaaaaaaaaa aaaaaaaaaaa
+              </h5>
+            </div>
+            <div class="rating-list-center">
+              <div class="progress">
+                <div
+                  style={{ width: "56%" }}
+                  aria-valuemax="5"
+                  aria-valuemin="0"
+                  aria-valuenow="5"
+                  role="progressbar"
+                  class="progress-bar bg-primary"
+                >
+                  <span class="sr-only">80% Complete (danger)</span>
+                </div>
+              </div>
+            </div>
+            <div class="rating-list-right text-black">56%</div>
+            <div class="rating-list-end">
+              <button
+                type="button"
+                onClick={this.openMitigationsModal}
+                class="btn btn-outline-success btn-sm"
+                style={{ width: "150px", fontSize: "17px" }}
+              >
+                Mitigations
+              </button>
+            </div>
+          </div>
+          <div class="rating-list">
+            <div class="rating-list-left text-black">
+              {" "}
+              <h5 style={{ textAlign: "left", color: "#74767a" }}>
+                2. aaaaaaaaaa aaaaaaaaaa aaaaaaaaaaa
+              </h5>
+            </div>
+            <div class="rating-list-center">
+              <div class="progress">
+                <div
+                  style={{ width: "23%" }}
+                  aria-valuemax="5"
+                  aria-valuemin="0"
+                  aria-valuenow="5"
+                  role="progressbar"
+                  class="progress-bar bg-primary"
+                >
+                  <span class="sr-only">80% Complete (danger)</span>
+                </div>
+              </div>
+            </div>
+            <div class="rating-list-right text-black">23%</div>
+            <div class="rating-list-end">
+              <button
+                type="button"
+                onClick={this.openMitigationsModal}
+                class="btn btn-outline-success btn-sm"
+                style={{ width: "150px", fontSize: "17px" }}
+              >
+                Mitigations
+              </button>
+            </div>
+          </div>
+          <div class="rating-list">
+            <div class="rating-list-left text-black">
+              {" "}
+              <h5 style={{ textAlign: "left", color: "#74767a" }}>
+                3. aaaaaaaaaa aaaaaaaaaa aaaaaaaaaaa
+              </h5>
+            </div>
+            <div class="rating-list-center">
+              <div class="progress">
+                <div
+                  style={{ width: "23%" }}
+                  aria-valuemax="5"
+                  aria-valuemin="0"
+                  aria-valuenow="5"
+                  role="progressbar"
+                  class="progress-bar bg-primary"
+                >
+                  <span class="sr-only">80% Complete (danger)</span>
+                </div>
+              </div>
+            </div>
+            <div class="rating-list-right text-black">23%</div>
+            <div class="rating-list-end">
+              <button
+                type="button"
+                onClick={this.openMitigationsModal}
+                class="btn btn-outline-success btn-sm"
+                style={{ width: "150px", fontSize: "17px" }}
+              >
+                Mitigations
+              </button>
+            </div>
+          </div>
+          <div class="rating-list">
+            <div class="rating-list-left text-black">
+              {" "}
+              <h5 style={{ textAlign: "left", color: "#74767a" }}>
+                4. aaaaaaaaaa aaaaaaaaaa aaaaaaaaaaa
+              </h5>
+            </div>
+            <div class="rating-list-center">
+              <div class="progress">
+                <div
+                  style={{ width: "11%" }}
+                  aria-valuemax="5"
+                  aria-valuemin="0"
+                  aria-valuenow="5"
+                  role="progressbar"
+                  class="progress-bar bg-primary"
+                >
+                  <span class="sr-only">80% Complete (danger)</span>
+                </div>
+              </div>
+            </div>
+            <div class="rating-list-right text-black">11%</div>
+            <div class="rating-list-end">
+              <button
+                type="button"
+                onClick={this.openMitigationsModal}
+                class="btn btn-outline-success btn-sm"
+                style={{ width: "150px", fontSize: "17px" }}
+              >
+                Mitigations
+              </button>
+            </div>
+          </div>
+          <div class="rating-list">
+            <div class="rating-list-left text-black">
+              {" "}
+              <h5 style={{ textAlign: "left", color: "#74767a" }}>
+                5. aaaaaaaaaa aaaaaaaaaa aaaaaaaaaaa
+              </h5>
+            </div>
+            <div class="rating-list-center">
+              <div class="progress">
+                <div
+                  style={{ width: "2%" }}
+                  aria-valuemax="5"
+                  aria-valuemin="0"
+                  aria-valuenow="5"
+                  role="progressbar"
+                  class="progress-bar bg-primary"
+                >
+                  <span class="sr-only">80% Complete (danger)</span>
+                </div>
+              </div>
+            </div>
+            <div class="rating-list-right text-black">02%</div>
+            <div class="rating-list-end">
+              <button
+                type="button"
+                onClick={this.openMitigationsModal}
+                class="btn btn-outline-success btn-sm"
+                style={{ width: "150px", fontSize: "17px" }}
+              >
+                Mitigations
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="graph-star-rating-footer text-center mt-5 mb-3">
+          <button
+            type="button"
+            onClick={this.closeOverview}
+            class="btn btn-outline-primary btn-sm"
+            style={{ width: "200px", fontSize: "17px" }}
+          >
+            Close overview
+          </button>
+        </div>
+      </div>
+    );
+
     return (
       <div>
+        {mitigationsModalDialog}
         <div
           class="bg-white rounded shadow-sm p-4 mb-5 rating-review-select-page"
           style={{ maxWidth: "100%" }}
@@ -454,7 +711,19 @@ export default class BayesReasoning extends Component {
               </FormControl>
             </Grid>
           </Grid>
+          <div class="graph-star-rating-footer text-center mt-4 mb-3">
+            <button
+              type="button"
+              onClick={this.propagate}
+              class="btn btn-outline-primary btn-sm"
+              style={{ width: "200px", fontSize: "17px" }}
+            >
+              Propagate
+            </button>
+          </div>
         </div>
+        {this.state.propagated ? attacks : ""}
+        <div ref={this.messagesEndRef} />
       </div>
     );
   }
