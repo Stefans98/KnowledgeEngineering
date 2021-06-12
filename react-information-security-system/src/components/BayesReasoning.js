@@ -11,29 +11,34 @@ import {
 } from "@material-ui/core";
 import "../assets/styles/bayesReasoning.css";
 import { Button, Modal } from "react-bootstrap";
+import BayesReasoningService from "../services/BayesReasoningService";
+import PrologService from "../services/PrologService";
 
 export default class BayesReasoning extends Component {
   constructor(props) {
     super(props);
     this.messagesEndRef = React.createRef();
+    this.messagesStartRef = React.createRef();
     this.state = {
-      theftOfData: "none",
-      signalLevelAlerts: "none",
-      networkDisruptionOrDDoS: "none",
-      incorrectlyConfiguredFirewalls: "none",
-      configuration: "none",
-      lossOrTheftOfDevice: "none",
-      sensitiveInformation: "none",
-      covertTimingChannel: "none",
-      securityChecks: "none",
-      identityTheftOrFraud: "none",
-      interactingWithSystem: "none",
-      communicationPaths: "none",
+      theftOfData: null,
+      signalLevelAlerts: null,
+      networkDisruptionOrDDoS: null,
+      incorrectlyConfiguredFirewalls: null,
+      configuration: null,
+      lossOrTheftOfDevice: null,
+      sensitiveInformation: null,
+      covertTimingChannel: null,
+      securityChecks: null,
+      identityTheftOrFraud: null,
+      interactingWithSystem: null,
+      communicationPaths: null,
       inputContinentsValue: "",
       inputIndustryValue: "",
       inputCompanySizeValue: "",
       isOpenMitigationsModal: false,
       propagated: false,
+      propagatedAttacks: [],
+      mitigations: [],
     };
   }
 
@@ -85,10 +90,16 @@ export default class BayesReasoning extends Component {
     this.setState({ identityTheftOrFraud: event.target.value });
   };
 
-  openMitigationsModal = () => {
-    this.setState({
-      isOpenMitigationsModal: true,
-    });
+  openMitigationsModal = (attackName) => {
+    var name = this.lowerCaseFirstLetter(attackName);
+
+    PrologService.getMitigations(name)
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        this.setState({ mitigations: data, isOpenMitigationsModal: true });
+      });
   };
 
   closeMitigationsModal = () =>
@@ -96,16 +107,60 @@ export default class BayesReasoning extends Component {
 
   propagate = () => {
     this.setState({ propagated: true }, () => {
-      this.scrollToBottom();
+      BayesReasoningService.propagateAttacks(
+        this.state.networkDisruptionOrDDoS,
+        this.state.incorrectlyConfiguredFirewalls,
+        this.state.lossOrTheftOfDevice,
+        this.state.interactingWithSystem,
+        this.state.communicationPaths,
+        this.state.signalLevelAlerts,
+        this.state.sensitiveInformation,
+        this.state.covertTimingChannel,
+        this.state.theftOfData,
+        this.state.configuration,
+        this.state.securityChecks,
+        this.state.identityTheftOrFraud,
+        this.state.inputContinentsValue,
+        this.state.inputIndustryValue,
+        this.state.inputCompanySizeValue
+      )
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          this.setState(
+            {
+              propagatedAttacks: data,
+            },
+            () => {
+              this.scrollToBottom();
+            }
+          );
+        });
     });
   };
 
   closeOverview = () => {
-    this.setState({ propagated: false });
+    this.setState({ propagated: false }, () => {
+      this.scrollToTop();
+    });
   };
 
   scrollToBottom = () => {
     this.messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  scrollToTop = () => {
+    this.messagesStartRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  calculatePercentage = (percentage) => {
+    var result = percentage * 100;
+    return result.toFixed(2) + "%";
+  };
+
+  lowerCaseFirstLetter = (attackName) => {
+    return attackName.charAt(0).toLowerCase() + attackName.slice(1);
   };
 
   render() {
@@ -144,22 +199,18 @@ export default class BayesReasoning extends Component {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div style={{ overflow: "auto", height: "300px" }}>
-            <Grid container spacing={20}>
-              <Grid container item xs spacing={20}>
-                <p style={{ color: "#74767a" }}>- mitigation 1</p>
-              </Grid>
-            </Grid>
-            <Grid container spacing={20}>
-              <Grid container item xs spacing={20}>
-                <p style={{ color: "#74767a" }}>- mitigation 2</p>
-              </Grid>
-            </Grid>
-            <Grid container spacing={20}>
-              <Grid container item xs spacing={20}>
-                <p style={{ color: "#74767a" }}>- mitigation 3</p>
-              </Grid>
-            </Grid>
+          <div style={{ overflow: "auto", height: "300px", padding: "15px" }}>
+            {this.state.mitigations.map((mitigation, key) => {
+              return (
+                <div key={key}>
+                  <Grid container spacing={20}>
+                    <Grid container item xs spacing={20}>
+                      <p style={{ color: "#74767a" }}>- {mitigation.name}</p>
+                    </Grid>
+                  </Grid>
+                </div>
+              );
+            })}
           </div>
         </Modal.Body>
         <Modal.Footer>
@@ -182,170 +233,51 @@ export default class BayesReasoning extends Component {
           Attacks overview after propagation:
         </h4>
         <div class="graph-star-rating-body">
-          <div class="rating-list">
-            <div class="rating-list-left text-black">
-              <h5 style={{ textAlign: "left", color: "#74767a" }}>
-                1. aaaaaaaaaa aaaaaaaaaa aaaaaaaaaaa
-              </h5>
-            </div>
-            <div class="rating-list-center">
-              <div class="progress">
-                <div
-                  style={{ width: "56%" }}
-                  aria-valuemax="5"
-                  aria-valuemin="0"
-                  aria-valuenow="5"
-                  role="progressbar"
-                  class="progress-bar bg-primary"
-                >
-                  <span class="sr-only">80% Complete (danger)</span>
+          {this.state.propagatedAttacks.map((attack, key) => {
+            return (
+              <div key={key}>
+                <div class="rating-list">
+                  <div class="rating-list-left text-black">
+                    <h5 style={{ textAlign: "left", color: "#74767a" }}>
+                      {attack.attackName.replaceAll("_", " ")}
+                    </h5>
+                  </div>
+                  <div class="rating-list-center">
+                    <div class="progress">
+                      <div
+                        style={{
+                          width: this.calculatePercentage(
+                            attack.itHappenPercentage
+                          ),
+                        }}
+                        aria-valuemax="5"
+                        aria-valuemin="0"
+                        aria-valuenow="5"
+                        role="progressbar"
+                        class="progress-bar bg-primary"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="rating-list-right text-black">
+                    {" "}
+                    {this.calculatePercentage(attack.itHappenPercentage)}
+                  </div>
+                  <div class="rating-list-end">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        this.openMitigationsModal(attack.attackName);
+                      }}
+                      class="btn btn-outline-success btn-sm"
+                      style={{ width: "150px", fontSize: "17px" }}
+                    >
+                      Mitigations
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="rating-list-right text-black">56%</div>
-            <div class="rating-list-end">
-              <button
-                type="button"
-                onClick={this.openMitigationsModal}
-                class="btn btn-outline-success btn-sm"
-                style={{ width: "150px", fontSize: "17px" }}
-              >
-                Mitigations
-              </button>
-            </div>
-          </div>
-          <div class="rating-list">
-            <div class="rating-list-left text-black">
-              {" "}
-              <h5 style={{ textAlign: "left", color: "#74767a" }}>
-                2. aaaaaaaaaa aaaaaaaaaa aaaaaaaaaaa
-              </h5>
-            </div>
-            <div class="rating-list-center">
-              <div class="progress">
-                <div
-                  style={{ width: "23%" }}
-                  aria-valuemax="5"
-                  aria-valuemin="0"
-                  aria-valuenow="5"
-                  role="progressbar"
-                  class="progress-bar bg-primary"
-                >
-                  <span class="sr-only">80% Complete (danger)</span>
-                </div>
-              </div>
-            </div>
-            <div class="rating-list-right text-black">23%</div>
-            <div class="rating-list-end">
-              <button
-                type="button"
-                onClick={this.openMitigationsModal}
-                class="btn btn-outline-success btn-sm"
-                style={{ width: "150px", fontSize: "17px" }}
-              >
-                Mitigations
-              </button>
-            </div>
-          </div>
-          <div class="rating-list">
-            <div class="rating-list-left text-black">
-              {" "}
-              <h5 style={{ textAlign: "left", color: "#74767a" }}>
-                3. aaaaaaaaaa aaaaaaaaaa aaaaaaaaaaa
-              </h5>
-            </div>
-            <div class="rating-list-center">
-              <div class="progress">
-                <div
-                  style={{ width: "23%" }}
-                  aria-valuemax="5"
-                  aria-valuemin="0"
-                  aria-valuenow="5"
-                  role="progressbar"
-                  class="progress-bar bg-primary"
-                >
-                  <span class="sr-only">80% Complete (danger)</span>
-                </div>
-              </div>
-            </div>
-            <div class="rating-list-right text-black">23%</div>
-            <div class="rating-list-end">
-              <button
-                type="button"
-                onClick={this.openMitigationsModal}
-                class="btn btn-outline-success btn-sm"
-                style={{ width: "150px", fontSize: "17px" }}
-              >
-                Mitigations
-              </button>
-            </div>
-          </div>
-          <div class="rating-list">
-            <div class="rating-list-left text-black">
-              {" "}
-              <h5 style={{ textAlign: "left", color: "#74767a" }}>
-                4. aaaaaaaaaa aaaaaaaaaa aaaaaaaaaaa
-              </h5>
-            </div>
-            <div class="rating-list-center">
-              <div class="progress">
-                <div
-                  style={{ width: "11%" }}
-                  aria-valuemax="5"
-                  aria-valuemin="0"
-                  aria-valuenow="5"
-                  role="progressbar"
-                  class="progress-bar bg-primary"
-                >
-                  <span class="sr-only">80% Complete (danger)</span>
-                </div>
-              </div>
-            </div>
-            <div class="rating-list-right text-black">11%</div>
-            <div class="rating-list-end">
-              <button
-                type="button"
-                onClick={this.openMitigationsModal}
-                class="btn btn-outline-success btn-sm"
-                style={{ width: "150px", fontSize: "17px" }}
-              >
-                Mitigations
-              </button>
-            </div>
-          </div>
-          <div class="rating-list">
-            <div class="rating-list-left text-black">
-              {" "}
-              <h5 style={{ textAlign: "left", color: "#74767a" }}>
-                5. aaaaaaaaaa aaaaaaaaaa aaaaaaaaaaa
-              </h5>
-            </div>
-            <div class="rating-list-center">
-              <div class="progress">
-                <div
-                  style={{ width: "2%" }}
-                  aria-valuemax="5"
-                  aria-valuemin="0"
-                  aria-valuenow="5"
-                  role="progressbar"
-                  class="progress-bar bg-primary"
-                >
-                  <span class="sr-only">80% Complete (danger)</span>
-                </div>
-              </div>
-            </div>
-            <div class="rating-list-right text-black">02%</div>
-            <div class="rating-list-end">
-              <button
-                type="button"
-                onClick={this.openMitigationsModal}
-                class="btn btn-outline-success btn-sm"
-                style={{ width: "150px", fontSize: "17px" }}
-              >
-                Mitigations
-              </button>
-            </div>
-          </div>
+            );
+          })}
         </div>
         <div class="graph-star-rating-footer text-center mt-5 mb-3">
           <button
@@ -366,6 +298,7 @@ export default class BayesReasoning extends Component {
         <div
           class="bg-white rounded shadow-sm p-4 mb-5 rating-review-select-page"
           style={{ maxWidth: "100%" }}
+          ref={this.messagesStartRef}
         >
           <h3 style={{ textAlign: "center", color: "#74767a" }}>
             Bayes parameters
@@ -381,6 +314,9 @@ export default class BayesReasoning extends Component {
                 id="continent"
                 inputValue={this.state.inputContinentsValue}
                 onInputChange={(event, newInputValue) => {
+                  if (newInputValue === "") {
+                    newInputValue = null;
+                  }
                   this.setState({ inputContinentsValue: newInputValue }, () => {
                     console.log(this.state.inputContinentsValue);
                   });
@@ -398,6 +334,9 @@ export default class BayesReasoning extends Component {
                 id="industry"
                 inputValue={this.state.inputIndustryValue}
                 onInputChange={(event, newInputValue) => {
+                  if (newInputValue === "") {
+                    newInputValue = null;
+                  }
                   this.setState({ inputIndustryValue: newInputValue }, () => {
                     console.log(this.state.inputIndustryValue);
                   });
@@ -415,6 +354,9 @@ export default class BayesReasoning extends Component {
                 id="companySize"
                 inputValue={this.state.inputCompanySizeValue}
                 onInputChange={(event, newInputValue) => {
+                  if (newInputValue === "") {
+                    newInputValue = null;
+                  }
                   this.setState(
                     { inputCompanySizeValue: newInputValue },
                     () => {
@@ -455,7 +397,7 @@ export default class BayesReasoning extends Component {
                   onChange={this.handleChangeNetworkDisruptionOrDDoS}
                 >
                   <FormControlLabel
-                    value="none"
+                    value={null}
                     control={<Radio />}
                     label="None"
                   />
@@ -474,7 +416,7 @@ export default class BayesReasoning extends Component {
                   onChange={this.handleChangeCommunicationPaths}
                 >
                   <FormControlLabel
-                    value="none"
+                    value={null}
                     control={<Radio />}
                     label="None"
                   />
@@ -501,7 +443,7 @@ export default class BayesReasoning extends Component {
                   onChange={this.handleChangeTheftOfData}
                 >
                   <FormControlLabel
-                    value="none"
+                    value={null}
                     control={<Radio />}
                     label="None"
                   />
@@ -525,7 +467,7 @@ export default class BayesReasoning extends Component {
                   onChange={this.handleChangeIncorrectlyConfiguredFirewalls}
                 >
                   <FormControlLabel
-                    value="none"
+                    value={null}
                     control={<Radio />}
                     label="None"
                   />
@@ -544,7 +486,7 @@ export default class BayesReasoning extends Component {
                   onChange={this.handleChangeSignalLevelAlerts}
                 >
                   <FormControlLabel
-                    value="none"
+                    value={null}
                     control={<Radio />}
                     label="None"
                   />
@@ -563,7 +505,7 @@ export default class BayesReasoning extends Component {
                   onChange={this.handleChangeConfiguration}
                 >
                   <FormControlLabel
-                    value="none"
+                    value={null}
                     control={<Radio />}
                     label="None"
                   />
@@ -591,7 +533,7 @@ export default class BayesReasoning extends Component {
                   onChange={this.handleChangeLossOrTheftOfDevice}
                 >
                   <FormControlLabel
-                    value="none"
+                    value={null}
                     control={<Radio />}
                     label="None"
                   />
@@ -610,7 +552,7 @@ export default class BayesReasoning extends Component {
                   onChange={this.handleChangeSensitiveInformation}
                 >
                   <FormControlLabel
-                    value="none"
+                    value={null}
                     control={<Radio />}
                     label="None"
                   />
@@ -637,7 +579,7 @@ export default class BayesReasoning extends Component {
                   onChange={this.handleChangeSecurityChecks}
                 >
                   <FormControlLabel
-                    value="none"
+                    value={null}
                     control={<Radio />}
                     label="None"
                   />
@@ -661,7 +603,7 @@ export default class BayesReasoning extends Component {
                   onChange={this.handleChangeInteractingWithSystem}
                 >
                   <FormControlLabel
-                    value="none"
+                    value={null}
                     control={<Radio />}
                     label="None"
                   />
@@ -680,7 +622,7 @@ export default class BayesReasoning extends Component {
                   onChange={this.handleChangeCovertTimingChannel}
                 >
                   <FormControlLabel
-                    value="none"
+                    value={null}
                     control={<Radio />}
                     label="None"
                   />
@@ -701,7 +643,7 @@ export default class BayesReasoning extends Component {
                   onChange={this.handleChangeIdentityTheftOrFraud}
                 >
                   <FormControlLabel
-                    value="none"
+                    value={null}
                     control={<Radio />}
                     label="None"
                   />

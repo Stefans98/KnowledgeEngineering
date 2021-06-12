@@ -1,0 +1,77 @@
+@base <https://github.com/Stefans98/KnowledgeEngineering> .
+@prefix pre: <https://github.com/Stefans98/KnowledgeEngineering#> .
+@prefix xsd: <http://w3.org/2001/XMLSchema#> .
+
+<#carryOff_GPS_Attack>
+	a pre:Attack ;
+	pre:id "628"^^xsd:int ;
+	pre:name "Carry-Off GPS Attack"^^xsd:string ;
+    pre:likelihood "0"^^xsd:int ;
+    pre:severity "2"^^xsd:int ;
+    pre:prerequisites pre:target_relying_on_valid_GPS_signal ;
+    pre:consequences pre:unspecified_consequences ;
+    pre:weaknesses pre:insufficient_Verification_of_Data_Authenticity ;
+    pre:mitigations pre:unspecified_mitigations .
+
+<#target_relying_on_valid_GPS_signal>
+	a pre:Prerequisites ;
+	pre:name "Target relying on valid GPS signal"^^xsd:string .
+
+<#unspecified_consequences>
+	a pre:Consequences ;
+	pre:name "Unspecified"^^xsd:string .
+
+<#insufficient_Verification_of_Data_Authenticity>
+	a pre:Weaknesses ;
+	pre:name "Insufficient Verification of Data Authenticity"^^xsd:string .
+
+<#unspecified_mitigations>
+	a pre:Mitigations ;
+	pre:name "Unspecified"^^xsd:string .
+
+<#terrestrial_Jamming>
+	a pre:Attack ;
+	pre:id "599"^^xsd:int ;
+	pre:name "Terrestrial Jamming"^^xsd:string ;
+    pre:likelihood "0"^^xsd:int ;
+    pre:severity "2"^^xsd:int ;
+    pre:prerequisites pre:none ;
+    pre:consequences pre:deny_availability_of_satellite_communications ;
+    pre:weaknesses pre:improper_Authentication ;
+    pre:mitigations pre:unspecified_mitigations .
+
+<#none>
+	a pre:Prerequisites ;
+	pre:name "None"^^xsd:string .
+
+<#deny_availability_of_satellite_communications>
+	a pre:Consequences ;
+	pre:name "Deny availability of satellite communications"^^xsd:string .
+
+<#improper_Authentication>
+	a pre:Weaknesses ;
+	pre:name "Improper Authentication"^^xsd:string .
+
+<#evil_Twin_WiFi_Attack>
+	a pre:Attack ;
+	pre:id "615"^^xsd:int ;
+	pre:name "Evil Twin WiFi Attack"^^xsd:string ;
+    pre:likelihood "1"^^xsd:int ;
+    pre:severity "0"^^xsd:int ;
+    pre:prerequisites pre:none ;
+    pre:consequences pre:read_data ;
+    pre:weaknesses pre:channel_Accessible_by_Non_Endpoint ;
+    pre:mitigations pre:commercial_defensive_technology_that_monitors_for_rogue_WiFi_access_points .
+
+<#read_data>
+	a pre:Consequences ;
+	pre:name "Read_data"^^xsd:string .
+
+<#channel_Accessible_by_Non_Endpoint>
+	a pre:Weaknesses ;
+	pre:name "Channel Accessible by Non Endpoint"^^xsd:string .
+
+<#commercial_defensive_technology_that_monitors_for_rogue_WiFi_access_points>
+	a pre:Mitigations ;
+	pre:name "Commercial defensive technology that monitors for rogue WiFi access points man in the middle attacks and anomalous activity with the mobile device baseband radios"^^xsd:string .
+
