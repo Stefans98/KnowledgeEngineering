@@ -653,7 +653,7 @@ export default class BayesReasoning extends Component {
               </FormControl>
             </Grid>
           </Grid>
-          <div class="graph-star-rating-footer text-center mt-4 mb-3">
+          <div class="graph-star-rating-footer text-center mt-5 mb-3">
             <button
               type="button"
               onClick={this.propagate}
