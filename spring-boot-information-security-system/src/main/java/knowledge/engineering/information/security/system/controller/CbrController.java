@@ -26,8 +26,24 @@ public class CbrController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CbrDto>> calculateVulnerabilityRisk(@RequestBody CbrParameters cbrParameters) {
+        Level likelihood = Level.LOW;
+        if(cbrParameters.getLikelihood() == 0){
+            likelihood = Level.LOW;
+        }else if(cbrParameters.getLikelihood() == 1){
+            likelihood = Level.MEDIUM;
+        }else if(cbrParameters.getLikelihood() == 2){
+            likelihood = Level.HIGH;
+        }
 
-        List<CbrDto> result = cbrApplication.cbrResult(Level.HIGH, Level.MEDIUM, cbrParameters.getPrerequisites(),
+        Level severity = Level.LOW;
+        if(cbrParameters.getSeverity() == 0){
+            severity = Level.LOW;
+        }else if(cbrParameters.getSeverity() == 1){
+            severity = Level.MEDIUM;
+        }else if(cbrParameters.getSeverity() == 2){
+            severity = Level.HIGH;
+        }
+        List<CbrDto> result = cbrApplication.cbrResult(likelihood, severity, cbrParameters.getPrerequisites(),
                 cbrParameters.getConsequences(), cbrParameters.getWeaknesses(), cbrParameters.getMitigations());
 
         return new ResponseEntity<>(result, HttpStatus.OK);

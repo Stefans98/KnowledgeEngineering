@@ -2,13 +2,16 @@ import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import React, { Component } from "react";
 import {
+  Button,
   FormControl,
   FormControlLabel,
   FormLabel,
   Grid,
+  Modal,
   Radio,
   RadioGroup,
 } from "@material-ui/core";
+import CaseBaseReasoningService from "../services/CaseBaseReasoningService";
 
 export default class CaseBaseReasoning extends Component {
   constructor(props) {
@@ -19,7 +22,10 @@ export default class CaseBaseReasoning extends Component {
       inputWeaknessesValue: [],
       inputMitigationsValue: [],
       likelihood: "0",
-      severity: "0"
+      severity: "0",
+      isOpenMitigationsModal: false,
+      propagated: false,
+      attacks: []
     };
   }
 
@@ -38,7 +44,92 @@ export default class CaseBaseReasoning extends Component {
     console.log(this.state.inputMitigationsValue);
     console.log(this.state.likelihood);
     console.log(this.state.severity);
+
+    var likelihoodParam = 0;
+    if(this.state.likelihood == "0"){
+      likelihoodParam = 0;
+    }else if(this.state.likelihood == "1"){
+      likelihoodParam = 1;
+    }else if(this.state.likelihood == "2"){
+      likelihoodParam = 2;
+    }
+
+    var severityParam = 0;
+    if(this.state.severity == "0"){
+      severityParam = 0;
+    }else if(this.state.severity == "1"){
+      severityParam = 1;
+    }else if(this.state.severity == "2"){
+      severityParam = 2;
+    }
+
+    var prerequisitesString = "";
+    for(let i = 0; i < this.state.inputPrerequisitesValue.length; i++){
+      if(i == 0){
+        prerequisitesString = prerequisitesString.concat(this.state.inputPrerequisitesValue[i].state);
+      }else {
+        prerequisitesString = prerequisitesString.concat(", ", this.state.inputPrerequisitesValue[i].state);
+      }
+    }
+
+    var consequencesString = "";
+    for(let i = 0; i < this.state.inputConsequencesValue.length; i++){
+      if(i == 0){
+        consequencesString = consequencesString.concat(this.state.inputConsequencesValue[i]);
+      }else {
+        consequencesString = consequencesString.concat(", ", this.state.inputConsequencesValue[i]);
+      }
+    }
+
+    var weaknessesString = "";
+    for(let i = 0; i < this.state.inputWeaknessesValue.length; i++){
+      if(i == 0){
+        weaknessesString = weaknessesString.concat(this.state.inputWeaknessesValue[i]);
+      }else{
+        weaknessesString = weaknessesString.concat(", ", this.state.inputWeaknessesValue[i]);
+      }
+    }
+
+    var mitigationsString = "";
+    for(let i = 0; i < this.state.inputMitigationsValue.length; i++){
+      if(i == 0){
+        mitigationsString = mitigationsString.concat(this.state.inputMitigationsValue[i]);
+      }else{
+        mitigationsString = mitigationsString.concat(", ", this.state.inputMitigationsValue[i]);
+      }
+    }
+
+    CaseBaseReasoningService.propagate(likelihoodParam, severityParam, prerequisitesString, consequencesString, 
+      weaknessesString, mitigationsString)
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          this.setState({
+            attacks : data
+          });
+        });
+
+    this.setState({ propagated: true });
+
   }
+
+  closeOverview = () => {
+    this.setState({ propagated: false });
+  };
+
+  calculatePercentage = (similarity) => {
+    return similarity*100;
+  }
+
+  openMitigationsModal = () => {
+    this.setState({
+      isOpenMitigationsModal: true,
+    });
+  };
+
+  closeMitigationsModal = () =>
+    this.setState({ isOpenMitigationsModal: false });
 
   render() {
     const continets = [
@@ -63,6 +154,116 @@ export default class CaseBaseReasoning extends Component {
       { state: "501-1000" },
       { state: "1000+" },
     ];
+
+    const attacks = (
+      <div class="bg-white rounded shadow-sm p-4 mb-4 clearfix graph-star-rating">
+        <h4
+          style={{
+            textAlign: "left",
+            color: "#74767a",
+            paddingBottom: "50px",
+          }}
+        >
+          Attacks overview after propagation:
+        </h4>
+        <div class="graph-star-rating-body">
+          {this.state.attacks.map((attack, key) => {
+            return (
+              <div key={key}>
+                <div class="rating-list">
+                  <div class="rating-list-left text-black">
+                    <h5 style={{ textAlign: "left", color: "#74767a" }}>
+                      {attack.attackName.replaceAll("_", " ")}
+                    </h5>
+                  </div>
+                  <div class="rating-list-center">
+                    <div class="progress">
+                      <div
+                        style={{
+                          width: this.calculatePercentage(
+                            attack.similarity
+                          ),
+                        }}
+                        aria-valuemax="5"
+                        aria-valuemin="0"
+                        aria-valuenow="5"
+                        role="progressbar"
+                        class="progress-bar bg-primary"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="rating-list-right text-black">
+                    {" "}
+                    {this.calculatePercentage(attack.similarity)}
+                  </div>
+                  <div class="rating-list-end">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        this.openMitigationsModal();
+                      }}
+                      class="btn btn-outline-success btn-sm"
+                      style={{ width: "150px", fontSize: "17px" }}
+                    >
+                      Mitigations
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <div class="graph-star-rating-footer text-center mt-5 mb-3">
+          <button
+            type="button"
+            onClick={this.closeOverview}
+            class="btn btn-outline-primary btn-sm"
+            style={{ width: "200px", fontSize: "17px" }}
+          >
+            Close overview
+          </button>
+        </div>
+      </div>
+    );
+
+    const mitigationsModalDialog = (
+      <Modal
+        show={this.state.isOpenMitigationsModal}
+        onHide={this.closeMitigationsModal}
+        style={{ marginTop: "120px", minHeight: "560px", overflow: "hidden" }}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title style={{ marginLeft: "165px", color: "#74767a" }}>
+            Mitigations
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div style={{ overflow: "auto", height: "300px" }}>
+            <Grid container spacing={20}>
+              <Grid container item xs spacing={20}>
+                <p style={{ color: "#74767a" }}>- mitigation 1</p>
+              </Grid>
+            </Grid>
+            <Grid container spacing={20}>
+              <Grid container item xs spacing={20}>
+                <p style={{ color: "#74767a" }}>- mitigation 2</p>
+              </Grid>
+            </Grid>
+            <Grid container spacing={20}>
+              <Grid container item xs spacing={20}>
+                <p style={{ color: "#74767a" }}>- mitigation 3</p>
+              </Grid>
+            </Grid>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={this.closeMitigationsModal}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
+
     return (
       <div>
          <div
@@ -212,6 +413,9 @@ export default class CaseBaseReasoning extends Component {
           </div>
 
         </div>
+
+        {this.state.propagated ? attacks : ""}
+
       </div>
     );
   }
