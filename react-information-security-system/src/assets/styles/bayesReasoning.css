@@ -5,11 +5,11 @@
 }
 .rating-list-left {
   height: 16px;
-  width: 40%;
+  width: 55%;
   margin-top: -10px;
 }
 .rating-list-center {
-  width: 30%;
+  width: 25%;
 }
 .rating-list-right {
   text-align: center;
@@ -18,6 +18,6 @@
 }
 .rating-list-end {
   text-align: center;
-  width: 20%;
+  width: 10%;
   margin-top: -5px;
 }
