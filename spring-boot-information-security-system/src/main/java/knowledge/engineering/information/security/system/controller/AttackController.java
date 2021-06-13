@@ -1,18 +1,20 @@
 package knowledge.engineering.information.security.system.controller;
 
 import knowledge.engineering.information.security.system.model.*;
-import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.update.UpdateExecutionFactory;
+import org.apache.jena.update.UpdateFactory;
+import org.apache.jena.update.UpdateProcessor;
+import org.apache.jena.update.UpdateRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
@@ -21,10 +23,6 @@ import org.apache.jena.query.QueryFactory;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Literal;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.riot.Lang;
-import org.apache.jena.riot.RDFDataMgr;
 
 @RestController
 @RequestMapping(value = "api/attack")
@@ -37,6 +35,7 @@ public class AttackController {
     public ResponseEntity<List<Attack>> getAttacks() {
         List<Attack> result = new ArrayList<>();
 
+//        // LocalExample
 //        Model model = ModelFactory.createDefaultModel();
 //        try {
 //            InputStream is = new FileInputStream("./src/main/resources/data/attacks.ttl");
@@ -71,7 +70,7 @@ public class AttackController {
                 + "}";
 
         Query query = QueryFactory.create(queryString) ;
-        // QueryExecution qexec = QueryExecutionFactory.create(query, model);
+        // QueryExecution qexec = QueryExecutionFactory.create(query, model); // LocalExample
         try {
             QueryExecution qexec = QueryExecutionFactory.sparqlService(QUERY_URL, query);
 
@@ -140,5 +139,87 @@ public class AttackController {
         }
 
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Attack> addAttack(@RequestBody Attack attack) {
+
+        Random random = new Random();
+        int id = random.nextInt(900) + 100;
+        String name = "attack_" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+        int likelihood = 0;
+        int severity = 0;
+        String prerequisites = "";
+        if(attack.getPrerequisites() != null) {
+            prerequisites = attack.getPrerequisites().getName();
+        }
+        String consequences = "";
+        if(attack.getConsequences() != null) {
+            consequences = attack.getConsequences().getName();
+        }
+        String weaknesses = "";
+        if(attack.getWeaknesses() != null) {
+            weaknesses = attack.getWeaknesses().getName();
+        }
+        String mitigations = "";
+        if(attack.getMitigations() != null) {
+            mitigations = attack.getMitigations().getName();
+        }
+
+        if(attack.getLikelihood() == Level.MEDIUM) {
+            likelihood = 1;
+        } else if(attack.getLikelihood() == Level.HIGH) {
+            likelihood = 2;
+        }
+
+        if(attack.getSeverity() == Level.MEDIUM) {
+            severity = 1;
+        } else if(attack.getSeverity() == Level.HIGH) {
+            severity = 2;
+        }
+
+        String insertString = ""
+                + "PREFIX pre: <https://github.com/Stefans98/KnowledgeEngineering#> "
+                + "PREFIX xsd: <http://w3.org/2001/XMLSchema#> "
+                + "INSERT DATA {"
+                + "    pre:" + name + ""
+                + "        a pre:Attack ; "
+                + "        pre:id \"" + id + "\"^^xsd:int ; "
+                + "        pre:name \"" + name + "\"^^xsd:string ; "
+                + "        pre:likelihood \"" + likelihood + "\"^^xsd:int ; "
+                + "        pre:severity \"" + severity + "\"^^xsd:int ; "
+                + "        pre:prerequisites \"" + prerequisites + "\"^^xsd:string ; "
+                + "        pre:consequences \"" + consequences + "\"^^xsd:string ; "
+                + "        pre:weaknesses \"" + weaknesses + "\"^^xsd:string ; "
+                + "        pre:mitigations \"" + mitigations + "\"^^xsd:string. "
+//                + "        pre:prerequisites " + attack.getPrerequisites() + " ; "
+//                + "        pre:consequences " + attack.getConsequences() + " ; "
+//                + "        pre:weaknesses " + attack.getWeaknesses() + " ; "
+//                + "        pre:mitigations " + attack.getMitigations() + ". "
+                + "}";
+        UpdateRequest updateRequest = UpdateFactory.create(insertString);
+        UpdateProcessor updateProcessor = UpdateExecutionFactory.createRemote(updateRequest, UPDATE_URL);
+        updateProcessor.execute();
+
+        return new ResponseEntity<>(attack, HttpStatus.OK);
+    }
+
+    @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> deleteAttack(@RequestBody Attack attack) {
+
+        String attackName = attack.getName();
+
+        // DELETE
+        String deleteString = ""
+                + "PREFIX pre: <https://github.com/Stefans98/KnowledgeEngineering#> "
+                + "DELETE "
+                + "WHERE {"
+                + "    pre:" + attackName + " ?x ?y ."
+                + "}";
+        UpdateRequest updateRequest = UpdateFactory.create(deleteString);
+        UpdateProcessor updateProcessor = UpdateExecutionFactory.createRemote(updateRequest, UPDATE_URL);
+        updateProcessor.execute();
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
