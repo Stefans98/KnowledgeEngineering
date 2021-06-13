@@ -2,20 +2,23 @@ import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import React, { Component } from "react";
 import {
-  Button,
   FormControl,
   FormControlLabel,
   FormLabel,
   Grid,
-  Modal,
   Radio,
   RadioGroup,
 } from "@material-ui/core";
+import { Button, Modal } from "react-bootstrap";
+import "../assets/styles/bayesReasoning.css";
 import CaseBaseReasoningService from "../services/CaseBaseReasoningService";
+import PrologService from "../services/PrologService";
 
 export default class CaseBaseReasoning extends Component {
   constructor(props) {
     super(props);
+    this.messagesEndRef = React.createRef();
+    this.messagesStartRef = React.createRef();
     this.state = {
       inputPrerequisitesValue: [],
       inputConsequencesValue: [],
@@ -25,7 +28,8 @@ export default class CaseBaseReasoning extends Component {
       severity: "0",
       isOpenMitigationsModal: false,
       propagated: false,
-      attacks: []
+      attacks: [],
+      mitigations: []
     };
   }
 
@@ -75,27 +79,27 @@ export default class CaseBaseReasoning extends Component {
     var consequencesString = "";
     for(let i = 0; i < this.state.inputConsequencesValue.length; i++){
       if(i == 0){
-        consequencesString = consequencesString.concat(this.state.inputConsequencesValue[i]);
+        consequencesString = consequencesString.concat(this.state.inputConsequencesValue[i].state);
       }else {
-        consequencesString = consequencesString.concat(", ", this.state.inputConsequencesValue[i]);
+        consequencesString = consequencesString.concat(", ", this.state.inputConsequencesValue[i].state);
       }
     }
 
     var weaknessesString = "";
     for(let i = 0; i < this.state.inputWeaknessesValue.length; i++){
       if(i == 0){
-        weaknessesString = weaknessesString.concat(this.state.inputWeaknessesValue[i]);
+        weaknessesString = weaknessesString.concat(this.state.inputWeaknessesValue[i].state);
       }else{
-        weaknessesString = weaknessesString.concat(", ", this.state.inputWeaknessesValue[i]);
+        weaknessesString = weaknessesString.concat(", ", this.state.inputWeaknessesValue[i].state);
       }
     }
 
     var mitigationsString = "";
     for(let i = 0; i < this.state.inputMitigationsValue.length; i++){
       if(i == 0){
-        mitigationsString = mitigationsString.concat(this.state.inputMitigationsValue[i]);
+        mitigationsString = mitigationsString.concat(this.state.inputMitigationsValue[i].state);
       }else{
-        mitigationsString = mitigationsString.concat(", ", this.state.inputMitigationsValue[i]);
+        mitigationsString = mitigationsString.concat(", ", this.state.inputMitigationsValue[i].state);
       }
     }
 
@@ -107,6 +111,8 @@ export default class CaseBaseReasoning extends Component {
         .then((data) => {
           this.setState({
             attacks : data
+          },() => {
+            this.scrollToBottom();
           });
         });
 
@@ -118,14 +124,33 @@ export default class CaseBaseReasoning extends Component {
     this.setState({ propagated: false });
   };
 
-  calculatePercentage = (similarity) => {
-    return similarity*100;
-  }
+  calculatePercentage = (percentage) => {
+    var result = percentage * 100;
+    return result.toFixed(2) + "%";
+  };
 
-  openMitigationsModal = () => {
-    this.setState({
-      isOpenMitigationsModal: true,
-    });
+  lowerCaseFirstLetter = (attackName) => {
+    return attackName.charAt(0).toLowerCase() + attackName.slice(1);
+  };
+
+  scrollToBottom = () => {
+    this.messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  scrollToTop = () => {
+    this.messagesStartRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  openMitigationsModal = (attackName) => {
+    var name = this.lowerCaseFirstLetter(attackName);
+
+    PrologService.getMitigations(name)
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        this.setState({ mitigations: data, isOpenMitigationsModal: true });
+      });
   };
 
   closeMitigationsModal = () =>
@@ -154,6 +179,41 @@ export default class CaseBaseReasoning extends Component {
       { state: "501-1000" },
       { state: "1000+" },
     ];
+
+    const mitigationsModalDialog = (
+      <Modal
+        show={this.state.isOpenMitigationsModal}
+        onHide={this.closeMitigationsModal}
+        style={{ marginTop: "120px", minHeight: "560px", overflow: "hidden" }}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title style={{ marginLeft: "165px", color: "#74767a" }}>
+            Mitigations
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div style={{ overflow: "auto", height: "300px", padding: "15px" }}>
+            {this.state.mitigations.map((mitigation, key) => {
+              return (
+                <div key={key}>
+                  <Grid container spacing={20}>
+                    <Grid container item xs spacing={20}>
+                      <p style={{ color: "#74767a" }}>- {mitigation.name}</p>
+                    </Grid>
+                  </Grid>
+                </div>
+              );
+            })}
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={this.closeMitigationsModal}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
+
 
     const attacks = (
       <div class="bg-white rounded shadow-sm p-4 mb-4 clearfix graph-star-rating">
@@ -200,7 +260,7 @@ export default class CaseBaseReasoning extends Component {
                     <button
                       type="button"
                       onClick={() => {
-                        this.openMitigationsModal();
+                        this.openMitigationsModal(attack.attackName.replaceAll(" ", "_"));
                       }}
                       class="btn btn-outline-success btn-sm"
                       style={{ width: "150px", fontSize: "17px" }}
@@ -226,46 +286,9 @@ export default class CaseBaseReasoning extends Component {
       </div>
     );
 
-    const mitigationsModalDialog = (
-      <Modal
-        show={this.state.isOpenMitigationsModal}
-        onHide={this.closeMitigationsModal}
-        style={{ marginTop: "120px", minHeight: "560px", overflow: "hidden" }}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title style={{ marginLeft: "165px", color: "#74767a" }}>
-            Mitigations
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div style={{ overflow: "auto", height: "300px" }}>
-            <Grid container spacing={20}>
-              <Grid container item xs spacing={20}>
-                <p style={{ color: "#74767a" }}>- mitigation 1</p>
-              </Grid>
-            </Grid>
-            <Grid container spacing={20}>
-              <Grid container item xs spacing={20}>
-                <p style={{ color: "#74767a" }}>- mitigation 2</p>
-              </Grid>
-            </Grid>
-            <Grid container spacing={20}>
-              <Grid container item xs spacing={20}>
-                <p style={{ color: "#74767a" }}>- mitigation 3</p>
-              </Grid>
-            </Grid>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={this.closeMitigationsModal}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    );
-
     return (
       <div>
+        {mitigationsModalDialog}
          <div
           class="bg-white rounded shadow-sm p-4 mb-5 rating-review-select-page"
           style={{ maxWidth: "100%" }}
@@ -273,6 +296,7 @@ export default class CaseBaseReasoning extends Component {
           <h4 style={{ textAlign: "left", color: "#74767a" }}>
             Choose attack characteristics:
           </h4>
+          <br/>
 
           <Grid container spacing={5}>
             <Grid item xs>
@@ -280,6 +304,11 @@ export default class CaseBaseReasoning extends Component {
                 multiple
                 disableCloseOnSelect
                 id="prerequisites"
+                onInputChange={(event, newInputValue) => {
+                  this.setState({ inputPrerequisitesValue: newInputValue }, () => {
+                    console.log(this.state.inputPrerequisitesValue);
+                  });
+                }}
                 onChange={(event, newInputValue) => {
                   this.setState({ inputPrerequisitesValue: newInputValue }, () => {
                     console.log(this.state.inputPrerequisitesValue);
@@ -362,7 +391,7 @@ export default class CaseBaseReasoning extends Component {
               />
             </Grid>
           </Grid>
-
+          <br/>
           <Grid container spacing={5}>
             <Grid item xs>
               <FormControl component="fieldset">
@@ -415,7 +444,9 @@ export default class CaseBaseReasoning extends Component {
         </div>
 
         {this.state.propagated ? attacks : ""}
+        <div ref={this.messagesEndRef} />
 
+        
       </div>
     );
   }
