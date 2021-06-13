@@ -65,7 +65,7 @@
 
 <#read_data>
 	a pre:Consequences ;
-	pre:name "Read_data"^^xsd:string .
+	pre:name "Read data"^^xsd:string .
 
 <#channel_Accessible_by_Non_Endpoint>
 	a pre:Weaknesses ;

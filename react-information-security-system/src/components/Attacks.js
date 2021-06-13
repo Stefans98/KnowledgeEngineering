@@ -1,8 +1,70 @@
 import React, { Component } from "react";
+import AttackService from "../services/AttackService";
 //import "../assets/styles/attacks.css";
 
 export default class Attacks extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      attacks: [],
+    };
+  }
+
+  componentDidMount() {
+    this.getAttacks();
+  }
+
+  getAttacks = () => {
+    AttackService.getAttacks()
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        this.setState({ attacks: data });
+      });
+  };
+
   render() {
+    const tableRows = this.state.attacks.map((attack, key) => {
+      return (
+        <tr id={key}>
+          <th scope="row">{attack.id}</th>
+          <td>{attack.name}</td>
+          <td>{attack.likelihood}</td>
+          <td>{attack.severity}</td>
+          <td>{attack.prerequisites.name}</td>
+          <td>{attack.consequences.name}</td>
+          <td>{attack.weaknesses.name}</td>
+          <td>{attack.mitigations.name}</td>
+          <td>
+            <div class="action">
+              <a
+                href="#"
+                class="text-success mr-4"
+                data-toggle="tooltip"
+                data-placement="top"
+                title=""
+                data-original-title="Edit"
+              >
+                {" "}
+                <i class="fas fa-pencil-alt"></i>
+              </a>
+              <a
+                href="#"
+                class="text-danger"
+                data-toggle="tooltip"
+                data-placement="top"
+                title=""
+                data-original-title="Close"
+              >
+                <i class="fa fa-trash-alt"></i>
+              </a>
+            </div>
+          </td>
+        </tr>
+      );
+    });
+
     return (
       <div>
         <div class="container" style={{ maxWidth: "100%" }}>
@@ -26,7 +88,8 @@ export default class Attacks extends Component {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
+                        {tableRows}
+                        {/* <tr>
                           <th scope="row">1</th>
                           <td>Landing page Design</td>
                           <td>04/6/2019</td>
@@ -258,7 +321,7 @@ export default class Attacks extends Component {
                               </a>
                             </div>
                           </td>
-                        </tr>
+                        </tr> */}
                       </tbody>
                     </table>
                   </div>

@@ -7,7 +7,6 @@ import ucm.gaia.jcolibri.cbrcore.Connector;
 import ucm.gaia.jcolibri.exception.InitializingException;
 import ucm.gaia.jcolibri.util.FileIO;
 
-import javax.annotation.Resource;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -40,19 +39,19 @@ public class CsvConnector implements Connector {
 
                 // Likelihood
                 if(values[2].equals("low")) {
-                    attack.setLikelihood(Level.LOW);
+                    attack.setLikelihood(Level.Low);
                 } else if(values[2].equals("medium")) {
-                    attack.setLikelihood(Level.MEDIUM);
+                    attack.setLikelihood(Level.Medium);
                 } else if(values[2].equals("high")) {
-                    attack.setLikelihood(Level.HIGH);
+                    attack.setLikelihood(Level.High);
                 }
                 // Severity
                 if(values[3].equals("low")) {
-                    attack.setSeverity(Level.LOW);
+                    attack.setSeverity(Level.Low);
                 } else if(values[3].equals("medium")) {
-                    attack.setSeverity(Level.MEDIUM);
+                    attack.setSeverity(Level.Medium);
                 } else if(values[3].equals("high")) {
-                    attack.setSeverity(Level.HIGH);
+                    attack.setSeverity(Level.High);
                 }
 
                 Prerequisites prerequisites = new Prerequisites();

@@ -22,7 +22,7 @@ public class CbrController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CbrDto>> getSimilarity() {
-        List<CbrDto> result = cbrApplication.cbrResult(Level.HIGH, Level.MEDIUM, "cookie_is_contained_in_reply_to_adversary",
+        List<CbrDto> result = cbrApplication.cbrResult(Level.High, Level.Medium, "cookie_is_contained_in_reply_to_adversary",
                 "gain_privileges", "missing_Encryption_of_Sensitive_Data", "unspecified");
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
