@@ -1,7 +1,6 @@
 package knowledge.engineering.information.security.system.controller;
 
 import knowledge.engineering.information.security.system.model.*;
-import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.update.UpdateExecutionFactory;
 import org.apache.jena.update.UpdateFactory;
 import org.apache.jena.update.UpdateProcessor;
@@ -73,6 +72,7 @@ public class AttackController {
         Query query = QueryFactory.create(queryString);
         // QueryExecution qexec = QueryExecutionFactory.create(query, model); // LocalExample
         try {
+            System.setProperty("http.maxConnections", "10000");
             QueryExecution qexec = QueryExecutionFactory.sparqlService(QUERY_URL, query);
 
             ResultSet results = qexec.execSelect();
@@ -208,6 +208,7 @@ public class AttackController {
                 + "        pre:mitigations pre:" + id + "_" + mitigationsName + ". "
                 + "}";
         UpdateRequest updateRequest = UpdateFactory.create(insertString);
+        System.setProperty("http.maxConnections", "10000");
         UpdateProcessor updateProcessor = UpdateExecutionFactory.createRemote(updateRequest, UPDATE_URL);
         updateProcessor.execute();
 
@@ -218,9 +219,10 @@ public class AttackController {
                     + "INSERT DATA {"
                     + "    pre:" + id + "_" + prerequisitesName + ""
                     + "        a pre:Prerequisites ; "
-                    + "        pre:name \"" + id + "_" + prerequisitesName + "\"^^xsd:string. "
+                    + "        pre:name \"" + prerequisitesName + "\"^^xsd:string. "
                     + "}";
             UpdateRequest updatePrerequisitesRequest = UpdateFactory.create(insertPrerequisitesString);
+            System.setProperty("http.maxConnections", "10000");
             UpdateProcessor updatePrerequisitesProcessor = UpdateExecutionFactory.createRemote(updatePrerequisitesRequest, UPDATE_URL);
             updatePrerequisitesProcessor.execute();
         }
@@ -232,9 +234,10 @@ public class AttackController {
                     + "INSERT DATA {"
                     + "    pre:" + id + "_" + consequencesName + ""
                     + "        a pre:Consequences ; "
-                    + "        pre:name \"" + id + "_" + consequencesName + "\"^^xsd:string. "
+                    + "        pre:name \"" + consequencesName + "\"^^xsd:string. "
                     + "}";
             UpdateRequest updateConsequencesRequest = UpdateFactory.create(insertConsequencesString);
+            System.setProperty("http.maxConnections", "10000");
             UpdateProcessor updateConsequencesProcessor = UpdateExecutionFactory.createRemote(updateConsequencesRequest, UPDATE_URL);
             updateConsequencesProcessor.execute();
         }
@@ -246,9 +249,10 @@ public class AttackController {
                     + "INSERT DATA {"
                     + "    pre:" + id + "_" + weaknessesName + ""
                     + "        a pre:Weaknesses ; "
-                    + "        pre:name \"" + id + "_" + weaknessesName + "\"^^xsd:string. "
+                    + "        pre:name \"" + weaknessesName + "\"^^xsd:string. "
                     + "}";
             UpdateRequest updateWeaknessesRequest = UpdateFactory.create(insertWeaknessesString);
+            System.setProperty("http.maxConnections", "10000");
             UpdateProcessor updateWeaknessesProcessor = UpdateExecutionFactory.createRemote(updateWeaknessesRequest, UPDATE_URL);
             updateWeaknessesProcessor.execute();
         }
@@ -260,9 +264,10 @@ public class AttackController {
                     + "INSERT DATA {"
                     + "    pre:" + id + "_" + mitigationsName + ""
                     + "        a pre:Mitigations ; "
-                    + "        pre:name \"" + id + "_" + mitigationsName + "\"^^xsd:string. "
+                    + "        pre:name \"" + mitigationsName + "\"^^xsd:string. "
                     + "}";
             UpdateRequest updateMitigationsRequest = UpdateFactory.create(insertMitigationsString);
+            System.setProperty("http.maxConnections", "10000");
             UpdateProcessor updateMitigationsProcessor = UpdateExecutionFactory.createRemote(updateMitigationsRequest, UPDATE_URL);
             updateMitigationsProcessor.execute();
         }
@@ -283,6 +288,7 @@ public class AttackController {
                 + "    pre:" + attackName + " ?x ?y ."
                 + "}";
         UpdateRequest updateRequest = UpdateFactory.create(deleteString);
+        System.setProperty("http.maxConnections", "10000");
         UpdateProcessor updateProcessor = UpdateExecutionFactory.createRemote(updateRequest, UPDATE_URL);
         updateProcessor.execute();
 
@@ -300,6 +306,7 @@ public class AttackController {
                 + "}";
         Query query = QueryFactory.create(queryString) ;
         try {
+            System.setProperty("http.maxConnections", "10000");
             QueryExecution qexec = QueryExecutionFactory.sparqlService(QUERY_URL, query);
 
             ResultSet results = qexec.execSelect() ;
@@ -327,6 +334,7 @@ public class AttackController {
                 + "}";
         Query query = QueryFactory.create(queryString) ;
         try {
+            System.setProperty("http.maxConnections", "10000");
             QueryExecution qexec = QueryExecutionFactory.sparqlService(QUERY_URL, query);
 
             ResultSet results = qexec.execSelect() ;
@@ -354,6 +362,7 @@ public class AttackController {
                 + "}";
         Query query = QueryFactory.create(queryString) ;
         try {
+            System.setProperty("http.maxConnections", "10000");
             QueryExecution qexec = QueryExecutionFactory.sparqlService(QUERY_URL, query);
 
             ResultSet results = qexec.execSelect() ;
@@ -381,6 +390,7 @@ public class AttackController {
                 + "}";
         Query query = QueryFactory.create(queryString) ;
         try {
+            System.setProperty("http.maxConnections", "10000");
             QueryExecution qexec = QueryExecutionFactory.sparqlService(QUERY_URL, query);
 
             ResultSet results = qexec.execSelect() ;
@@ -408,6 +418,7 @@ public class AttackController {
                 + "}";
         Query query = QueryFactory.create(queryString) ;
         try {
+            System.setProperty("http.maxConnections", "10000");
             QueryExecution qexec = QueryExecutionFactory.sparqlService(QUERY_URL, query);
 
             ResultSet results = qexec.execSelect() ;
