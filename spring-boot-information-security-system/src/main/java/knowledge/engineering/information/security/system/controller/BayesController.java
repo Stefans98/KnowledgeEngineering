@@ -39,7 +39,7 @@ public class BayesController {
 
         List<Node> nodeList = net.getNodes();
 
-        if(bayesParameters.getContinent() != null ) {
+        if(bayesParameters.getContinent() != null) {
             ProbabilisticNode factNode = (ProbabilisticNode) net.getNode("Continent");
             int stateIndex = bayesParameters.getContinent();
             factNode.addFinding(stateIndex);

@@ -20,18 +20,18 @@ export default class BayesReasoning extends Component {
     this.messagesEndRef = React.createRef();
     this.messagesStartRef = React.createRef();
     this.state = {
-      theftOfData: null,
-      signalLevelAlerts: null,
-      networkDisruptionOrDDoS: null,
-      incorrectlyConfiguredFirewalls: null,
-      configuration: null,
-      lossOrTheftOfDevice: null,
-      sensitiveInformation: null,
-      covertTimingChannel: null,
-      securityChecks: null,
-      identityTheftOrFraud: null,
-      interactingWithSystem: null,
-      communicationPaths: null,
+      theftOfData: "",
+      signalLevelAlerts: "",
+      networkDisruptionOrDDoS: "",
+      incorrectlyConfiguredFirewalls: "",
+      configuration: "",
+      lossOrTheftOfDevice: "",
+      sensitiveInformation: "",
+      covertTimingChannel: "",
+      securityChecks: "",
+      identityTheftOrFraud: "",
+      interactingWithSystem: "",
+      communicationPaths: "",
       inputContinentsValue: "",
       inputIndustryValue: "",
       inputCompanySizeValue: "",
@@ -91,7 +91,7 @@ export default class BayesReasoning extends Component {
   };
 
   openMitigationsModal = (attackName) => {
-    var name = this.lowerCaseFirstLetter(attackName);
+    var name = this.lowerCaseFirstLetter(attackName).replace("-", "");
 
     PrologService.getMitigations(name)
       .then((res) => {
@@ -107,22 +107,108 @@ export default class BayesReasoning extends Component {
 
   propagate = () => {
     this.setState({ propagated: true }, () => {
+      let networkDisruptionOrDDoS =
+        this.state.networkDisruptionOrDDoS === ""
+          ? null
+          : this.state.networkDisruptionOrDDoS;
+      let incorrectlyConfiguredFirewalls =
+        this.state.incorrectlyConfiguredFirewalls === ""
+          ? null
+          : this.state.incorrectlyConfiguredFirewalls;
+      let lossOrTheftOfDevice =
+        this.state.lossOrTheftOfDevice === ""
+          ? null
+          : this.state.lossOrTheftOfDevice;
+      let interactingWithSystem =
+        this.state.interactingWithSystem === ""
+          ? null
+          : this.state.interactingWithSystem;
+      let communicationPaths =
+        this.state.communicationPaths === ""
+          ? null
+          : this.state.communicationPaths;
+      let signalLevelAlerts =
+        this.state.signalLevelAlerts === ""
+          ? null
+          : this.state.signalLevelAlerts;
+      let sensitiveInformation =
+        this.state.sensitiveInformation === ""
+          ? null
+          : this.state.sensitiveInformation;
+      let covertTimingChannel =
+        this.state.covertTimingChannel === ""
+          ? null
+          : this.state.covertTimingChannel;
+      let theftOfData =
+        this.state.theftOfData === "" ? null : this.state.theftOfData;
+      let configuration =
+        this.state.configuration === "" ? null : this.state.configuration;
+      let securityChecks =
+        this.state.securityChecks === "" ? null : this.state.securityChecks;
+      let identityTheftOrFraud =
+        this.state.identityTheftOrFraud === ""
+          ? null
+          : this.state.identityTheftOrFraud;
+      let inputContinentsValue =
+        this.state.inputContinentsValue === ""
+          ? null
+          : this.state.inputContinentsValue;
+      let inputIndustryValue =
+        this.state.inputIndustryValue === ""
+          ? null
+          : this.state.inputIndustryValue;
+      let inputCompanySizeValue =
+        this.state.inputCompanySizeValue === ""
+          ? null
+          : this.state.inputCompanySizeValue;
+
+      if (inputContinentsValue === "Europe") {
+        inputContinentsValue = 0;
+      } else if (inputContinentsValue === "Asia") {
+        inputContinentsValue = 1;
+      } else if (inputContinentsValue === "North America") {
+        inputContinentsValue = 2;
+      } else if (inputContinentsValue === "South America") {
+        inputContinentsValue = 3;
+      } else if (inputContinentsValue === "Australia") {
+        inputContinentsValue = 4;
+      }
+      if (inputIndustryValue === "Services") {
+        inputIndustryValue = 0;
+      } else if (inputIndustryValue === "Manufacturing") {
+        inputIndustryValue = 1;
+      } else if (inputIndustryValue === "Finance, Insurance & Real Estate") {
+        inputIndustryValue = 2;
+      } else if (inputIndustryValue === "Public Administration") {
+        inputIndustryValue = 3;
+      } else if (inputIndustryValue === "Nonclassifiable Establishments") {
+        inputIndustryValue = 4;
+      }
+      if (inputCompanySizeValue === "1-250") {
+        inputCompanySizeValue = 0;
+      } else if (inputCompanySizeValue === "251-500") {
+        inputCompanySizeValue = 1;
+      } else if (inputCompanySizeValue === "501-1000") {
+        inputCompanySizeValue = 2;
+      } else if (inputCompanySizeValue === "1000+") {
+        inputCompanySizeValue = 3;
+      }
       BayesReasoningService.propagateAttacks(
-        this.state.networkDisruptionOrDDoS,
-        this.state.incorrectlyConfiguredFirewalls,
-        this.state.lossOrTheftOfDevice,
-        this.state.interactingWithSystem,
-        this.state.communicationPaths,
-        this.state.signalLevelAlerts,
-        this.state.sensitiveInformation,
-        this.state.covertTimingChannel,
-        this.state.theftOfData,
-        this.state.configuration,
-        this.state.securityChecks,
-        this.state.identityTheftOrFraud,
-        this.state.inputContinentsValue,
-        this.state.inputIndustryValue,
-        this.state.inputCompanySizeValue
+        networkDisruptionOrDDoS,
+        incorrectlyConfiguredFirewalls,
+        lossOrTheftOfDevice,
+        interactingWithSystem,
+        communicationPaths,
+        signalLevelAlerts,
+        sensitiveInformation,
+        covertTimingChannel,
+        theftOfData,
+        configuration,
+        securityChecks,
+        identityTheftOrFraud,
+        inputContinentsValue,
+        inputIndustryValue,
+        inputCompanySizeValue
       )
         .then((res) => {
           return res.json();
@@ -396,11 +482,7 @@ export default class BayesReasoning extends Component {
                   value={this.state.networkDisruptionOrDDoS}
                   onChange={this.handleChangeNetworkDisruptionOrDDoS}
                 >
-                  <FormControlLabel
-                    value={null}
-                    control={<Radio />}
-                    label="None"
-                  />
+                  <FormControlLabel value="" control={<Radio />} label="None" />
                   <FormControlLabel value="0" control={<Radio />} label="Yes" />
                   <FormControlLabel value="1" control={<Radio />} label="No" />
                 </RadioGroup>
@@ -415,11 +497,7 @@ export default class BayesReasoning extends Component {
                   value={this.state.communicationPaths}
                   onChange={this.handleChangeCommunicationPaths}
                 >
-                  <FormControlLabel
-                    value={null}
-                    control={<Radio />}
-                    label="None"
-                  />
+                  <FormControlLabel value="" control={<Radio />} label="None" />
                   <FormControlLabel
                     value="0"
                     control={<Radio />}
@@ -442,11 +520,7 @@ export default class BayesReasoning extends Component {
                   value={this.state.theftOfData}
                   onChange={this.handleChangeTheftOfData}
                 >
-                  <FormControlLabel
-                    value={null}
-                    control={<Radio />}
-                    label="None"
-                  />
+                  <FormControlLabel value="" control={<Radio />} label="None" />
                   <FormControlLabel value="0" control={<Radio />} label="Yes" />
                   <FormControlLabel value="1" control={<Radio />} label="No" />
                 </RadioGroup>
@@ -466,11 +540,7 @@ export default class BayesReasoning extends Component {
                   value={this.state.incorrectlyConfiguredFirewalls}
                   onChange={this.handleChangeIncorrectlyConfiguredFirewalls}
                 >
-                  <FormControlLabel
-                    value={null}
-                    control={<Radio />}
-                    label="None"
-                  />
+                  <FormControlLabel value="" control={<Radio />} label="None" />
                   <FormControlLabel value="0" control={<Radio />} label="Yes" />
                   <FormControlLabel value="1" control={<Radio />} label="No" />
                 </RadioGroup>
@@ -485,11 +555,7 @@ export default class BayesReasoning extends Component {
                   value={this.state.signalLevelAlerts}
                   onChange={this.handleChangeSignalLevelAlerts}
                 >
-                  <FormControlLabel
-                    value={null}
-                    control={<Radio />}
-                    label="None"
-                  />
+                  <FormControlLabel value="" control={<Radio />} label="None" />
                   <FormControlLabel value="0" control={<Radio />} label="Yes" />
                   <FormControlLabel value="1" control={<Radio />} label="No" />
                 </RadioGroup>
@@ -504,11 +570,7 @@ export default class BayesReasoning extends Component {
                   value={this.state.configuration}
                   onChange={this.handleChangeConfiguration}
                 >
-                  <FormControlLabel
-                    value={null}
-                    control={<Radio />}
-                    label="None"
-                  />
+                  <FormControlLabel value="" control={<Radio />} label="None" />
                   <FormControlLabel
                     value="0"
                     control={<Radio />}
@@ -532,11 +594,7 @@ export default class BayesReasoning extends Component {
                   value={this.state.lossOrTheftOfDevice}
                   onChange={this.handleChangeLossOrTheftOfDevice}
                 >
-                  <FormControlLabel
-                    value={null}
-                    control={<Radio />}
-                    label="None"
-                  />
+                  <FormControlLabel value="" control={<Radio />} label="None" />
                   <FormControlLabel value="0" control={<Radio />} label="Yes" />
                   <FormControlLabel value="1" control={<Radio />} label="No" />
                 </RadioGroup>
@@ -551,11 +609,7 @@ export default class BayesReasoning extends Component {
                   value={this.state.sensitiveInformation}
                   onChange={this.handleChangeSensitiveInformation}
                 >
-                  <FormControlLabel
-                    value={null}
-                    control={<Radio />}
-                    label="None"
-                  />
+                  <FormControlLabel value="" control={<Radio />} label="None" />
                   <FormControlLabel
                     value="0"
                     control={<Radio />}
@@ -578,11 +632,7 @@ export default class BayesReasoning extends Component {
                   value={this.state.securityChecks}
                   onChange={this.handleChangeSecurityChecks}
                 >
-                  <FormControlLabel
-                    value={null}
-                    control={<Radio />}
-                    label="None"
-                  />
+                  <FormControlLabel value="" control={<Radio />} label="None" />
                   <FormControlLabel value="0" control={<Radio />} label="Yes" />
                   <FormControlLabel value="1" control={<Radio />} label="No" />
                 </RadioGroup>
@@ -602,11 +652,7 @@ export default class BayesReasoning extends Component {
                   value={this.state.interactingWithSystem}
                   onChange={this.handleChangeInteractingWithSystem}
                 >
-                  <FormControlLabel
-                    value={null}
-                    control={<Radio />}
-                    label="None"
-                  />
+                  <FormControlLabel value="" control={<Radio />} label="None" />
                   <FormControlLabel value="0" control={<Radio />} label="Yes" />
                   <FormControlLabel value="1" control={<Radio />} label="No" />
                 </RadioGroup>
@@ -621,11 +667,7 @@ export default class BayesReasoning extends Component {
                   value={this.state.covertTimingChannel}
                   onChange={this.handleChangeCovertTimingChannel}
                 >
-                  <FormControlLabel
-                    value={null}
-                    control={<Radio />}
-                    label="None"
-                  />
+                  <FormControlLabel value="" control={<Radio />} label="None" />
                   <FormControlLabel value="0" control={<Radio />} label="Yes" />
                   <FormControlLabel value="1" control={<Radio />} label="No" />
                 </RadioGroup>
@@ -642,11 +684,7 @@ export default class BayesReasoning extends Component {
                   value={this.state.identityTheftOrFraud}
                   onChange={this.handleChangeIdentityTheftOrFraud}
                 >
-                  <FormControlLabel
-                    value={null}
-                    control={<Radio />}
-                    label="None"
-                  />
+                  <FormControlLabel value="" control={<Radio />} label="None" />
                   <FormControlLabel value="0" control={<Radio />} label="Yes" />
                   <FormControlLabel value="1" control={<Radio />} label="No" />
                 </RadioGroup>
