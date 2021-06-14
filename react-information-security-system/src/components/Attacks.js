@@ -14,6 +14,10 @@ export default class Attacks extends Component {
     this.getAttacks();
   }
 
+  lowerCaseFirstLetter = (attackName) => {
+    return attackName.charAt(0).toLowerCase() + attackName.slice(1);
+  };
+
   getAttacks = () => {
     AttackService.getAttacks()
       .then((res) => {
@@ -22,6 +26,18 @@ export default class Attacks extends Component {
       .then((data) => {
         this.setState({ attacks: data });
       });
+  };
+
+  deleteAttack = (attackName) => {
+    let name = this.lowerCaseFirstLetter(attackName).replaceAll(" ", "_");
+    name = name.replaceAll("-", "");
+
+    AttackService.deleteAttack(name)
+      .then((res) => {
+        this.getAttacks();
+        return res.json();
+      })
+      .then(() => {});
   };
 
   render() {
@@ -40,6 +56,17 @@ export default class Attacks extends Component {
             <div class="action">
               <a
                 href="#"
+                class="text-info mr-4"
+                data-toggle="tooltip"
+                data-placement="top"
+                title=""
+                data-original-title="Edit"
+              >
+                {" "}
+                <i class="fa fa-plus"></i>
+              </a>
+              <a
+                href="#"
                 class="text-success mr-4"
                 data-toggle="tooltip"
                 data-placement="top"
@@ -50,12 +77,15 @@ export default class Attacks extends Component {
                 <i class="fas fa-pencil-alt"></i>
               </a>
               <a
-                href="#"
+                href="javascript:void(0)"
                 class="text-danger"
                 data-toggle="tooltip"
                 data-placement="top"
                 title=""
                 data-original-title="Close"
+                onClick={() => {
+                  this.deleteAttack(attack.name);
+                }}
               >
                 <i class="fa fa-trash-alt"></i>
               </a>

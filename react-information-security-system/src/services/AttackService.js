@@ -22,23 +22,6 @@ class AttackService {
     weaknessesName,
     mitigationsName
   ) {
-    // const attack = {
-    //   likelihood: likelihoodValue,
-    //   severity: severityValue,
-    //   prerequisites: {
-    //     name: prerequisitesName,
-    //   },
-    //   consequences: {
-    //     name: consequencesName,
-    //   },
-    //   weaknesses: {
-    //     name: weaknessesName,
-    //   },
-    //   mitigations: {
-    //     name: mitigationsName,
-    //   },
-    // };
-
     const requestOptions = {
       method: "POST",
       headers: {
@@ -62,6 +45,20 @@ class AttackService {
           name: mitigationsName,
         },
       }),
+    };
+
+    return fetch(API_URL, requestOptions);
+  }
+
+  deleteAttack(attackName) {
+    const requestOptions = {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({ name: attackName }),
     };
 
     return fetch(API_URL, requestOptions);
