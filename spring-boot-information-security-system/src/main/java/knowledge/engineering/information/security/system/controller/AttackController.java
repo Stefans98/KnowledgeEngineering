@@ -151,7 +151,9 @@ public class AttackController {
             id = random.nextInt(900) + 100;
         }
 
-        String name = "attack_" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+        String name = "attack_" + new SimpleDateFormat("yyyyMMddHHmmss").format(Calendar.getInstance().getTime());
+        String nameContent = Character.toUpperCase(name.charAt(0)) + name.substring(1);
+        nameContent = nameContent.replaceAll("_", " ");
 
         int likelihood = 0;
         if(attack.getLikelihood() == Level.Medium) {
@@ -168,23 +170,75 @@ public class AttackController {
         }
 
         String prerequisitesName = "none";
-        if(attack.getPrerequisites() != null) {
+        String prerequisitesContent = "None";
+        if(attack.getPrerequisites().getName() != "") {
             prerequisitesName = attack.getPrerequisites().getName();
+            prerequisitesContent = "";
+            String[] parts = attack.getPrerequisites().getName().split("__");
+            for(int i = 0; i < parts.length; i++) {
+                parts[i] = Character.toUpperCase(parts[i].charAt(0)) + parts[i].substring(1);
+                parts[i] = parts[i].replaceAll("_", " ");
+                if(i == 0) {
+                    prerequisitesContent = prerequisitesContent.concat(parts[i]);
+                } else {
+                    prerequisitesContent = prerequisitesContent.concat(", ");
+                    prerequisitesContent = prerequisitesContent.concat(parts[i]);
+                }
+            }
         }
 
         String consequencesName = "unspecified_consequences";
-        if(attack.getConsequences() != null) {
+        String consequencesContent = "Unspecified";
+        if(attack.getConsequences().getName() != "") {
             consequencesName = attack.getConsequences().getName();
+            consequencesContent = "";
+            String[] parts = attack.getConsequences().getName().split("__");
+            for(int i = 0; i < parts.length; i++) {
+                parts[i] = Character.toUpperCase(parts[i].charAt(0)) + parts[i].substring(1);
+                parts[i] = parts[i].replaceAll("_", " ");
+                if(i == 0) {
+                    consequencesContent = consequencesContent.concat(parts[i]);
+                } else {
+                    consequencesContent = consequencesContent.concat(", ");
+                    consequencesContent = consequencesContent.concat(parts[i]);
+                }
+            }
         }
 
         String weaknessesName = "unspecified_weaknesses";
-        if(attack.getWeaknesses() != null) {
+        String weaknessesContent = "Unspecified";
+        if(attack.getWeaknesses().getName() != "") {
             weaknessesName = attack.getWeaknesses().getName();
+            weaknessesContent = "";
+            String[] parts = attack.getWeaknesses().getName().split("__");
+            for(int i = 0; i < parts.length; i++) {
+                parts[i] = Character.toUpperCase(parts[i].charAt(0)) + parts[i].substring(1);
+                parts[i] = parts[i].replaceAll("_", " ");
+                if(i == 0) {
+                    weaknessesContent = weaknessesContent.concat(parts[i]);
+                } else {
+                    weaknessesContent = weaknessesContent.concat(", ");
+                    weaknessesContent = weaknessesContent.concat(parts[i]);
+                }
+            }
         }
 
         String mitigationsName = "unspecified_mitigations";
-        if(attack.getMitigations() != null) {
+        String mitigationsContent = "Unspecified";
+        if(attack.getMitigations().getName() != "") {
             mitigationsName = attack.getMitigations().getName();
+            mitigationsContent = "";
+            String[] parts = attack.getMitigations().getName().split("__");
+            for(int i = 0; i < parts.length; i++) {
+                parts[i] = Character.toUpperCase(parts[i].charAt(0)) + parts[i].substring(1);
+                parts[i] = parts[i].replaceAll("_", " ");
+                if(i == 0) {
+                    mitigationsContent = mitigationsContent.concat(parts[i]);
+                } else {
+                    mitigationsContent = mitigationsContent.concat(", ");
+                    mitigationsContent = mitigationsContent.concat(parts[i]);
+                }
+            }
         }
 
 //        String mitigations = "";
@@ -199,7 +253,7 @@ public class AttackController {
                 + "    pre:" + name + ""
                 + "        a pre:Attack ; "
                 + "        pre:id \"" + id + "\"^^xsd:int ; "
-                + "        pre:name \"" + name + "\"^^xsd:string ; "
+                + "        pre:name \"" + nameContent + "\"^^xsd:string ; "
                 + "        pre:likelihood \"" + likelihood + "\"^^xsd:int ; "
                 + "        pre:severity \"" + severity + "\"^^xsd:int ; "
                 + "        pre:prerequisites pre:" + id + "_" + prerequisitesName + " ; "
@@ -219,7 +273,7 @@ public class AttackController {
                     + "INSERT DATA {"
                     + "    pre:" + id + "_" + prerequisitesName + ""
                     + "        a pre:Prerequisites ; "
-                    + "        pre:name \"" + prerequisitesName + "\"^^xsd:string. "
+                    + "        pre:name \"" + prerequisitesContent + "\"^^xsd:string. "
                     + "}";
             UpdateRequest updatePrerequisitesRequest = UpdateFactory.create(insertPrerequisitesString);
             System.setProperty("http.maxConnections", "10000");
@@ -234,7 +288,7 @@ public class AttackController {
                     + "INSERT DATA {"
                     + "    pre:" + id + "_" + consequencesName + ""
                     + "        a pre:Consequences ; "
-                    + "        pre:name \"" + consequencesName + "\"^^xsd:string. "
+                    + "        pre:name \"" + consequencesContent + "\"^^xsd:string. "
                     + "}";
             UpdateRequest updateConsequencesRequest = UpdateFactory.create(insertConsequencesString);
             System.setProperty("http.maxConnections", "10000");
@@ -249,7 +303,7 @@ public class AttackController {
                     + "INSERT DATA {"
                     + "    pre:" + id + "_" + weaknessesName + ""
                     + "        a pre:Weaknesses ; "
-                    + "        pre:name \"" + weaknessesName + "\"^^xsd:string. "
+                    + "        pre:name \"" + weaknessesContent + "\"^^xsd:string. "
                     + "}";
             UpdateRequest updateWeaknessesRequest = UpdateFactory.create(insertWeaknessesString);
             System.setProperty("http.maxConnections", "10000");
@@ -264,7 +318,7 @@ public class AttackController {
                     + "INSERT DATA {"
                     + "    pre:" + id + "_" + mitigationsName + ""
                     + "        a pre:Mitigations ; "
-                    + "        pre:name \"" + mitigationsName + "\"^^xsd:string. "
+                    + "        pre:name \"" + mitigationsContent + "\"^^xsd:string. "
                     + "}";
             UpdateRequest updateMitigationsRequest = UpdateFactory.create(insertMitigationsString);
             System.setProperty("http.maxConnections", "10000");
