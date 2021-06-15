@@ -8,12 +8,14 @@ import {
   Grid,
   Radio,
   RadioGroup,
+  Snackbar,
 } from "@material-ui/core";
 import { Button, Modal } from "react-bootstrap";
 import "../assets/styles/bayesReasoning.css";
 import CaseBaseReasoningService from "../services/CaseBaseReasoningService";
 import PrologService from "../services/PrologService";
 import AttackService from "../services/AttackService";
+import Alert from "@material-ui/lab/Alert";
 
 export default class CaseBaseReasoning extends Component {
   constructor(props) {
@@ -31,6 +33,9 @@ export default class CaseBaseReasoning extends Component {
       propagated: false,
       attacks: [],
       mitigations: [],
+      open: false,
+      message: "",
+      snackbarType: "success",
     };
   }
 
@@ -160,6 +165,10 @@ export default class CaseBaseReasoning extends Component {
               mitigationsString
             )
               .then((res) => {
+                this.handleClickSnackBar(
+                  "Attack with choosen characteristics is added as new attack",
+                  "success"
+                );
                 return res.json();
               })
               .then((data) => {});
@@ -171,7 +180,15 @@ export default class CaseBaseReasoning extends Component {
   };
 
   closeOverview = () => {
-    this.setState({ propagated: false });
+    this.setState({
+      propagated: false,
+      inputPrerequisitesValue: [],
+      inputConsequencesValue: [],
+      inputWeaknessesValue: [],
+      inputMitigationsValue: [],
+      likelihood: "0",
+      severity: "0",
+    });
   };
 
   calculatePercentage = (percentage) => {
@@ -209,6 +226,24 @@ export default class CaseBaseReasoning extends Component {
 
   closeMitigationsModal = () =>
     this.setState({ isOpenMitigationsModal: false });
+
+  handleClickSnackBar = (message, snackbarType) => {
+    this.setState({
+      open: true,
+      message: message,
+      snackbarType: snackbarType,
+    });
+  };
+
+  handleCloseSnackBar = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    this.setState({
+      open: false,
+    });
+  };
 
   render() {
     const prerequisitesList = [
@@ -532,6 +567,22 @@ export default class CaseBaseReasoning extends Component {
       mitigations.push({ state: c });
     }
 
+    const snackbar = (
+      <Snackbar
+        open={this.state.open}
+        autoHideDuration={2500}
+        onClose={this.handleCloseSnackBar}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert
+          onClose={this.handleCloseSnackBar}
+          severity={this.state.snackbarType}
+        >
+          {this.state.message}
+        </Alert>
+      </Snackbar>
+    );
+
     const mitigationsModalDialog = (
       <Modal
         show={this.state.isOpenMitigationsModal}
@@ -640,6 +691,7 @@ export default class CaseBaseReasoning extends Component {
     return (
       <div>
         {mitigationsModalDialog}
+        {snackbar}
         <div
           class="bg-white rounded shadow-sm p-4 mb-5 rating-review-select-page"
           style={{ maxWidth: "100%" }}

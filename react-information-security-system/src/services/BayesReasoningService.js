@@ -14,9 +14,9 @@ class BayesReasoningService {
     configuration,
     securityChecks,
     identityTheftOrFraud,
-    inputContinentsValue,
-    inputIndustryValue,
-    inputCompanySizeValue
+    continent,
+    industry,
+    companySize
   ) {
     const requestOptions = {
       method: "POST",
@@ -38,9 +38,9 @@ class BayesReasoningService {
         configuration,
         securityChecks,
         identityTheftOrFraud,
-        inputContinentsValue,
-        inputIndustryValue,
-        inputCompanySizeValue,
+        continent,
+        industry,
+        companySize,
       }),
     };
 

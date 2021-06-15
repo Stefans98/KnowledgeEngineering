@@ -241,11 +241,6 @@ public class AttackController {
             }
         }
 
-//        String mitigations = "";
-//        if(attack.getMitigations() != null) {
-//            mitigations = attack.getMitigations().getName();
-//        }
-
         String insertString = ""
                 + "PREFIX pre: <https://github.com/Stefans98/KnowledgeEngineering#> "
                 + "PREFIX xsd: <http://w3.org/2001/XMLSchema#> "
@@ -256,10 +251,10 @@ public class AttackController {
                 + "        pre:name \"" + nameContent + "\"^^xsd:string ; "
                 + "        pre:likelihood \"" + likelihood + "\"^^xsd:int ; "
                 + "        pre:severity \"" + severity + "\"^^xsd:int ; "
-                + "        pre:prerequisites pre:" + id + "_" + prerequisitesName + " ; "
-                + "        pre:consequences pre:" + id + "_" + consequencesName + " ; "
-                + "        pre:weaknesses pre:" + id + "_" + weaknessesName + " ; "
-                + "        pre:mitigations pre:" + id + "_" + mitigationsName + ". "
+                + "        pre:prerequisites pre:" + prerequisitesName + " ; "
+                + "        pre:consequences pre:" + consequencesName + " ; "
+                + "        pre:weaknesses pre:" + weaknessesName + " ; "
+                + "        pre:mitigations pre:" + mitigationsName + ". "
                 + "}";
         UpdateRequest updateRequest = UpdateFactory.create(insertString);
         System.setProperty("http.maxConnections", "10000");
@@ -271,7 +266,7 @@ public class AttackController {
                     + "PREFIX pre: <https://github.com/Stefans98/KnowledgeEngineering#> "
                     + "PREFIX xsd: <http://w3.org/2001/XMLSchema#> "
                     + "INSERT DATA {"
-                    + "    pre:" + id + "_" + prerequisitesName + ""
+                    + "    pre:" + prerequisitesName + ""
                     + "        a pre:Prerequisites ; "
                     + "        pre:name \"" + prerequisitesContent + "\"^^xsd:string. "
                     + "}";
@@ -286,7 +281,7 @@ public class AttackController {
                     + "PREFIX pre: <https://github.com/Stefans98/KnowledgeEngineering#> "
                     + "PREFIX xsd: <http://w3.org/2001/XMLSchema#> "
                     + "INSERT DATA {"
-                    + "    pre:" + id + "_" + consequencesName + ""
+                    + "    pre:" + consequencesName + ""
                     + "        a pre:Consequences ; "
                     + "        pre:name \"" + consequencesContent + "\"^^xsd:string. "
                     + "}";
@@ -301,7 +296,7 @@ public class AttackController {
                     + "PREFIX pre: <https://github.com/Stefans98/KnowledgeEngineering#> "
                     + "PREFIX xsd: <http://w3.org/2001/XMLSchema#> "
                     + "INSERT DATA {"
-                    + "    pre:" + id + "_" + weaknessesName + ""
+                    + "    pre:" + weaknessesName + ""
                     + "        a pre:Weaknesses ; "
                     + "        pre:name \"" + weaknessesContent + "\"^^xsd:string. "
                     + "}";
@@ -316,7 +311,7 @@ public class AttackController {
                     + "PREFIX pre: <https://github.com/Stefans98/KnowledgeEngineering#> "
                     + "PREFIX xsd: <http://w3.org/2001/XMLSchema#> "
                     + "INSERT DATA {"
-                    + "    pre:" + id + "_" + mitigationsName + ""
+                    + "    pre:" + mitigationsName + ""
                     + "        a pre:Mitigations ; "
                     + "        pre:name \"" + mitigationsContent + "\"^^xsd:string. "
                     + "}";
