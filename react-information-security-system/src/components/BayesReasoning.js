@@ -162,15 +162,15 @@ export default class BayesReasoning extends Component {
           ? null
           : this.state.inputCompanySizeValue;
 
-      if (inputContinentsValue === "Europe") {
+      if (inputContinentsValue == "Europe") {
         inputContinentsValue = 0;
-      } else if (inputContinentsValue === "Asia") {
+      } else if (inputContinentsValue == "Asia") {
         inputContinentsValue = 1;
-      } else if (inputContinentsValue === "North America") {
+      } else if (inputContinentsValue == "North America") {
         inputContinentsValue = 2;
-      } else if (inputContinentsValue === "South America") {
+      } else if (inputContinentsValue == "South America") {
         inputContinentsValue = 3;
-      } else if (inputContinentsValue === "Australia") {
+      } else if (inputContinentsValue == "Australia") {
         inputContinentsValue = 4;
       }
       if (inputIndustryValue === "Services") {
@@ -227,9 +227,29 @@ export default class BayesReasoning extends Component {
   };
 
   closeOverview = () => {
-    this.setState({ propagated: false }, () => {
-      this.scrollToTop();
-    });
+    this.setState(
+      {
+        propagated: false,
+        theftOfData: "",
+        signalLevelAlerts: "",
+        networkDisruptionOrDDoS: "",
+        incorrectlyConfiguredFirewalls: "",
+        configuration: "",
+        lossOrTheftOfDevice: "",
+        sensitiveInformation: "",
+        covertTimingChannel: "",
+        securityChecks: "",
+        identityTheftOrFraud: "",
+        interactingWithSystem: "",
+        communicationPaths: "",
+        inputContinentsValue: "",
+        inputIndustryValue: "",
+        inputCompanySizeValue: "",
+      },
+      () => {
+        this.scrollToTop();
+      }
+    );
   };
 
   scrollToBottom = () => {

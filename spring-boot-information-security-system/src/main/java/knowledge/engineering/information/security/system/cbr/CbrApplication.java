@@ -1,6 +1,7 @@
 package knowledge.engineering.information.security.system.cbr;
 
 import knowledge.engineering.information.security.system.connector.CsvConnector;
+import knowledge.engineering.information.security.system.connector.RDFConnector;
 import knowledge.engineering.information.security.system.dto.CbrDto;
 import knowledge.engineering.information.security.system.model.*;
 import org.springframework.stereotype.Service;
@@ -39,7 +40,8 @@ public class CbrApplication implements StandardCBRApplication {
     }
 
     public void configure() throws ExecutionException {
-        _connector =  new CsvConnector();
+        //_connector =  new CsvConnector();
+        _connector =  new RDFConnector();
 
         _caseBase = new LinealCaseBase();  // Create a Lineal case base for in-memory organization
 

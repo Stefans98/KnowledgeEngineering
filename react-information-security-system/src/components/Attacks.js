@@ -59,7 +59,7 @@ export default class Attacks extends Component {
     AttackService.deleteAttack(name)
       .then((res) => {
         this.getAttacks();
-        this.handleClickSnackBar("Attack is successfully deleted", "success");
+        this.handleClickSnackBar("Attack is deleted", "info");
         return res.json();
       })
       .then((data) => {});
