@@ -59,9 +59,10 @@ export default class Attacks extends Component {
     AttackService.deleteAttack(name)
       .then((res) => {
         this.getAttacks();
+        this.handleClickSnackBar("Attack is successfully deleted", "success");
         return res.json();
       })
-      .then(() => {});
+      .then((data) => {});
   };
 
   addAttack = () => {
@@ -177,7 +178,16 @@ export default class Attacks extends Component {
     this.setState({ isOpenNewAttackModal: true });
   };
 
-  closeNewAttackModal = () => this.setState({ isOpenNewAttackModal: false });
+  closeNewAttackModal = () =>
+    this.setState({
+      isOpenNewAttackModal: false,
+      inputPrerequisitesValue: [],
+      inputConsequencesValue: [],
+      inputWeaknessesValue: [],
+      inputMitigationsValue: [],
+      likelihood: "0",
+      severity: "0",
+    });
 
   handleChangeLikelihood = (event) => {
     this.setState({ likelihood: event.target.value });
@@ -857,7 +867,7 @@ export default class Attacks extends Component {
                       <h4
                         style={{
                           textAlign: "center",
-                          marginLeft: "120px",
+                          marginLeft: "110px",
                           color: "#74767a",
                           paddingBottom: "20px",
                         }}

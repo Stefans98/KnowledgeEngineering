@@ -25,7 +25,7 @@ public class CbrController {
     private CbrApplication cbrApplication;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<CbrDto>> calculateVulnerabilityRisk(@RequestBody CbrParameters cbrParameters) {
+    public ResponseEntity<List<CbrDto>> calculateCaseBaseSimilarity(@RequestBody CbrParameters cbrParameters) {
         Level likelihood = Level.Low;
         if(cbrParameters.getLikelihood() == 0){
             likelihood = Level.Low;
@@ -46,14 +46,6 @@ public class CbrController {
         List<CbrDto> result = cbrApplication.cbrResult(likelihood, severity, cbrParameters.getPrerequisites(),
                 cbrParameters.getConsequences(), cbrParameters.getWeaknesses(), cbrParameters.getMitigations());
 
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
-
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<CbrDto>> getSimilarity() {
-        List<CbrDto> result = cbrApplication.cbrResult(Level.High, Level.Medium, "cookie_is_contained_in_reply_to_adversary",
-                "gain_privileges", "missing_Encryption_of_Sensitive_Data", "unspecified");
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

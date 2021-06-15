@@ -71,7 +71,7 @@ export default class CaseBaseReasoning extends Component {
         );
       } else {
         prerequisitesString = prerequisitesString.concat(
-          ", ",
+          "__",
           this.lowerCaseFirstLetter(
             this.state.inputPrerequisitesValue[i].state
           ).replaceAll(" ", "_")
@@ -89,7 +89,7 @@ export default class CaseBaseReasoning extends Component {
         );
       } else {
         consequencesString = consequencesString.concat(
-          ", ",
+          "__",
           this.lowerCaseFirstLetter(
             this.state.inputConsequencesValue[i].state
           ).replaceAll(" ", "_")
@@ -107,7 +107,7 @@ export default class CaseBaseReasoning extends Component {
         );
       } else {
         weaknessesString = weaknessesString.concat(
-          ", ",
+          "__",
           this.lowerCaseFirstLetter(
             this.state.inputWeaknessesValue[i].state
           ).replaceAll(" ", "_")
@@ -125,7 +125,7 @@ export default class CaseBaseReasoning extends Component {
         );
       } else {
         mitigationsString = mitigationsString.concat(
-          ", ",
+          "__",
           this.lowerCaseFirstLetter(
             this.state.inputMitigationsValue[i].state
           ).replaceAll(" ", "_")
