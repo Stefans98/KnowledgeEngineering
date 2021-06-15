@@ -300,10 +300,6 @@ export default class Attacks extends Component {
     });
 
   openChangeAttackModal = (attack) => {
-    console.log(attack.severity);
-    console.log(attack.likelihood);
-    console.log(attack.prerequisites);
-
     var severity;
     if (attack.severity === "Low") {
       severity = "0";
@@ -322,12 +318,48 @@ export default class Attacks extends Component {
       likelihood = "2";
     }
 
+    var prerequisitesList = [];
+    var prerequisitesParts = attack.prerequisites.name.split(", ");
+
+    for (let i = 0; i < prerequisitesParts.length; i++) {
+      if (prerequisitesParts[i] !== "None") {
+        prerequisitesList.push({ state: prerequisitesParts[i] });
+      }
+    }
+
+    var consequencesList = [];
+    var consequencesParts = attack.consequences.name.split(", ");
+
+    for (let i = 0; i < consequencesParts.length; i++) {
+      if (consequencesParts[i] !== "Unspecified") {
+        consequencesList.push({ state: consequencesParts[i] });
+      }
+    }
+
+    var weaknessesList = [];
+    var weaknessesParts = attack.weaknesses.name.split(", ");
+
+    for (let i = 0; i < weaknessesParts.length; i++) {
+      if (weaknessesParts[i] !== "Unspecified") {
+        weaknessesList.push({ state: weaknessesParts[i] });
+      }
+    }
+
+    var mitigationsList = [];
+    var mitigationsParts = attack.mitigations.name.split(", ");
+
+    for (let i = 0; i < mitigationsParts.length; i++) {
+      if (mitigationsParts[i] !== "Unspecified") {
+        mitigationsList.push({ state: mitigationsParts[i] });
+      }
+    }
+
     this.setState({
       isOpenChangeAttackModal: true,
-      // inputPrerequisitesValue: attack.prerequisites,
-      // inputConsequencesValue: attack.consequences,
-      // inputWeaknessesValue: attack.weaknesses,
-      // inputMitigationsValue: attack.mitigations,
+      inputPrerequisitesValue: prerequisitesList,
+      inputConsequencesValue: consequencesList,
+      inputWeaknessesValue: weaknessesList,
+      inputMitigationsValue: mitigationsList,
       likelihood: likelihood,
       severity: severity,
     });
@@ -336,6 +368,12 @@ export default class Attacks extends Component {
   closeChangeAttackModal = () =>
     this.setState({
       isOpenChangeAttackModal: false,
+      inputPrerequisitesValue: [],
+      inputConsequencesValue: [],
+      inputWeaknessesValue: [],
+      inputMitigationsValue: [],
+      likelihood: "0",
+      severity: "0",
     });
 
   handleChangeLikelihood = (event) => {
@@ -761,22 +799,24 @@ export default class Attacks extends Component {
       <Modal
         show={this.state.isOpenNewAttackModal}
         onHide={this.closeNewAttackModal}
-        contentClassName="custom-modal-style"
+        size="lg"
+        style={{ height: "720px", overflow: "hidden" }}
       >
         <Modal.Header closeButton>
-          <Modal.Title style={{ marginLeft: "270px", color: "#74767a" }}>
+          <Modal.Title style={{ marginLeft: "315px", color: "#74767a" }}>
             New attack
           </Modal.Title>
         </Modal.Header>
         <Modal.Body
           style={{
-            overflowY: "auto",
             overflowX: "hidden",
+            overflowY: "auto",
+            height: "620px",
           }}
         >
           <div
             style={{
-              marginLeft: "22px",
+              marginLeft: "75px",
             }}
           >
             <h4 style={{ textAlign: "left", color: "#74767a" }}>
@@ -990,9 +1030,13 @@ export default class Attacks extends Component {
                 type="button"
                 onClick={this.addAttack}
                 class="btn btn-outline-primary btn-sm"
-                style={{ width: "120px", fontSize: "17px" }}
+                style={{
+                  width: "120px",
+                  fontSize: "17px",
+                  marginRight: "65px",
+                }}
               >
-                Add
+                Confirm
               </button>
             </div>
           </div>
@@ -1009,22 +1053,24 @@ export default class Attacks extends Component {
       <Modal
         show={this.state.isOpenChangeAttackModal}
         onHide={this.closeChangeAttackModal}
-        contentClassName="custom-modal-style"
+        size="lg"
+        style={{ height: "720px", overflow: "hidden" }}
       >
         <Modal.Header closeButton>
-          <Modal.Title style={{ marginLeft: "270px", color: "#74767a" }}>
+          <Modal.Title style={{ marginLeft: "300px", color: "#74767a" }}>
             Change attack
           </Modal.Title>
         </Modal.Header>
         <Modal.Body
           style={{
-            overflowY: "auto",
             overflowX: "hidden",
+            overflowY: "auto",
+            height: "620px",
           }}
         >
           <div
             style={{
-              marginLeft: "22px",
+              marginLeft: "75px",
             }}
           >
             <h4 style={{ textAlign: "left", color: "#74767a" }}>
@@ -1238,9 +1284,13 @@ export default class Attacks extends Component {
                 type="button"
                 onClick={this.changeAttack}
                 class="btn btn-outline-primary btn-sm"
-                style={{ width: "120px", fontSize: "17px" }}
+                style={{
+                  width: "120px",
+                  fontSize: "17px",
+                  marginRight: "55px",
+                }}
               >
-                Change
+                Confirm
               </button>
             </div>
           </div>
@@ -1281,12 +1331,12 @@ export default class Attacks extends Component {
                           }}
                           class="btn btn-outline-primary btn-sm"
                           style={{
-                            width: "100px",
+                            width: "120px",
                             fontSize: "17px",
                             float: "right",
                           }}
                         >
-                          Add attack
+                          New attack
                         </button>
                       </h4>
                     </div>
