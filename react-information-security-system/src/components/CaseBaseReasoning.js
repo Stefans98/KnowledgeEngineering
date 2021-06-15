@@ -43,13 +43,6 @@ export default class CaseBaseReasoning extends Component {
   };
 
   propagate = () => {
-    console.log(this.state.inputPrerequisitesValue);
-    console.log(this.state.inputConsequencesValue);
-    console.log(this.state.inputWeaknessesValue);
-    console.log(this.state.inputMitigationsValue);
-    console.log(this.state.likelihood);
-    console.log(this.state.severity);
-
     var likelihoodParam = 0;
     if (this.state.likelihood === "0") {
       likelihoodParam = 0;
@@ -70,7 +63,7 @@ export default class CaseBaseReasoning extends Component {
 
     var prerequisitesString = "";
     for (let i = 0; i < this.state.inputPrerequisitesValue.length; i++) {
-      if (i == 0) {
+      if (i === 0) {
         prerequisitesString = prerequisitesString.concat(
           this.lowerCaseFirstLetter(
             this.state.inputPrerequisitesValue[i].state
@@ -88,7 +81,7 @@ export default class CaseBaseReasoning extends Component {
 
     var consequencesString = "";
     for (let i = 0; i < this.state.inputConsequencesValue.length; i++) {
-      if (i == 0) {
+      if (i === 0) {
         consequencesString = consequencesString.concat(
           this.lowerCaseFirstLetter(
             this.state.inputConsequencesValue[i].state
@@ -106,7 +99,7 @@ export default class CaseBaseReasoning extends Component {
 
     var weaknessesString = "";
     for (let i = 0; i < this.state.inputWeaknessesValue.length; i++) {
-      if (i == 0) {
+      if (i === 0) {
         weaknessesString = weaknessesString.concat(
           this.lowerCaseFirstLetter(
             this.state.inputWeaknessesValue[i].state
@@ -124,7 +117,7 @@ export default class CaseBaseReasoning extends Component {
 
     var mitigationsString = "";
     for (let i = 0; i < this.state.inputMitigationsValue.length; i++) {
-      if (i == 0) {
+      if (i === 0) {
         mitigationsString = mitigationsString.concat(
           this.lowerCaseFirstLetter(
             this.state.inputMitigationsValue[i].state
@@ -219,9 +212,6 @@ export default class CaseBaseReasoning extends Component {
 
   render() {
     const prerequisitesList = [
-      {
-        state: "none",
-      },
       { state: "target_relying_on_valid_GPS_signal" },
       {
         state:
@@ -333,7 +323,7 @@ export default class CaseBaseReasoning extends Component {
     ];
 
     var prerequisites = [{ state: "" }];
-    for (var i = 0; i < prerequisitesList.length; i++) {
+    for (let i = 0; i < prerequisitesList.length; i++) {
       const c = this.upperCaseFirstLetter(
         prerequisitesList[i].state
       ).replaceAll("_", " ");
@@ -341,7 +331,6 @@ export default class CaseBaseReasoning extends Component {
     }
 
     const consequencesList = [
-      { state: "unspecified" },
       { state: "deny_availability_of_satellite_communications" },
       { state: "read_data" },
       { state: "modify_data" },
@@ -354,7 +343,7 @@ export default class CaseBaseReasoning extends Component {
     ];
 
     var consequences = [{ state: "" }];
-    for (var i = 0; i < consequencesList.length; i++) {
+    for (let i = 0; i < consequencesList.length; i++) {
       const c = this.upperCaseFirstLetter(consequencesList[i].state).replaceAll(
         "_",
         " "
@@ -407,7 +396,7 @@ export default class CaseBaseReasoning extends Component {
     ];
 
     var weaknesses = [{ state: "" }];
-    for (var i = 0; i < weaknessesList.length; i++) {
+    for (let i = 0; i < weaknessesList.length; i++) {
       const c = this.upperCaseFirstLetter(weaknessesList[i].state).replaceAll(
         "_",
         " "
@@ -416,7 +405,6 @@ export default class CaseBaseReasoning extends Component {
     }
 
     const mitigationsList = [
-      { state: "unspecified" },
       {
         state:
           "commercial_defensive_technology_that_monitors_for_rogue_WiFi_access_points_man_in_the_middle_attacks_and_anomalous_activity_with_the_mobile_device_baseband_radios",
@@ -536,7 +524,7 @@ export default class CaseBaseReasoning extends Component {
     ];
 
     var mitigations = [{ state: "" }];
-    for (var i = 0; i < mitigationsList.length; i++) {
+    for (let i = 0; i < mitigationsList.length; i++) {
       const c = this.upperCaseFirstLetter(mitigationsList[i].state).replaceAll(
         "_",
         " "
@@ -666,18 +654,21 @@ export default class CaseBaseReasoning extends Component {
               <Autocomplete
                 multiple
                 disableCloseOnSelect
+                value={this.state.inputPrerequisitesValue}
                 id="prerequisites"
-                onInputChange={(event, newInputValue) => {
-                  this.setState(
-                    { inputPrerequisitesValue: newInputValue },
-                    () => {
-                      console.log(this.state.inputPrerequisitesValue);
-                    }
-                  );
-                }}
                 onChange={(event, newInputValue) => {
+                  const uniqueArray = newInputValue.filter((state, index) => {
+                    const _thing = JSON.stringify(state);
+                    return (
+                      index ===
+                      newInputValue.findIndex((obj) => {
+                        return JSON.stringify(obj) === _thing;
+                      })
+                    );
+                  });
+
                   this.setState(
-                    { inputPrerequisitesValue: newInputValue },
+                    { inputPrerequisitesValue: uniqueArray },
                     () => {
                       console.log(this.state.inputPrerequisitesValue);
                     }
@@ -699,14 +690,22 @@ export default class CaseBaseReasoning extends Component {
               <Autocomplete
                 multiple
                 disableCloseOnSelect
+                value={this.state.inputConsequencesValue}
                 id="consequences"
                 onChange={(event, newInputValue) => {
-                  this.setState(
-                    { inputConsequencesValue: newInputValue },
-                    () => {
-                      console.log(this.state.inputConsequencesValue);
-                    }
-                  );
+                  const uniqueArray = newInputValue.filter((state, index) => {
+                    const _thing = JSON.stringify(state);
+                    return (
+                      index ===
+                      newInputValue.findIndex((obj) => {
+                        return JSON.stringify(obj) === _thing;
+                      })
+                    );
+                  });
+
+                  this.setState({ inputConsequencesValue: uniqueArray }, () => {
+                    console.log(this.state.inputConsequencesValue);
+                  });
                 }}
                 options={consequences}
                 getOptionLabel={(option) => option.state}
@@ -724,9 +723,19 @@ export default class CaseBaseReasoning extends Component {
               <Autocomplete
                 multiple
                 disableCloseOnSelect
+                value={this.state.inputWeaknessesValue}
                 id="weaknesses"
                 onChange={(event, newInputValue) => {
-                  this.setState({ inputWeaknessesValue: newInputValue }, () => {
+                  const uniqueArray = newInputValue.filter((state, index) => {
+                    const _thing = JSON.stringify(state);
+                    return (
+                      index ===
+                      newInputValue.findIndex((obj) => {
+                        return JSON.stringify(obj) === _thing;
+                      })
+                    );
+                  });
+                  this.setState({ inputWeaknessesValue: uniqueArray }, () => {
                     console.log(this.state.inputWeaknessesValue);
                   });
                 }}
@@ -746,14 +755,22 @@ export default class CaseBaseReasoning extends Component {
               <Autocomplete
                 multiple
                 disableCloseOnSelect
+                value={this.state.inputMitigationsValue}
                 id="mitigations"
                 onChange={(event, newInputValue) => {
-                  this.setState(
-                    { inputMitigationsValue: newInputValue },
-                    () => {
-                      console.log(this.state.inputMitigationsValue);
-                    }
-                  );
+                  const uniqueArray = newInputValue.filter((state, index) => {
+                    const _thing = JSON.stringify(state);
+                    return (
+                      index ===
+                      newInputValue.findIndex((obj) => {
+                        return JSON.stringify(obj) === _thing;
+                      })
+                    );
+                  });
+
+                  this.setState({ inputMitigationsValue: uniqueArray }, () => {
+                    console.log(this.state.inputMitigationsValue);
+                  });
                 }}
                 options={mitigations}
                 getOptionLabel={(option) => option.state}
