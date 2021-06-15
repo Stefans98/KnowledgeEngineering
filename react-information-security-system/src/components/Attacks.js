@@ -22,6 +22,7 @@ export default class Attacks extends Component {
     this.state = {
       attacks: [],
       isOpenNewAttackModal: false,
+      isOpenChangeAttackModal: false,
       inputPrerequisitesValue: [],
       inputConsequencesValue: [],
       inputWeaknessesValue: [],
@@ -174,6 +175,115 @@ export default class Attacks extends Component {
       });
   };
 
+  changeAttack = () => {
+    var likelihoodParam = 0;
+    if (this.state.likelihood === "0") {
+      likelihoodParam = 0;
+    } else if (this.state.likelihood === "1") {
+      likelihoodParam = 1;
+    } else if (this.state.likelihood === "2") {
+      likelihoodParam = 2;
+    }
+
+    var severityParam = 0;
+    if (this.state.severity === "0") {
+      severityParam = 0;
+    } else if (this.state.severity === "1") {
+      severityParam = 1;
+    } else if (this.state.severity === "2") {
+      severityParam = 2;
+    }
+
+    var prerequisitesString = "";
+    for (let i = 0; i < this.state.inputPrerequisitesValue.length; i++) {
+      if (i === 0) {
+        prerequisitesString = prerequisitesString.concat(
+          this.lowerCaseFirstLetter(
+            this.state.inputPrerequisitesValue[i].state
+          ).replaceAll(" ", "_")
+        );
+      } else {
+        prerequisitesString = prerequisitesString.concat(
+          "__",
+          this.lowerCaseFirstLetter(
+            this.state.inputPrerequisitesValue[i].state
+          ).replaceAll(" ", "_")
+        );
+      }
+    }
+
+    var consequencesString = "";
+    for (let i = 0; i < this.state.inputConsequencesValue.length; i++) {
+      if (i === 0) {
+        consequencesString = consequencesString.concat(
+          this.lowerCaseFirstLetter(
+            this.state.inputConsequencesValue[i].state
+          ).replaceAll(" ", "_")
+        );
+      } else {
+        consequencesString = consequencesString.concat(
+          "__",
+          this.lowerCaseFirstLetter(
+            this.state.inputConsequencesValue[i].state
+          ).replaceAll(" ", "_")
+        );
+      }
+    }
+
+    var weaknessesString = "";
+    for (let i = 0; i < this.state.inputWeaknessesValue.length; i++) {
+      if (i === 0) {
+        weaknessesString = weaknessesString.concat(
+          this.lowerCaseFirstLetter(
+            this.state.inputWeaknessesValue[i].state
+          ).replaceAll(" ", "_")
+        );
+      } else {
+        weaknessesString = weaknessesString.concat(
+          "__",
+          this.lowerCaseFirstLetter(
+            this.state.inputWeaknessesValue[i].state
+          ).replaceAll(" ", "_")
+        );
+      }
+    }
+
+    var mitigationsString = "";
+    for (let i = 0; i < this.state.inputMitigationsValue.length; i++) {
+      if (i === 0) {
+        mitigationsString = mitigationsString.concat(
+          this.lowerCaseFirstLetter(
+            this.state.inputMitigationsValue[i].state
+          ).replaceAll(" ", "_")
+        );
+      } else {
+        mitigationsString = mitigationsString.concat(
+          "__",
+          this.lowerCaseFirstLetter(
+            this.state.inputMitigationsValue[i].state
+          ).replaceAll(" ", "_")
+        );
+      }
+    }
+
+    AttackService.saveAttack(
+      likelihoodParam,
+      severityParam,
+      prerequisitesString,
+      consequencesString,
+      weaknessesString,
+      mitigationsString
+    )
+      .then((res) => {
+        this.getAttacks();
+        return res.json();
+      })
+      .then((data) => {
+        this.closeChangeAttackModal();
+        this.handleClickSnackBar("Attack is successfully changed", "success");
+      });
+  };
+
   openNewAttackModal = () => {
     this.setState({ isOpenNewAttackModal: true });
   };
@@ -187,6 +297,45 @@ export default class Attacks extends Component {
       inputMitigationsValue: [],
       likelihood: "0",
       severity: "0",
+    });
+
+  openChangeAttackModal = (attack) => {
+    console.log(attack.severity);
+    console.log(attack.likelihood);
+    console.log(attack.prerequisites);
+
+    var severity;
+    if (attack.severity === "Low") {
+      severity = "0";
+    } else if (attack.severity === "Medium") {
+      severity = "1";
+    } else {
+      severity = "2";
+    }
+
+    var likelihood;
+    if (attack.likelihood === "Low") {
+      likelihood = "0";
+    } else if (attack.likelihood === "Medium") {
+      likelihood = "1";
+    } else {
+      likelihood = "2";
+    }
+
+    this.setState({
+      isOpenChangeAttackModal: true,
+      // inputPrerequisitesValue: attack.prerequisites,
+      // inputConsequencesValue: attack.consequences,
+      // inputWeaknessesValue: attack.weaknesses,
+      // inputMitigationsValue: attack.mitigations,
+      likelihood: likelihood,
+      severity: severity,
+    });
+  };
+
+  closeChangeAttackModal = () =>
+    this.setState({
+      isOpenChangeAttackModal: false,
     });
 
   handleChangeLikelihood = (event) => {
@@ -575,7 +724,10 @@ export default class Attacks extends Component {
           <td>
             <div class="action">
               <a
-                href="#"
+                href="javascript:void(0)"
+                onClick={() => {
+                  this.openChangeAttackModal(attack);
+                }}
                 class="text-success mr-4"
                 data-toggle="tooltip"
                 data-placement="top"
@@ -853,9 +1005,258 @@ export default class Attacks extends Component {
       </Modal>
     );
 
+    const changeAttackModalDialog = (
+      <Modal
+        show={this.state.isOpenChangeAttackModal}
+        onHide={this.closeChangeAttackModal}
+        contentClassName="custom-modal-style"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title style={{ marginLeft: "270px", color: "#74767a" }}>
+            Change attack
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body
+          style={{
+            overflowY: "auto",
+            overflowX: "hidden",
+          }}
+        >
+          <div
+            style={{
+              marginLeft: "22px",
+            }}
+          >
+            <h4 style={{ textAlign: "left", color: "#74767a" }}>
+              Choose attack characteristics:
+            </h4>
+            <br />
+
+            <Grid container spacing={5}>
+              <Grid item xs>
+                <Autocomplete
+                  multiple
+                  disableCloseOnSelect
+                  value={this.state.inputPrerequisitesValue}
+                  id="prerequisites"
+                  onChange={(event, newInputValue) => {
+                    const uniqueArray = newInputValue.filter((state, index) => {
+                      const _thing = JSON.stringify(state);
+                      return (
+                        index ===
+                        newInputValue.findIndex((obj) => {
+                          return JSON.stringify(obj) === _thing;
+                        })
+                      );
+                    });
+
+                    this.setState(
+                      { inputPrerequisitesValue: uniqueArray },
+                      () => {
+                        console.log(this.state.inputPrerequisitesValue);
+                      }
+                    );
+                  }}
+                  options={prerequisites}
+                  getOptionLabel={(option) => option.state}
+                  style={{ width: 600 }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Prerequisites"
+                      variant="outlined"
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs>
+                <Autocomplete
+                  multiple
+                  disableCloseOnSelect
+                  value={this.state.inputConsequencesValue}
+                  id="consequences"
+                  onChange={(event, newInputValue) => {
+                    const uniqueArray = newInputValue.filter((state, index) => {
+                      const _thing = JSON.stringify(state);
+                      return (
+                        index ===
+                        newInputValue.findIndex((obj) => {
+                          return JSON.stringify(obj) === _thing;
+                        })
+                      );
+                    });
+
+                    this.setState(
+                      { inputConsequencesValue: uniqueArray },
+                      () => {
+                        console.log(this.state.inputConsequencesValue);
+                      }
+                    );
+                  }}
+                  options={consequences}
+                  getOptionLabel={(option) => option.state}
+                  style={{ width: 600 }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Consequences"
+                      variant="outlined"
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs>
+                <Autocomplete
+                  multiple
+                  disableCloseOnSelect
+                  value={this.state.inputWeaknessesValue}
+                  id="weaknesses"
+                  onChange={(event, newInputValue) => {
+                    const uniqueArray = newInputValue.filter((state, index) => {
+                      const _thing = JSON.stringify(state);
+                      return (
+                        index ===
+                        newInputValue.findIndex((obj) => {
+                          return JSON.stringify(obj) === _thing;
+                        })
+                      );
+                    });
+                    this.setState({ inputWeaknessesValue: uniqueArray }, () => {
+                      console.log(this.state.inputWeaknessesValue);
+                    });
+                  }}
+                  options={weaknesses}
+                  getOptionLabel={(option) => option.state}
+                  style={{ width: 600 }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Weaknesses"
+                      variant="outlined"
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs>
+                <Autocomplete
+                  multiple
+                  disableCloseOnSelect
+                  value={this.state.inputMitigationsValue}
+                  id="mitigations"
+                  onChange={(event, newInputValue) => {
+                    const uniqueArray = newInputValue.filter((state, index) => {
+                      const _thing = JSON.stringify(state);
+                      return (
+                        index ===
+                        newInputValue.findIndex((obj) => {
+                          return JSON.stringify(obj) === _thing;
+                        })
+                      );
+                    });
+
+                    this.setState(
+                      { inputMitigationsValue: uniqueArray },
+                      () => {
+                        console.log(this.state.inputMitigationsValue);
+                      }
+                    );
+                  }}
+                  options={mitigations}
+                  getOptionLabel={(option) => option.state}
+                  style={{ width: 600 }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Mitigations"
+                      variant="outlined"
+                    />
+                  )}
+                />
+              </Grid>
+            </Grid>
+            <br />
+            <Grid container spacing={5}>
+              <Grid item xs>
+                <FormControl component="fieldset">
+                  <FormLabel component="legend">Likelihood</FormLabel>
+                  <RadioGroup
+                    aria-label="interactingWithSystem"
+                    name="interactingWithSystem"
+                    value={this.state.likelihood}
+                    onChange={this.handleChangeLikelihood}
+                  >
+                    <FormControlLabel
+                      value="0"
+                      control={<Radio />}
+                      label="Low"
+                    />
+                    <FormControlLabel
+                      value="1"
+                      control={<Radio />}
+                      label="Medium"
+                    />
+                    <FormControlLabel
+                      value="2"
+                      control={<Radio />}
+                      label="High"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </Grid>
+
+              <Grid item xs>
+                <FormControl component="fieldset">
+                  <FormLabel component="legend">Severity</FormLabel>
+                  <RadioGroup
+                    aria-label="interactingWithSystem"
+                    name="interactingWithSystem"
+                    value={this.state.severity}
+                    onChange={this.handleChangeSeverity}
+                  >
+                    <FormControlLabel
+                      value="0"
+                      control={<Radio />}
+                      label="Low"
+                    />
+                    <FormControlLabel
+                      value="1"
+                      control={<Radio />}
+                      label="Medium"
+                    />
+                    <FormControlLabel
+                      value="2"
+                      control={<Radio />}
+                      label="High"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </Grid>
+            </Grid>
+
+            <div class="graph-star-rating-footer text-center mt-4 mb-3">
+              <button
+                type="button"
+                onClick={this.changeAttack}
+                class="btn btn-outline-primary btn-sm"
+                style={{ width: "120px", fontSize: "17px" }}
+              >
+                Change
+              </button>
+            </div>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={this.closeChangeAttackModal}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
+
     return (
       <div>
         {newAttackModalDialog}
+        {changeAttackModalDialog}
         {snackbar}
         <div class="container" style={{ maxWidth: "100%" }}>
           <div class="row">
