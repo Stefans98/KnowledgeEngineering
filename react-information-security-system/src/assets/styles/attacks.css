@@ -1,27 +1,29 @@
-.fixed_header {
+/* .fixed_header {
   width: 400px;
   table-layout: fixed;
   border-collapse: collapse;
-}
+} */
 
-.fixed_header tbody {
+/* .fixed_header tbody {
   display: block;
   width: 100%;
   overflow: auto;
   max-height: 460px;
-}
-
-.fixed_header thead tr {
-  display: block;
-}
-
-/* .fixed_header thead {
-  background: black;
-  color: #fff;
 } */
 
-.fixed_header th,
+/* .fixed_header thead tr {
+  display: block;
+} */
+
+/* .fixed_header th,
 .fixed_header td {
   text-align: left;
   width: 200px;
+} */
+
+.custom-modal-style {
+  width: 700px;
+  margin-left: -100px;
+  height: 690px;
+  overflow: hidden;
 }
