@@ -32,6 +32,7 @@ export default class Attacks extends Component {
       open: false,
       message: "",
       snackbarType: "success",
+      attackName: "",
     };
   }
 
@@ -266,7 +267,8 @@ export default class Attacks extends Component {
       }
     }
 
-    AttackService.saveAttack(
+    AttackService.changeAttack(
+      this.state.attackName,
       likelihoodParam,
       severityParam,
       prerequisitesString,
@@ -300,6 +302,12 @@ export default class Attacks extends Component {
     });
 
   openChangeAttackModal = (attack) => {
+    let name = this.lowerCaseFirstLetter(attack.name).replaceAll(" ", "_");
+    name = name.replaceAll("-", "");
+    this.setState({
+      attackName: name,
+    });
+
     var severity;
     if (attack.severity === "Low") {
       severity = "0";
@@ -374,6 +382,7 @@ export default class Attacks extends Component {
       inputMitigationsValue: [],
       likelihood: "0",
       severity: "0",
+      attackName: "",
     });
 
   handleChangeLikelihood = (event) => {

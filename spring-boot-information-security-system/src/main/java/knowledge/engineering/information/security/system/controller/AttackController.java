@@ -82,15 +82,12 @@ public class AttackController {
                 Attack attack = new Attack();
 
                 Literal idLiteral = solution.getLiteral("id");
-                // System.out.println(attackName.getString());
                 attack.setId(Integer.parseInt(idLiteral.getString()));
 
                 Literal attackNameLiteral = solution.getLiteral("attackName");
-                // System.out.println(attackName.getString());
                 attack.setName(attackNameLiteral.getString());
 
                 Literal likelihoodLiteral = solution.getLiteral("likelihood");
-                // System.out.println(likelihood.getString());
                 if(likelihoodLiteral.getString().equals("0")) {
                     attack.setLikelihood(Level.Low);
                 } else if(likelihoodLiteral.getString().equals("1")) {
@@ -100,7 +97,6 @@ public class AttackController {
                 }
 
                 Literal severityLiteral = solution.getLiteral("severity");
-                // System.out.println(severity.getString());
                 if(severityLiteral.getString().equals("0")) {
                     attack.setSeverity(Level.Low);
                 } else if(severityLiteral.getString().equals("1")) {
@@ -110,25 +106,21 @@ public class AttackController {
                 }
 
                 Literal prerequisitesLiteral = solution.getLiteral("prerequisitesName");
-                // System.out.println(prerequisitesLiteral.getString());
                 Prerequisites prerequisites = new Prerequisites();
                 prerequisites.setName(prerequisitesLiteral.getString());
                 attack.setPrerequisites(prerequisites);
 
                 Literal consequencesLiteral = solution.getLiteral("consequencesName");
-                // System.out.println(consequencesLiteral.getString());
                 Consequences consequences = new Consequences();
                 consequences.setName(consequencesLiteral.getString());
                 attack.setConsequences(consequences);
 
                 Literal weaknessesLiteral = solution.getLiteral("weaknessesName");
-                // System.out.println(weaknessesLiteral.getString());
                 Weaknesses weaknesses = new Weaknesses();
                 weaknesses.setName(weaknessesLiteral.getString());
                 attack.setWeaknesses(weaknesses);
 
                 Literal mitigationsLiteral = solution.getLiteral("mitigationsName");
-                // System.out.println(mitigationsLiteral.getString());
                 Mitigations mitigations = new Mitigations();
                 mitigations.setName(mitigationsLiteral.getString());
                 attack.setMitigations(mitigations);
@@ -143,7 +135,47 @@ public class AttackController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Attack> addAttack(@RequestBody Attack attack) {
+    public ResponseEntity<Attack> saveAttack(@RequestBody Attack attack) {
+
+        Attack savedAttack;
+
+        savedAttack = insertAttack(attack, false);
+
+        return new ResponseEntity<>(savedAttack, HttpStatus.OK);
+    }
+
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Attack> changeAttack(@RequestBody Attack attack) {
+
+        Attack changedAttack;
+
+        this.deleteAttack(attack);
+        changedAttack = this.insertAttack(attack, true);
+
+        return new ResponseEntity<>(changedAttack, HttpStatus.OK);
+    }
+
+    @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> deleteAttack(@RequestBody Attack attack) {
+
+        String attackName = attack.getName();
+
+        // DELETE
+        String deleteString = ""
+                + "PREFIX pre: <https://github.com/Stefans98/KnowledgeEngineering#> "
+                + "DELETE "
+                + "WHERE {"
+                + "    pre:" + attackName + " ?x ?y ."
+                + "}";
+        UpdateRequest updateRequest = UpdateFactory.create(deleteString);
+        System.setProperty("http.maxConnections", "10000");
+        UpdateProcessor updateProcessor = UpdateExecutionFactory.createRemote(updateRequest, UPDATE_URL);
+        updateProcessor.execute();
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    private Attack insertAttack(Attack attack, boolean put) {
 
         Random random = new Random();
         int id = random.nextInt(900) + 100;;
@@ -154,6 +186,12 @@ public class AttackController {
         String name = "attack_" + new SimpleDateFormat("yyyyMMddHHmmss").format(Calendar.getInstance().getTime());
         String nameContent = Character.toUpperCase(name.charAt(0)) + name.substring(1);
         nameContent = nameContent.replaceAll("_", " ");
+
+        if(put) {
+            name = attack.getName();
+            nameContent = Character.toUpperCase(name.charAt(0)) + name.substring(1);
+            nameContent = nameContent.replaceAll("_", " ");
+        }
 
         int likelihood = 0;
         if(attack.getLikelihood() == Level.Medium) {
@@ -321,27 +359,8 @@ public class AttackController {
             updateMitigationsProcessor.execute();
         }
 
-        return new ResponseEntity<>(attack, HttpStatus.OK);
-    }
-
-    @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> deleteAttack(@RequestBody Attack attack) {
-
-        String attackName = attack.getName();
-
-        // DELETE
-        String deleteString = ""
-                + "PREFIX pre: <https://github.com/Stefans98/KnowledgeEngineering#> "
-                + "DELETE "
-                + "WHERE {"
-                + "    pre:" + attackName + " ?x ?y ."
-                + "}";
-        UpdateRequest updateRequest = UpdateFactory.create(deleteString);
-        System.setProperty("http.maxConnections", "10000");
-        UpdateProcessor updateProcessor = UpdateExecutionFactory.createRemote(updateRequest, UPDATE_URL);
-        updateProcessor.execute();
-
-        return new ResponseEntity<>(HttpStatus.OK);
+        attack.setName(name);
+        return attack;
     }
 
     private boolean doesPrerequisitesExist(String prerequisitesName) {
