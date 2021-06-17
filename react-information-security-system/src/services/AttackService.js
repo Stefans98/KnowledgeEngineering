@@ -51,6 +51,7 @@ class AttackService {
   }
 
   changeAttack(
+    attackId,
     attackName,
     likelihoodValue,
     severityValue,
@@ -67,6 +68,7 @@ class AttackService {
         "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify({
+        id: attackId,
         name: attackName,
         likelihood: likelihoodValue,
         severity: severityValue,

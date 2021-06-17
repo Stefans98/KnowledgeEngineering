@@ -40,8 +40,8 @@ public class CbrApplication implements StandardCBRApplication {
     }
 
     public void configure() throws ExecutionException {
-        _connector =  new CsvConnector(); // From CSV
-        //_connector =  new RDFConnector(); // From RDF
+        //_connector =  new CsvConnector(); // From CSV
+        _connector =  new RDFConnector(); // From RDF
 
         _caseBase = new LinealCaseBase();  // Create a Lineal case base for in-memory organization
 

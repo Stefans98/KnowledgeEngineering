@@ -6,26 +6,26 @@
 	a pre:Attack ;
 	pre:id "628"^^xsd:int ;
 	pre:name "Carry-Off GPS Attack"^^xsd:string ;
-        pre:likelihood "0"^^xsd:int ;
-        pre:severity "2"^^xsd:int ;
-        pre:prerequisites pre:628_target_relying_on_valid_GPS_signal ;
-        pre:consequences pre:628_unspecified_consequences ;
-        pre:weaknesses pre:628_insufficient_Verification_of_Data_Authenticity ;
-        pre:mitigations pre:628_unspecified_mitigations .
+    pre:likelihood "0"^^xsd:int ;
+    pre:severity "2"^^xsd:int ;
+    pre:prerequisites pre:target_relying_on_valid_GPS_signal ;
+    pre:consequences pre:unspecified_consequences ;
+    pre:weaknesses pre:insufficient_Verification_of_Data_Authenticity ;
+    pre:mitigations pre:unspecified_mitigations .
 
-<#628_target_relying_on_valid_GPS_signal>
+<#target_relying_on_valid_GPS_signal>
 	a pre:Prerequisites ;
 	pre:name "Target relying on valid GPS signal"^^xsd:string .
 
-<#628_unspecified_consequences>
+<#unspecified_consequences>
 	a pre:Consequences ;
 	pre:name "Unspecified"^^xsd:string .
 
-<#628_insufficient_Verification_of_Data_Authenticity>
+<#insufficient_Verification_of_Data_Authenticity>
 	a pre:Weaknesses ;
 	pre:name "Insufficient Verification of Data Authenticity"^^xsd:string .
 
-<#628_unspecified_mitigations>
+<#unspecified_mitigations>
 	a pre:Mitigations ;
 	pre:name "Unspecified"^^xsd:string .
 
@@ -33,53 +33,45 @@
 	a pre:Attack ;
 	pre:id "599"^^xsd:int ;
 	pre:name "Terrestrial Jamming"^^xsd:string ;
-        pre:likelihood "0"^^xsd:int ;
-        pre:severity "2"^^xsd:int ;
-        pre:prerequisites pre:599_none ;
-        pre:consequences pre:599_deny_availability_of_satellite_communications ;
-        pre:weaknesses pre:599_improper_Authentication ;
-        pre:mitigations pre:599_unspecified_mitigations .
+    pre:likelihood "0"^^xsd:int ;
+    pre:severity "2"^^xsd:int ;
+    pre:prerequisites pre:none ;
+    pre:consequences pre:deny_availability_of_satellite_communications ;
+    pre:weaknesses pre:improper_Authentication ;
+    pre:mitigations pre:unspecified_mitigations .
 
-<#599_none>
+<#none>
 	a pre:Prerequisites ;
 	pre:name "None"^^xsd:string .
 
-<#599_deny_availability_of_satellite_communications>
+<#deny_availability_of_satellite_communications>
 	a pre:Consequences ;
 	pre:name "Deny availability of satellite communications"^^xsd:string .
 
-<#599_improper_Authentication>
+<#improper_Authentication>
 	a pre:Weaknesses ;
 	pre:name "Improper Authentication"^^xsd:string .
-
-<#599_unspecified_mitigations>
-	a pre:Mitigations ;
-	pre:name "Unspecified"^^xsd:string .
 
 <#evil_Twin_WiFi_Attack>
 	a pre:Attack ;
 	pre:id "615"^^xsd:int ;
 	pre:name "Evil Twin WiFi Attack"^^xsd:string ;
-        pre:likelihood "1"^^xsd:int ;
-        pre:severity "0"^^xsd:int ;
-        pre:prerequisites pre:615_none ;
-        pre:consequences pre:615_read_data ;
-        pre:weaknesses pre:615_channel_Accessible_by_Non_Endpoint ;
-        pre:mitigations pre:615_commercial_defensive_technology_that_monitors_for_rogue_WiFi_access_points .
+    pre:likelihood "1"^^xsd:int ;
+    pre:severity "0"^^xsd:int ;
+    pre:prerequisites pre:none ;
+    pre:consequences pre:read_data ;
+    pre:weaknesses pre:channel_Accessible_by_Non_Endpoint ;
+    pre:mitigations pre:commercial_defensive_technology_that_monitors_for_rogue_WiFi_access_points .
 
-<#615_none>
-	a pre:Prerequisites ;
-	pre:name "None"^^xsd:string .
-
-<#615_read_data>
+<#read_data>
 	a pre:Consequences ;
 	pre:name "Read data"^^xsd:string .
 
-<#615_channel_Accessible_by_Non_Endpoint>
+<#channel_Accessible_by_Non_Endpoint>
 	a pre:Weaknesses ;
 	pre:name "Channel Accessible by Non Endpoint"^^xsd:string .
 
-<#615_commercial_defensive_technology_that_monitors_for_rogue_WiFi_access_points>
+<#commercial_defensive_technology_that_monitors_for_rogue_WiFi_access_points>
 	a pre:Mitigations ;
 	pre:name "Commercial defensive technology that monitors for rogue WiFi access points man in the middle attacks and anomalous activity with the mobile device baseband radios"^^xsd:string .
 

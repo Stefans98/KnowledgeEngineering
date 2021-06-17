@@ -3,9 +3,9 @@
 @prefix xsd: <http://w3.org/2001/XMLSchema#> .
 
 <#carryOff_GPS_Attack>
-	a pre:Attack ;
-	pre:id "628"^^xsd:int ;
-	pre:name "Carry-Off GPS Attack"^^xsd:string ;
+    a pre:Attack ;
+    pre:id "628"^^xsd:int ;
+    pre:name "Carry-Off GPS Attack"^^xsd:string ;
     pre:likelihood "0"^^xsd:int ;
     pre:severity "2"^^xsd:int ;
     pre:prerequisites pre:target_relying_on_valid_GPS_signal ;
@@ -13,26 +13,10 @@
     pre:weaknesses pre:insufficient_Verification_of_Data_Authenticity ;
     pre:mitigations pre:unspecified_mitigations .
 
-<#target_relying_on_valid_GPS_signal>
-	a pre:Prerequisites ;
-	pre:name "Target relying on valid GPS signal"^^xsd:string .
-
-<#unspecified_consequences>
-	a pre:Consequences ;
-	pre:name "Unspecified"^^xsd:string .
-
-<#insufficient_Verification_of_Data_Authenticity>
-	a pre:Weaknesses ;
-	pre:name "Insufficient Verification of Data Authenticity"^^xsd:string .
-
-<#unspecified_mitigations>
-	a pre:Mitigations ;
-	pre:name "Unspecified"^^xsd:string .
-
 <#terrestrial_Jamming>
-	a pre:Attack ;
-	pre:id "599"^^xsd:int ;
-	pre:name "Terrestrial Jamming"^^xsd:string ;
+    a pre:Attack ;
+    pre:id "599"^^xsd:int ;
+    pre:name "Terrestrial Jamming"^^xsd:string ;
     pre:likelihood "0"^^xsd:int ;
     pre:severity "2"^^xsd:int ;
     pre:prerequisites pre:none ;
@@ -40,38 +24,760 @@
     pre:weaknesses pre:improper_Authentication ;
     pre:mitigations pre:unspecified_mitigations .
 
-<#none>
-	a pre:Prerequisites ;
-	pre:name "None"^^xsd:string .
-
-<#deny_availability_of_satellite_communications>
-	a pre:Consequences ;
-	pre:name "Deny availability of satellite communications"^^xsd:string .
-
-<#improper_Authentication>
-	a pre:Weaknesses ;
-	pre:name "Improper Authentication"^^xsd:string .
-
 <#evil_Twin_WiFi_Attack>
-	a pre:Attack ;
-	pre:id "615"^^xsd:int ;
-	pre:name "Evil Twin WiFi Attack"^^xsd:string ;
+    a pre:Attack ;
+    pre:id "615"^^xsd:int ;
+    pre:name "Evil Twin WiFi Attack"^^xsd:string ;
     pre:likelihood "1"^^xsd:int ;
     pre:severity "0"^^xsd:int ;
     pre:prerequisites pre:none ;
     pre:consequences pre:read_data ;
     pre:weaknesses pre:channel_Accessible_by_Non_Endpoint ;
-    pre:mitigations pre:commercial_defensive_technology_that_monitors_for_rogue_WiFi_access_points .
+    pre:mitigations pre:commercial_defensive_technology_that_monitors_for_rogue_WiFi_access_points_man_in_the_middle_attacks_and_anomalous_activity_with_the_mobile_device_baseband_radios .
+
+<#cellular_Rogue_Base_Station>
+    a pre:Attack ;
+    pre:id "617"^^xsd:int ;
+    pre:name "Cellular Rogue Base Station"^^xsd:string ;
+    pre:likelihood "0"^^xsd:int ;
+    pre:severity "0"^^xsd:int ;
+    pre:prerequisites pre:none ;
+    pre:consequences pre:read_data ;
+    pre:weaknesses pre:exposure_of_Sensitive_Information_to_an_Unauthorized_Actor ;
+    pre:mitigations pre:passively_monitor_cellular_network_connection_for_real_time_threat_detection_and_logging_for_manual_review .
+
+<#sniffing_Network_Traffic>
+    a pre:Attack ;
+    pre:id "158"^^xsd:int ;
+    pre:name "Sniffing Network Traffic"^^xsd:string ;
+    pre:likelihood "2"^^xsd:int ;
+    pre:severity "1"^^xsd:int ;
+    pre:prerequisites pre:target_communicating_on_a_network_protocol_visible_by_a_network_sniffing_application__target_sender_recipient_adversary_must_be_on_same_subnet ;
+    pre:consequences pre:read_data ;
+    pre:weaknesses pre:missing_Encryption_of_Sensitive_Data ;
+    pre:mitigations pre:obfuscate_network_traffic_through_encryption_to_prevent_its_readability_by_network_sniffers__employ_appropriate_levels_of_segmentation_to_your_network_in_accordance_with_best_practices .
+
+<#accessing_Intercepting_Modifying_HTTP_Cookies>
+    a pre:Attack ;
+    pre:id "31"^^xsd:int ;
+    pre:name "Accessing Intercepting Modifying HTTP Cookies"^^xsd:string ;
+    pre:likelihood "2"^^xsd:int ;
+    pre:severity "2"^^xsd:int ;
+    pre:prerequisites pre:http_daemon_relies_on_cookies__cookies_contain_sensitive_information__cookie_is_contained_in_reply_to_adversary ;
+    pre:consequences pre:read_data__modify_data__gain_privileges ;
+    pre:weaknesses pre:missing_Encryption_of_Sensitive_Data__improper_Input_Validation__cleartext_Storage_of_Sensitive_Information_in_a_Cookie__session_Fixation__broken_Authentication_and_Session_Management__client_Side_Enforcement_of_Server_Side_Security__external_Control_of_Critical_State_Data ;
+    pre:mitigations pre:validation_for_cookies__generate_and_validate_MAC_for_cookies__use_SSL_TLS_to_protect_cookie_in_transit__ensure_the_web_server_implements_all_relevant_security_patches .
+
+<#utilizing_RESTs_Trust_in_the_System_Resource_to_Obtain_Sensitive_Data>
+    a pre:Attack ;
+    pre:id "57"^^xsd:int ;
+    pre:name "Utilizing RESTs Trust in the System Resource to Obtain Sensitive Data"^^xsd:string ;
+    pre:likelihood "1"^^xsd:int ;
+    pre:severity "2"^^xsd:int ;
+    pre:prerequisites pre:opportunity_to_intercept_must_exist_beyond_the_point_where_SSL_is_terminated__insert_listener_actively_in_client_server_communication_path__insert_listener_passively_in_client_server_communication_path ;
+    pre:consequences pre:gain_privileges ;
+    pre:weaknesses pre:channel_Accessible_by_Non_Endpoint__improper_Authentication__broken_Authentication_and_Session_Management__protection_Mechanism_Failure ;
+    pre:mitigations pre:implement_message_level_security_such_as_HMAC_in_the_HTTP_communication__utilize_defense_in_depth_do_not_rely_on_single_security_mechanism_like_SSL__enforce_principle_of_least_privilege .
+
+<#cellular_Traffic_Intercept>
+    a pre:Attack ;
+    pre:id "609"^^xsd:int ;
+    pre:name "Cellular Traffic Intercept"^^xsd:string ;
+    pre:likelihood "1"^^xsd:int ;
+    pre:severity "0"^^xsd:int ;
+    pre:prerequisites pre:none ;
+    pre:consequences pre:read_data ;
+    pre:weaknesses pre:missing_Encryption_of_Sensitive_Data ;
+    pre:mitigations pre:encryption_of_data_packets_emanating_from_smartphone_to_retransmission_device_with_Suite_B_cryptography .
+
+<#sniff_Application_Code>
+    a pre:Attack ;
+    pre:id "65"^^xsd:int ;
+    pre:name "Sniff Application Code"^^xsd:string ;
+    pre:likelihood "0"^^xsd:int ;
+    pre:severity "2"^^xsd:int ;
+    pre:prerequisites pre:attacker_must_have_ability_to_place_themself_in_the_communication_path_between_client_and_server__targeted_application_must_receive_application_code_from_server__attacker_must_be_able_to_employ_sniffer_on_the_network_without_being_detected ;
+    pre:consequences pre:read_data__gain_privileges ;
+    pre:weaknesses pre:cleartext_Transmission_of_Sensitive_Information__missing_Encryption_of_Sensitive_Data__cleartext_Storage_of_Sensitive_Information_in_Executable__protection_Mechanism_Failure__insecure_Cryptographic_Storage ;
+    pre:mitigations pre:use_SSL_SSH_SCP_to_encrypt_all_communication_between_client_and_server .
+
+<#probe_Audio_and_Video_Peripherals>
+    a pre:Attack ;
+    pre:id "634"^^xsd:int ;
+    pre:name "Probe Audio and Video Peripherals"^^xsd:string ;
+    pre:likelihood "0"^^xsd:int ;
+    pre:severity "2"^^xsd:int ;
+    pre:prerequisites pre:knowledge_of_target_devices_or_application_vulnerabilities__adversary_must_be_able_to_place_malicious_code_on_the_target_device ;
+    pre:consequences pre:read_data ;
+    pre:weaknesses pre:privilege_Defined_With_Unsafe_Actions ;
+    pre:mitigations pre:use_allowlist_policy_to_prevent_unknown_code_from_executing_on_system__patch_installed_applications_as_soon_as_new_updates_become_available .
+
+<#wiFi_MAC_Address_Tracking>
+    a pre:Attack ;
+    pre:id "612"^^xsd:int ;
+    pre:name "WiFi MAC Address Tracking"^^xsd:string ;
+    pre:likelihood "0"^^xsd:int ;
+    pre:severity "0"^^xsd:int ;
+    pre:prerequisites pre:none ;
+    pre:consequences pre:unspecified_consequences ;
+    pre:weaknesses pre:insertion_of_Sensitive_Information_Into_Sent_Data__channel_Accessible_by_Non_Endpoint ;
+    pre:mitigations pre:automatic_randomization_of_WiFi_MAC_addresses__frequent_changing_of_handset_and_retransmission_device .
+
+<#wiFi_SSID_Tracking>
+    a pre:Attack ;
+    pre:id "613"^^xsd:int ;
+    pre:name "WiFi SSID Tracking"^^xsd:string ;
+    pre:likelihood "1"^^xsd:int ;
+    pre:severity "0"^^xsd:int ;
+    pre:prerequisites pre:none ;
+    pre:consequences pre:unspecified_consequences ;
+    pre:weaknesses pre:insertion_of_Sensitive_Information_Into_Sent_Data__channel_Accessible_by_Non_Endpoint ;
+    pre:mitigations pre:do_not_enable_the_feature_of_Hidden_SSIDs__frequently_change_SSID_to_new_and_unrelated_values .
+
+<#cellular_Broadcast_Message_Request>
+    a pre:Attack ;
+    pre:id "618"^^xsd:int ;
+    pre:name "Cellular Broadcast Message Request"^^xsd:string ;
+    pre:likelihood "2"^^xsd:int ;
+    pre:severity "0"^^xsd:int ;
+    pre:prerequisites pre:attacker_must_have_knowledge_of_targets_mobile_phone_number ;
+    pre:consequences pre:unspecified_consequences ;
+    pre:weaknesses pre:insertion_of_Sensitive_Information_Into_Sent_Data  ;
+    pre:mitigations pre:frequent_changing_of_mobile_number .
+
+<#signal_Strength_Tracking>
+    a pre:Attack ;
+    pre:id "619"^^xsd:int ;
+    pre:name "Signal Strength Tracking"^^xsd:string ;
+    pre:likelihood "2"^^xsd:int ;
+    pre:severity "0"^^xsd:int ;
+    pre:prerequisites pre:none ;
+    pre:consequences pre:unspecified_consequences ;
+    pre:weaknesses pre:insertion_of_Sensitive_Information_Into_Sent_Data ;
+    pre:mitigations pre:unspecified_mitigations .
+
+<#tcp_SYN_Scan>
+    a pre:Attack ;
+    pre:id "287"^^xsd:int ;
+    pre:name "Tcp SYN Scan"^^xsd:string ;
+    pre:likelihood "2"^^xsd:int ;
+    pre:severity "0"^^xsd:int ;
+    pre:prerequisites pre:on_Unix_and_Linux_raw_socket_manipulations_require_root_privileges ;
+    pre:consequences pre:bypass_protection_mechanism__hide_activities ;
+    pre:weaknesses pre:exposure_of_Sensitive_Information_to_an_Unauthorized_Actor ;
+    pre:mitigations pre:unspecified_mitigations .
+
+<#tcp_Connect_Scan>
+    a pre:Attack ;
+    pre:id "301"^^xsd:int ;
+    pre:name "Tcp Connect Scan"^^xsd:string ;
+    pre:likelihood "2"^^xsd:int ;
+    pre:severity "0"^^xsd:int ;
+    pre:prerequisites pre:adversary_needs_logical_access_to_the_target_network__requires_ability_to_connect_to_available_port_and_complete_three_way_handshake ;
+    pre:consequences pre:read_data ;
+    pre:weaknesses pre:exposure_of_Sensitive_Information_to_an_Unauthorized_Actor ;
+    pre:mitigations pre:employ_robust_network_defense_posture_that_includes_IDS_IPS_system .
+
+<#tcp_FIN_Scan>
+    a pre:Attack ;
+    pre:id "302"^^xsd:int ;
+    pre:name "Tcp FIN Scan"^^xsd:string ;
+    pre:likelihood "1"^^xsd:int ;
+    pre:severity "0"^^xsd:int ;
+    pre:prerequisites pre:on_Unix_and_Linux_raw_socket_manipulations_require_root_privileges ;
+    pre:consequences pre:bypass_protection_mechanism__hide_activities ;
+    pre:weaknesses pre:exposure_of_Sensitive_Information_to_an_Unauthorized_Actor ;
+    pre:mitigations pre:use_IDS_IPS_system_with_heuristic_algorithms .
+
+<#tcp_Xmas_Scan>
+    a pre:Attack ;
+    pre:id "303"^^xsd:int ;
+    pre:name "Tcp Xmas Scan"^^xsd:string ;
+    pre:likelihood "1"^^xsd:int ;
+    pre:severity "0"^^xsd:int ;
+    pre:prerequisites pre:adversary_needs_logical_access_to_the_target_network__requires_the_use_of_raw_sockets__on_Unix_and_Linux_raw_socket_manipulations_require_root_privileges ;
+    pre:consequences pre:bypass_protection_mechanism__hide_activities__unreliable_execution ;
+    pre:weaknesses pre:exposure_of_Sensitive_Information_to_an_Unauthorized_Actor ;
+    pre:mitigations pre:employ_robust_network_defensive_posture_that_includes_managed_IDS_IP .
+
+<#tcp_Null_Scan>
+    a pre:Attack ;
+    pre:id "304"^^xsd:int ;
+    pre:name "Tcp Null Scan"^^xsd:string ;
+    pre:likelihood "1"^^xsd:int ;
+    pre:severity "0"^^xsd:int ;
+    pre:prerequisites pre:adversary_needs_logical_access_to_the_target_network__requires_the_use_of_raw_sockets__on_Unix_and_Linux_raw_socket_manipulations_require_root_privileges ;
+    pre:consequences pre:bypass_protection_mechanism__hide_activities ;
+    pre:weaknesses pre:exposure_of_Sensitive_Information_to_an_Unauthorized_Actor ;
+    pre:mitigations pre:employ_robust_network_defensive_posture_that_includes_managed_IDS_IP .
+
+<#tcp_ACK_Scan>
+    a pre:Attack ;
+    pre:id "305"^^xsd:int ;
+    pre:name "Tcp ACK Scan"^^xsd:string ;
+    pre:likelihood "1"^^xsd:int ;
+    pre:severity "0"^^xsd:int ;
+    pre:prerequisites pre:adversary_needs_logical_access_to_the_target_network__requires_the_use_of_raw_sockets__on_Unix_and_Linux_raw_socket_manipulations_require_root_privileges ;
+    pre:consequences pre:bypass_protection_mechanism__hide_activities ;
+    pre:weaknesses pre:exposure_of_Sensitive_Information_to_an_Unauthorized_Actor ;
+    pre:mitigations pre:unspecified_mitigations .
+
+<#tcp_Window_Scan>
+    a pre:Attack ;
+    pre:id "306"^^xsd:int ;
+    pre:name "Tcp Window Scan"^^xsd:string ;
+    pre:likelihood "1"^^xsd:int ;
+    pre:severity "0"^^xsd:int ;
+    pre:prerequisites pre:requires_the_use_of_raw_sockets__on_Unix_and_Linux_raw_socket_manipulations_require_root_privileges ;
+    pre:consequences pre:bypass_protection_mechanism__hide_activities ;
+    pre:weaknesses pre:exposure_of_Sensitive_Information_to_an_Unauthorized_Actor ;
+    pre:mitigations pre:unspecified_mitigations .
+
+<#tcp_RPC_Scan>
+    a pre:Attack ;
+    pre:id "307"^^xsd:int ;
+    pre:name "Tcp RPC Scan"^^xsd:string ;
+    pre:likelihood "1"^^xsd:int ;
+    pre:severity "0"^^xsd:int ;
+    pre:prerequisites pre:no_special_privileges_when_it_is_performed_via_native_system_utility ;
+    pre:consequences pre:bypass_protection_mechanism__hide_activities ;
+    pre:weaknesses pre:exposure_of_Sensitive_Information_to_an_Unauthorized_Actor ;
+    pre:mitigations pre:use_IDS_IPS_system .
+
+<#udp_Scan>
+    a pre:Attack ;
+    pre:id "308"^^xsd:int ;
+    pre:name "Udp Scan"^^xsd:string ;
+    pre:likelihood "1"^^xsd:int ;
+    pre:severity "0"^^xsd:int ;
+    pre:prerequisites pre:ability_to_send_UDP_datagrams_to_host_and_receive_ICMP_error_messages_from_that_host ;
+    pre:consequences pre:bypass_protection_mechanism__hide_activities ;
+    pre:weaknesses pre:exposure_of_Sensitive_Information_to_an_Unauthorized_Actor ;
+    pre:mitigations pre:use_firewalls_or_ACLs_which_block_egress_ICMP_error_types .
+
+<#padding_Oracle_Crypto_Attack>
+    a pre:Attack ;
+    pre:id "463"^^xsd:int ;
+    pre:name "Padding Oracle Crypto Attack"^^xsd:string ;
+    pre:likelihood "0"^^xsd:int ;
+    pre:severity "8"^^xsd:int ;
+    pre:prerequisites pre:inproperly_authenticatation_prior_to_performing_decryption_operation ;
+    pre:consequences pre:unspecified_consequences ;
+    pre:weaknesses pre:generation_of_Error_Message_Containing_Sensitive_Information__covert_Channel__improper_Verification_of_Cryptographic_Signature__improper_Validation_of_Integrity_Check_Value__incorrect_Behavior_Order ;
+    pre:mitigations pre:use_message_authentication_code_or_another_mechanism_to_perform_verification_of_message_authenticity_or_integrity_prior_to_decryption__do_not_leak_information_back_to_user_as_to_any_cryptography_encountered_during_decryption .
+
+<#cryptanalysis_of_Cellular_Encryption>
+    a pre:Attack ;
+    pre:id "608"^^xsd:int ;
+    pre:name "Cryptanalysis of Cellular Encryption"^^xsd:string ;
+    pre:likelihood "2"^^xsd:int ;
+    pre:severity "2"^^xsd:int ;
+    pre:prerequisites pre:none ;
+    pre:consequences pre:unspecified_consequences ;
+    pre:weaknesses pre:use_of_a_Broken_or_Risky_Cryptographic_Algorithm ;
+    pre:mitigations pre:use_of_hardened_baseband_firmware_on_retransmission_device_to_detect_and_prevent_the_use_of_weak_cellular_encryption__monitor_cellular_RF_interface_to_detect_the_usage_of_weaker_than_expected_cellular_encryption .
+
+<#xml_Routing_Detour_Attacks>
+    a pre:Attack ;
+    pre:id "219"^^xsd:int ;
+    pre:name "Xml Routing Detour Attacks"^^xsd:string ;
+    pre:likelihood "2"^^xsd:int ;
+    pre:severity "1"^^xsd:int ;
+    pre:prerequisites pre:targeted_system_must_have_multiple_stages_processing_of_XML_content ;
+    pre:consequences pre:modify_data__read_data__gain_privileges__bypass_protection_mechanism ;
+    pre:weaknesses pre:unintended_Proxy_or_Intermediary__externally_Controlled_Reference_to_a_Resource_in_Another_Sphere ;
+    pre:mitigations pre:specify_maximum_number_intermediate_nodes_for_the_request_and_require_SSL_connections_with_mutual_authentication__use_SSL_for_connections_between_all_parties_with_mutual_authentication .
+
+<#transaction_or_Event_Tampering_via_Application_API_Manipulation>
+    a pre:Attack ;
+    pre:id "385"^^xsd:int ;
+    pre:name "Transaction or Event Tampering via Application API Manipulation"^^xsd:string ;
+    pre:likelihood "1"^^xsd:int ;
+    pre:severity "1"^^xsd:int ;
+    pre:prerequisites pre:targeted_software_is_utilizing_application_framework_APIs ;
+    pre:consequences pre:unspecified_consequences ;
+    pre:weaknesses pre:modification_of_Assumed_Immutable_Data_MAID__insufficient_Verification_of_Data_Authenticity__origin_Validation_Error__client_Side_Enforcement_of_Server_Side_Security__missing_Encryption_of_Sensitive_Data ;
+    pre:mitigations pre:unspecified_mitigations .
+
+<#content_Spoofing_Via_Application_API_Manipulation>
+    a pre:Attack ;
+    pre:id "389"^^xsd:int ;
+    pre:name "Content Spoofing Via Application API Manipulation"^^xsd:string ;
+    pre:likelihood "0"^^xsd:int ;
+    pre:severity "0"^^xsd:int ;
+    pre:prerequisites pre:targeted_software_is_utilizing_application_framework_APIs ;
+    pre:consequences pre:unspecified_consequences ;
+    pre:weaknesses pre:missing_Support_for_Integrity_Check ;
+    pre:mitigations pre:unspecified_mitigations .
+
+<#navigation_Remapping_To_Propagate_Malicious_Content>
+    a pre:Attack ;
+    pre:id "387"^^xsd:int ;
+    pre:name "Navigation Remapping To Propagate Malicious Content"^^xsd:string ;
+    pre:likelihood "2"^^xsd:int ;
+    pre:severity "1"^^xsd:int ;
+    pre:prerequisites pre:targeted_software_is_utilizing_application_framework_APIs ;
+    pre:consequences pre:unspecified_consequences ;
+    pre:weaknesses pre:modification_of_Assumed_Immutable_Data_MAID__insufficient_Verification_of_Data_Authenticity__origin_Validation_Error__client_Side_Enforcement_of_Server_Side_Security__missing_Encryption_of_Sensitive_Data ;
+    pre:mitigations pre:unspecified_mitigations .
+
+<#aplication_API_Button_Hijacking>
+    a pre:Attack ;
+    pre:id "388"^^xsd:int ;
+    pre:name "Aplication API Button Hijacking"^^xsd:string ;
+    pre:likelihood "2"^^xsd:int ;
+    pre:severity "1"^^xsd:int ;
+    pre:prerequisites pre:targeted_software_is_utilizing_application_framework_APIs ;
+    pre:consequences pre:unspecified_consequences ;
+    pre:weaknesses pre:modification_of_Assumed_Immutable_Data_MAID__insufficient_Verification_of_Data_Authenticity__origin_Validation_Error__client_Side_Enforcement_of_Server_Side_Security__missing_Encryption_of_Sensitive_Data ;
+    pre:mitigations pre:unspecified_mitigations .
+
+<#leveraging_Active_Man_in_the_Middle_Attacks_to_Bypass_Same_Origin_Policy>
+    a pre:Attack ;
+    pre:id "466"^^xsd:int ;
+    pre:name "Leveraging Active Man in the Middle Attacks to Bypass Same Origin Policy"^^xsd:string ;
+    pre:likelihood "1"^^xsd:int ;
+    pre:severity "1"^^xsd:int ;
+    pre:prerequisites pre:victim_and_the_attacker_are_in_environment_where_active_man_in_the_middle_attack_is_possible__victim_visits_website_that_does_not_use_TLS_SSL ;
+    pre:consequences pre:read_data__execute_unauthorized_commands ;
+    pre:weaknesses pre:channel_Accessible_by_Non_Endpoint ;
+    pre:mitigations pre:tunnel_communications_through_secure_proxy__trust_level_separation_for_privileged_or_non_privileged_interactions .
+
+<#establish_Rogue_Location>
+    a pre:Attack ;
+    pre:id "616"^^xsd:int ;
+    pre:name "Establish Rogue Location"^^xsd:string ;
+    pre:likelihood "1"^^xsd:int ;
+    pre:severity "1"^^xsd:int ;
+    pre:prerequisites pre:expected_resource_to_be_available_to_user ;
+    pre:consequences pre:read_data ;
+    pre:weaknesses pre:exposure_of_Sensitive_Information_to_an_Unauthorized_Actor ;
+    pre:mitigations pre:passively_monitor_cellular_network_connection_for_real_time_threat_detection_and_logging_for_manual_review .
+
+<#sniffing_Attacks>
+    a pre:Attack ;
+    pre:id "157"^^xsd:int ;
+    pre:name "Sniffing Attacks"^^xsd:string ;
+    pre:likelihood "1"^^xsd:int ;
+    pre:severity "1"^^xsd:int ;
+    pre:prerequisites pre:target_data_stream_must_be_transmitted_on_a_medium_to_which_the_adversary_has_access ;
+    pre:consequences pre:read_data ;
+    pre:weaknesses pre:missing_Encryption_of_Sensitive_Data ;
+    pre:mitigations pre:encrypt_sensitive_information_when_transmitted_on_insecure_mediums_to_prevent_interception .
+
+<#cryptanalysis>
+    a pre:Attack ;
+    pre:id "97"^^xsd:int ;
+    pre:name "Cryptanalysis"^^xsd:string ;
+    pre:likelihood "0"^^xsd:int ;
+    pre:severity "2"^^xsd:int ;
+    pre:prerequisites pre:target_software_utilizes_some_sort_of_cryptographic_algorithm__attacker_has_access_to_the_ciphertext ;
+    pre:consequences pre:read_data ;
+    pre:weaknesses pre:use_of_a_Broken_or_Risky_Cryptographic_Algorithm__use_of_a_Risky_Cryptographic_Primitive__use_of_Predictable_Algorithm_in_Random_Number_Generator__cryptographic_Operations_are_run_Before_Supporting_Units_are_Ready ;
+    pre:mitigations pre:use_proven_cryptographic_algorithms_with_recommended_key_sizes__ensure_that_the_algorithms_are_used_properly .
+
+<#reflection_Attack_in_Authentication_Protocol>
+    a pre:Attack ;
+    pre:id "90"^^xsd:int ;
+    pre:name "Reflection Attack in Authentication Protocol"^^xsd:string ;
+    pre:likelihood "2"^^xsd:int ;
+    pre:severity "2"^^xsd:int ;
+    pre:prerequisites pre:attacker_must_have_direct_access_to_the_target_server ;
+    pre:consequences pre:gain_privileges__bypass_protection_mechanism__read_data ;
+    pre:weaknesses pre:broken_Authentication_and_Session_Management__incorrect_Implementation_of_Authentication_Algorithm ;
+    pre:mitigations pre:server_must_initiate_handshake_by_issuing_challenge__introducing_a_random_nonce_with_each_new_connection .
+
+<#data_Serialization_External_Entities_Blowup>
+    a pre:Attack ;
+    pre:id "221"^^xsd:int ;
+    pre:name "Data Serialization External Entities Blowup"^^xsd:string ;
+    pre:likelihood "2"^^xsd:int ;
+    pre:severity "1"^^xsd:int ;
+    pre:prerequisites pre:server_that_has_an_implementation_that_accepts_entities_containing_URI_values ;
+    pre:consequences pre:execute_unauthorized_commands__resource_consumption ;
+    pre:weaknesses pre:improper_Restriction_of_XML_External_Entity_Reference ;
+    pre:mitigations pre:implement_custom_resolver_that_has_request_timeout_and_restrict_resources_it_can_retrieve_locally .
+
+<#eavesdropping>
+    a pre:Attack ;
+    pre:id "651"^^xsd:int ;
+    pre:name "Eavesdropping"^^xsd:string ;
+    pre:likelihood "0"^^xsd:int ;
+    pre:severity "1"^^xsd:int ;
+    pre:prerequisites pre:physical_proximity_to_the_targets_environment ;
+    pre:consequences pre:read_data ;
+    pre:weaknesses pre:exposure_of_Sensitive_Information_to_an_Unauthorized_Actor ;
+    pre:mitigations pre:use_of_antivirus_and_other_security_monitoring_and_detecting_tools__physically_disable_the_microphone_on_your_machine .
+
+<#manipulating_Opaque_Client_based_Data_Tokens>
+    a pre:Attack ;
+    pre:id "39"^^xsd:int ;
+    pre:name "Manipulating Opaque Client based Data Tokens"^^xsd:string ;
+    pre:likelihood "2"^^xsd:int ;
+    pre:severity "1"^^xsd:int ;
+    pre:prerequisites pre:attacker_has_some_access_to_the_system__some_data_must_be_held_client_side ;
+    pre:consequences pre:modify_data__gain_privileges ;
+    pre:weaknesses pre:missing_Support_for_Integrity_Check__cleartext_Storage_of_Sensitive_Information_in_a_Cookie__improper_Authorization__session_Fixation__improper_Handling_of_Parameters ;
+    pre:mitigations pre:protect_client_side_authentication_tokens_for_confidentiality_and_integrity__make_sure_that_session_tokens_use_good_source_of_randomness__perform_validation_on_the_server_side .
+
+
+
+
+
+
+<#none>
+    a pre:Prerequisites ;
+    pre:name "None"^^xsd:string .
+
+<#knowledge_of_target_devices_or_application_vulnerabilities__adversary_must_be_able_to_place_malicious_code_on_the_target_device>
+    a pre:Prerequisites ;
+    pre:name "Knowledge of target devices or application vulnerabilities, Adversary must be able to place malicious code on the target device"^^xsd:string .
+
+<#target_relying_on_valid_GPS_signal>
+    a pre:Prerequisites ;
+    pre:name "Target relying on valid GPS signal"^^xsd:string .
+
+<#target_communicating_on_a_network_protocol_visible_by_a_network_sniffing_application__target_sender_recipient_adversary_must_be_on_same_subnet>
+    a pre:Prerequisites ;
+    pre:name "Target communicating on a network protocol visible by a network sniffing application, Target sender recipient adversary must be on same subnet"^^xsd:string .
+
+<#http_daemon_relies_on_cookies__cookies_contain_sensitive_information__cookie_is_contained_in_reply_to_adversary>
+    a pre:Prerequisites ;
+    pre:name "Http daemon relies on cookies, Cookies contain sensitive information, Cookie is contained in reply to adversary"^^xsd:string .
+
+<#opportunity_to_intercept_must_exist_beyond_the_point_where_SSL_is_terminated__insert_listener_actively_in_client_server_communication_path__insert_listener_passively_in_client_server_communication_path>
+    a pre:Prerequisites ;
+    pre:name "Opportunity to intercept must exist beyond the point where SSL is terminated, Insert listener actively in client server communication path, Insert listener passively in client server communication path"^^xsd:string .
+
+<#attacker_must_have_ability_to_place_themself_in_the_communication_path_between_client_and_server__targeted_application_must_receive_application_code_from_server__attacker_must_be_able_to_employ_sniffer_on_the_network_without_being_detected>
+    a pre:Prerequisites ;
+    pre:name "Attacker must have ability to place themself in the communication path between client and server, Targeted application must receive application code from server, Attacker must be able to employ sniffer on the network without being detected"^^xsd:string .
+
+<#attacker_must_have_knowledge_of_targets_mobile_phone_number>
+    a pre:Prerequisites ;
+    pre:name "Attacker must have knowledge of targets mobile phone number"^^xsd:string .
+
+<#on_Unix_and_Linux_raw_socket_manipulations_require_root_privileges>
+    a pre:Prerequisites ;
+    pre:name "On Unix and Linux raw socket manipulations require root privileges"^^xsd:string .
+
+<#adversary_needs_logical_access_to_the_target_network__requires_ability_to_connect_to_available_port_and_complete_three_way_handshake>
+    a pre:Prerequisites ;
+    pre:name "Adversary needs logical access to the target network, Requires ability to connect to available port and complete three way handshake"^^xsd:string .
+
+<#adversary_needs_logical_access_to_the_target_network__requires_the_use_of_raw_sockets__on_Unix_and_Linux_raw_socket_manipulations_require_root_privileges>
+    a pre:Prerequisites ;
+    pre:name "Adversary needs logical access to the target network, Requires the use of raw sockets, On Unix and Linux raw socket manipulations require root privileges"^^xsd:string .
+
+<#requires_the_use_of_raw_sockets__on_Unix_and_Linux_raw_socket_manipulations_require_root_privileges>
+    a pre:Prerequisites ;
+    pre:name "Requires the use of raw sockets, On Unix and Linux raw socket manipulations require root privileges"^^xsd:string .
+
+<#no_special_privileges_when_it_is_performed_via_native_system_utility>
+    a pre:Prerequisites ;
+    pre:name "No special privileges when it is performed via native system utility"^^xsd:string .
+
+<#ability_to_send_UDP_datagrams_to_host_and_receive_ICMP_error_messages_from_that_host>
+    a pre:Prerequisites ;
+    pre:name "Ability to send UDP datagrams to host and receive ICMP error messages from that host"^^xsd:string .
+
+<#inproperly_authenticatation_prior_to_performing_decryption_operation>
+    a pre:Prerequisites ;
+    pre:name "Inproperly authenticatation prior to performing decryption operation"^^xsd:string .
+
+<#targeted_system_must_have_multiple_stages_processing_of_XML_content>
+    a pre:Prerequisites ;
+    pre:name "Targeted system must have multiple stages processing of XML content"^^xsd:string .
+
+<#targeted_software_is_utilizing_application_framework_APIs>
+    a pre:Prerequisites ;
+    pre:name "Targeted software is utilizing application framework APIs"^^xsd:string .
+
+<#victim_and_the_attacker_are_in_environment_where_active_man_in_the_middle_attack_is_possible__victim_visits_website_that_does_not_use_TLS_SSL>
+    a pre:Prerequisites ;
+    pre:name "Victim and the attacker are in environment where active man in the middle attack is possible, Victim visits website that does not use TLS SSL"^^xsd:string .
+
+<#expected_resource_to_be_available_to_user>
+    a pre:Prerequisites ;
+    pre:name "Expected resource to be available to user"^^xsd:string .
+
+<#target_data_stream_must_be_transmitted_on_a_medium_to_which_the_adversary_has_access>
+    a pre:Prerequisites ;
+    pre:name "Target data stream must be transmitted on a medium to which the adversary has access"^^xsd:string .
+
+<#target_software_utilizes_some_sort_of_cryptographic_algorithm__attacker_has_access_to_the_ciphertext>
+    a pre:Prerequisites ;
+    pre:name "Target software utilizes some sort of cryptographic algorithm, Attacker has access to the ciphertext"^^xsd:string .
+
+<#attacker_must_have_direct_access_to_the_target_server>
+    a pre:Prerequisites ;
+    pre:name "Attacker must have direct access to the target server"^^xsd:string .
+
+<#server_that_has_an_implementation_that_accepts_entities_containing_URI_values>
+    a pre:Prerequisites ;
+    pre:name "Server that has an implementation that accepts entities containing URI values"^^xsd:string .
+
+<#physical_proximity_to_the_targets_environment>
+    a pre:Prerequisites ;
+    pre:name "Physical proximity to the targets environment"^^xsd:string .
+
+<#attacker_has_some_access_to_the_system__some_data_must_be_held_client_side>
+    a pre:Prerequisites ;
+    pre:name "Attacker has some access to the system, Some data must be held client side"^^xsd:string .
+
+
+
+
+<#unspecified_consequences>
+    a pre:Consequences ;
+    pre:name "Unspecified"^^xsd:string .
+
+<#deny_availability_of_satellite_communications>
+    a pre:Consequences ;
+    pre:name "Deny availability of satellite communications"^^xsd:string .
 
 <#read_data>
-	a pre:Consequences ;
-	pre:name "Read data"^^xsd:string .
+    a pre:Consequences ;
+    pre:name "Read data"^^xsd:string .
+
+<#read_data__modify_data__gain_privileges>
+    a pre:Consequences ;
+    pre:name "Read data, Modify data, Gain privileges"^^xsd:string .
+
+<#gain_privileges>
+    a pre:Consequences ;
+    pre:name "Gain privileges"^^xsd:string .
+
+<#read_data__gain_privileges>
+    a pre:Consequences ;
+    pre:name "Read data, Gain privileges"^^xsd:string .
+
+<#bypass_protection_mechanism__hide_activities>
+    a pre:Consequences ;
+    pre:name "Bypass protection mechanism, Hide activities"^^xsd:string .
+
+<#bypass_protection_mechanism__hide_activities__unreliable_execution>
+    a pre:Consequences ;
+    pre:name "Bypass protection mechanism, Hide activities, Unreliable execution"^^xsd:string .
+
+<#modify_data__read_data__gain_privileges__bypass_protection_mechanism>
+    a pre:Consequences ;
+    pre:name "Modify data, Read data, Gain privileges, Bypass protection mechanism"^^xsd:string .
+
+<#read_data__execute_unauthorized_commands>
+    a pre:Consequences ;
+    pre:name "Read data, Execute unauthorized commands"^^xsd:string .
+
+<#gain_privileges__bypass_protection_mechanism__read_data>
+    a pre:Consequences ;
+    pre:name "Gain privileges, Bypass protection mechanism, Read data"^^xsd:string .
+
+<#execute_unauthorized_commands__resource_consumption>
+    a pre:Consequences ;
+    pre:name "Execute unauthorized commands, Resource consumption"^^xsd:string .
+
+<#modify_data__gain_privileges>
+    a pre:Consequences ;
+    pre:name "Modify data, Gain privileges"^^xsd:string .
+
+
+
+
+
+
+<#unspecified_weaknesses>
+    a pre:Weaknesses ;
+    pre:name "Unspecified"^^xsd:string .
 
 <#channel_Accessible_by_Non_Endpoint>
-	a pre:Weaknesses ;
-	pre:name "Channel Accessible by Non Endpoint"^^xsd:string .
+    a pre:Weaknesses ;
+    pre:name "Channel Accessible by Non Endpoint"^^xsd:string .
 
-<#commercial_defensive_technology_that_monitors_for_rogue_WiFi_access_points>
-	a pre:Mitigations ;
-	pre:name "Commercial defensive technology that monitors for rogue WiFi access points man in the middle attacks and anomalous activity with the mobile device baseband radios"^^xsd:string .
+<#improper_Authentication>
+    a pre:Weaknesses ;
+    pre:name "Improper Authentication"^^xsd:string .
 
+<#insufficient_Verification_of_Data_Authenticity>
+    a pre:Weaknesses ;
+    pre:name "Insufficient Verification of Data Authenticity"^^xsd:string .
+
+<#exposure_of_Sensitive_Information_to_an_Unauthorized_Actor>
+    a pre:Weaknesses ;
+    pre:name "Exposure of Sensitive Information to an Unauthorized Actor"^^xsd:string .
+
+<#missing_Encryption_of_Sensitive_Data>
+    a pre:Weaknesses ;
+    pre:name "Missing Encryption of Sensitive Data"^^xsd:string .
+
+<#missing_Encryption_of_Sensitive_Data__improper_Input_Validation__cleartext_Storage_of_Sensitive_Information_in_a_Cookie__session_Fixation__broken_Authentication_and_Session_Management__client_Side_Enforcement_of_Server_Side_Security__external_Control_of_Critical_State_Data>
+    a pre:Weaknesses ;
+    pre:name "Missing Encryption of Sensitive Data, Improper Input Validation, Cleartext Storage of Sensitive Information in a Cookie, Session Fixation, Broken Authentication and Session Management, Client Side Enforcement of Server Side Security, External Control of Critical State Data"^^xsd:string .
+
+<#channel_Accessible_by_Non_Endpoint__improper_Authentication__broken_Authentication_and_Session_Management__protection_Mechanism_Failure>
+    a pre:Weaknesses ;
+    pre:name "Channel Accessible by Non Endpoint, Improper Authentication, Broken Authentication and Session Management, Protection Mechanism Failure"^^xsd:string .
+
+<#cleartext_Transmission_of_Sensitive_Information__missing_Encryption_of_Sensitive_Data__cleartext_Storage_of_Sensitive_Information_in_Executable__protection_Mechanism_Failure__insecure_Cryptographic_Storage>
+    a pre:Weaknesses ;
+    pre:name "Cleartext Transmission of Sensitive Information, Missing Encryption of Sensitive Data, Cleartext Storage of Sensitive Information in Executable, Protection Mechanism Failure, Insecure Cryptographic Storage"^^xsd:string .
+
+<#privilege_Defined_With_Unsafe_Actions>
+    a pre:Weaknesses ;
+    pre:name "Privilege Defined With Unsafe Actions"^^xsd:string .
+
+<#insertion_of_Sensitive_Information_Into_Sent_Data__channel_Accessible_by_Non_Endpoint>
+    a pre:Weaknesses ;
+    pre:name "Insertion of Sensitive Information Into Sent Data, Channel Accessible by Non Endpoint"^^xsd:string .
+
+<#insertion_of_Sensitive_Information_Into_Sent_Data>
+    a pre:Weaknesses ;
+    pre:name "Insertion of Sensitive Information Into Sent Data"^^xsd:string .
+
+<#generation_of_Error_Message_Containing_Sensitive_Information__covert_Channel__improper_Verification_of_Cryptographic_Signature__improper_Validation_of_Integrity_Check_Value__incorrect_Behavior_Order>
+    a pre:Weaknesses ;
+    pre:name "Generation of Error Message Containing Sensitive Information, Covert Channel, Improper Verification of Cryptographic Signature, Improper Validation of Integrity Check Value, Incorrect Behavior Order"^^xsd:string .
+
+<#use_of_a_Broken_or_Risky_Cryptographic_Algorithm>
+    a pre:Weaknesses ;
+    pre:name "Use of a Broken or Risky Cryptographic Algorithm"^^xsd:string .
+
+<#unintended_Proxy_or_Intermediary__externally_Controlled_Reference_to_a_Resource_in_Another_Sphere>
+    a pre:Weaknesses ;
+    pre:name "Unintended Proxy or Intermediary, Externally Controlled Reference to a Resource in Another Sphere"^^xsd:string .
+
+<#modification_of_Assumed_Immutable_Data_MAID__insufficient_Verification_of_Data_Authenticity__origin_Validation_Error__client_Side_Enforcement_of_Server_Side_Security__missing_Encryption_of_Sensitive_Data>
+    a pre:Weaknesses ;
+    pre:name "Modification of Assumed Immutable Data MAID, Insufficient Verification of Data Authenticity, Origin Validation Error, Client Side Enforcement of Server Side Security, Missing Encryption of Sensitive Data"^^xsd:string .
+
+<#missing_Support_for_Integrity_Check>
+    a pre:Weaknesses ;
+    pre:name "Missing Support for Integrity Check"^^xsd:string .
+
+<#use_of_a_Broken_or_Risky_Cryptographic_Algorithm__use_of_a_Risky_Cryptographic_Primitive__use_of_Predictable_Algorithm_in_Random_Number_Generator__cryptographic_Operations_are_run_Before_Supporting_Units_are_Ready>
+    a pre:Weaknesses ;
+    pre:name "Use of a Broken or Risky Cryptographic Algorithm, Use of a Risky Cryptographic Primitive, Use of Predictable Algorithm in Random Number Generator, Cryptographic Operations are run Before Supporting Units are Ready"^^xsd:string .
+
+<#broken_Authentication_and_Session_Management__incorrect_Implementation_of_Authentication_Algorithm>
+    a pre:Weaknesses ;
+    pre:name "Broken Authentication and Session Management, Incorrect Implementation of Authentication Algorithm"^^xsd:string .
+
+<#improper_Restriction_of_XML_External_Entity_Reference>
+    a pre:Weaknesses ;
+    pre:name "Improper Restriction of XML External Entity Reference"^^xsd:string .
+
+<#missing_Support_for_Integrity_Check__cleartext_Storage_of_Sensitive_Information_in_a_Cookie__improper_Authorization__session_Fixation__improper_Handling_of_Parameters>
+    a pre:Weaknesses ;
+    pre:name "Missing Support for Integrity Check, Cleartext Storage of Sensitive Information in a Cookie, Improper Authorization, Session Fixation, Improper Handling of Parameters"^^xsd:string .
+
+
+
+
+
+
+<#unspecified_mitigations>
+    a pre:Mitigations ;
+    pre:name "Unspecified"^^xsd:string .
+
+<#protect_client_side_authentication_tokens_for_confidentiality_and_integrity__make_sure_that_session_tokens_use_good_source_of_randomness__perform_validation_on_the_server_side>
+    a pre:Mitigations ;
+    pre:name "Protect client side authentication tokens for confidentiality and integrity, Make sure that session tokens use good source of randomness, Perform validation on the server side"^^xsd:string .
+
+<#employ_robust_network_defensive_posture_that_includes_managed_IDS_IP>
+    a pre:Mitigations ;
+    pre:name "Employ robust network defensive posture that includes managed IDS IP"^^xsd:string .
+
+<#commercial_defensive_technology_that_monitors_for_rogue_WiFi_access_points_man_in_the_middle_attacks_and_anomalous_activity_with_the_mobile_device_baseband_radios>
+    a pre:Mitigations ;
+    pre:name "Commercial defensive technology that monitors for rogue WiFi access points man in the middle attacks and anomalous activity with the mobile device baseband radios"^^xsd:string .
+
+<#passively_monitor_cellular_network_connection_for_real_time_threat_detection_and_logging_for_manual_review>
+    a pre:Mitigations ;
+    pre:name "Passively monitor cellular network connection for real time threat detection and logging for manual review"^^xsd:string .
+
+<#obfuscate_network_traffic_through_encryption_to_prevent_its_readability_by_network_sniffers__employ_appropriate_levels_of_segmentation_to_your_network_in_accordance_with_best_practices>
+    a pre:Mitigations ;
+    pre:name "Obfuscate network traffic through encryption to prevent its readability by network sniffers, Employ appropriate levels of segmentation to your network in accordance with best practices"^^xsd:string .
+
+<#validation_for_cookies__generate_and_validate_MAC_for_cookies__use_SSL_TLS_to_protect_cookie_in_transit__ensure_the_web_server_implements_all_relevant_security_patches>
+    a pre:Mitigations ;
+    pre:name "Validation for cookies, Generate and validate MAC for cookies, Use SSL TLS to protect cookie in transit, Ensure the web server implements all relevant security patches"^^xsd:string .
+
+<#implement_message_level_security_such_as_HMAC_in_the_HTTP_communication__utilize_defense_in_depth_do_not_rely_on_single_security_mechanism_like_SSL__enforce_principle_of_least_privilege>
+    a pre:Mitigations ;
+    pre:name "Implement message level security such as HMAC in the HTTP communication, Utilize defense in depth do not rely on single security mechanism like SSL, Enforce principle of least privilege"^^xsd:string .
+
+<#encryption_of_data_packets_emanating_from_smartphone_to_retransmission_device_with_Suite_B_cryptography>
+    a pre:Mitigations ;
+    pre:name "Encryption of data packets emanating from smartphone to retransmission device with Suite B cryptography"^^xsd:string .
+
+<#use_SSL_SSH_SCP_to_encrypt_all_communication_between_client_and_server>
+    a pre:Mitigations ;
+    pre:name "Use SSL SSH SCP to encrypt all communication between client and server"^^xsd:string .
+
+<#use_allowlist_policy_to_prevent_unknown_code_from_executing_on_system__patch_installed_applications_as_soon_as_new_updates_become_available>
+    a pre:Mitigations ;
+    pre:name "Use allow list policy to prevent unknown code from executing on system, Patch installed applications as soon as new updates become available"^^xsd:string .
+
+<#automatic_randomization_of_WiFi_MAC_addresses__frequent_changing_of_handset_and_retransmission_device>
+    a pre:Mitigations ;
+    pre:name "Automatic randomization of WiFi MAC addresses, Frequent changing of handset and retransmission device"^^xsd:string .
+
+<#do_not_enable_the_feature_of_Hidden_SSIDs__frequently_change_SSID_to_new_and_unrelated_values>
+    a pre:Mitigations ;
+    pre:name "Do not enable the feature of Hidden SSIDs, Frequently change SSID to new and unrelated values"^^xsd:string .
+
+<#frequent_changing_of_mobile_number>
+    a pre:Mitigations ;
+    pre:name "Frequent changing of mobile number"^^xsd:string .
+
+<#employ_robust_network_defense_posture_that_includes_IDS_IPS_system>
+    a pre:Mitigations ;
+    pre:name "Employ robust network defense posture that includes IDS IPS system"^^xsd:string .
+
+<#use_IDS_IPS_system_with_heuristic_algorithms>
+    a pre:Mitigations ;
+    pre:name "Use IDS IPS system with heuristic algorithms"^^xsd:string .
+
+<#use_IDS_IPS_system>
+    a pre:Mitigations ;
+    pre:name "Use IDS IPS system"^^xsd:string .
+
+<#use_firewalls_or_ACLs_which_block_egress_ICMP_error_types>
+    a pre:Mitigations ;
+    pre:name "Use firewalls or ACLs which block egress ICMP error types"^^xsd:string .
+
+<#use_message_authentication_code_or_another_mechanism_to_perform_verification_of_message_authenticity_or_integrity_prior_to_decryption__do_not_leak_information_back_to_user_as_to_any_cryptography_encountered_during_decryption>
+    a pre:Mitigations ;
+    pre:name "Use message authentication code or another mechanism to perform verification of message authenticity or integrity prior to decryption, Do not leak information back to user as to any cryptography encountered during decryption"^^xsd:string .
+
+<#use_of_hardened_baseband_firmware_on_retransmission_device_to_detect_and_prevent_the_use_of_weak_cellular_encryption__monitor_cellular_RF_interface_to_detect_the_usage_of_weaker_than_expected_cellular_encryption>
+    a pre:Mitigations ;
+    pre:name "Use of hardened baseband firmware on retransmission device to detect and prevent the use of weak cellular encryption, Monitor cellular RF interface to detect the usage of weaker than expected cellular encryption"^^xsd:string .
+
+<#specify_maximum_number_intermediate_nodes_for_the_request_and_require_SSL_connections_with_mutual_authentication__use_SSL_for_connections_between_all_parties_with_mutual_authentication>
+    a pre:Mitigations ;
+    pre:name "Specify maximum number intermediate nodes for the request and require SSL connections with mutual authentication, Use SSL for connections between all parties with mutual authentication"^^xsd:string .
+
+<#tunnel_communications_through_secure_proxy__trust_level_separation_for_privileged_or_non_privileged_interactions>
+    a pre:Mitigations ;
+    pre:name "Tunnel communications through secure proxy, Trust level separation for privileged or non privileged interactions"^^xsd:string .
+
+<#encrypt_sensitive_information_when_transmitted_on_insecure_mediums_to_prevent_interception>
+    a pre:Mitigations ;
+    pre:name "Encrypt sensitive information when transmitted on insecure mediums to prevent interception"^^xsd:string .
+
+<#use_proven_cryptographic_algorithms_with_recommended_key_sizes__ensure_that_the_algorithms_are_used_properly>
+    a pre:Mitigations ;
+    pre:name "Use proven cryptographic algorithms with recommended key sizes, Ensure that the algorithms are used properly"^^xsd:string .
+
+<#server_must_initiate_handshake_by_issuing_challenge__introducing_a_random_nonce_with_each_new_connection>
+    a pre:Mitigations ;
+    pre:name "Server must initiate handshake by issuing challenge, Introducing a random nonce with each new connection"^^xsd:string .
+
+<#implement_custom_resolver_that_has_request_timeout_and_restrict_resources_it_can_retrieve_locally>
+    a pre:Mitigations ;
+    pre:name "Implement custom resolver that has request timeout and restrict resources it can retrieve locally"^^xsd:string .
+
+<#use_of_antivirus_and_other_security_monitoring_and_detecting_tools__physically_disable_the_microphone_on_your_machine>
+    a pre:Mitigations ;
+    pre:name "Use of antivirus and other security monitoring and detecting tools, Physically disable the microphone on your machine"^^xsd:string .

@@ -33,6 +33,7 @@ export default class Attacks extends Component {
       message: "",
       snackbarType: "success",
       attackName: "",
+      attackId: 0,
     };
   }
 
@@ -268,6 +269,7 @@ export default class Attacks extends Component {
     }
 
     AttackService.changeAttack(
+      this.state.attackId,
       this.state.attackName,
       likelihoodParam,
       severityParam,
@@ -306,6 +308,7 @@ export default class Attacks extends Component {
     name = name.replaceAll("-", "");
     this.setState({
       attackName: name,
+      attackId: attack.id,
     });
 
     var severity;

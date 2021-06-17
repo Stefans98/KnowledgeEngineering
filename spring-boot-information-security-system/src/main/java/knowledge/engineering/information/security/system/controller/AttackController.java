@@ -1,5 +1,6 @@
 package knowledge.engineering.information.security.system.controller;
 
+import knowledge.engineering.information.security.system.dto.BayesDto;
 import knowledge.engineering.information.security.system.model.*;
 import org.apache.jena.update.UpdateExecutionFactory;
 import org.apache.jena.update.UpdateFactory;
@@ -11,10 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
@@ -131,6 +129,7 @@ public class AttackController {
             e.printStackTrace();
         }
 
+        result.sort(Comparator.comparing(Attack::getId));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -149,7 +148,7 @@ public class AttackController {
 
         Attack changedAttack;
 
-        this.deleteAttack(attack);
+        this.removeAttack(attack);
         changedAttack = this.insertAttack(attack, true);
 
         return new ResponseEntity<>(changedAttack, HttpStatus.OK);
@@ -175,12 +174,32 @@ public class AttackController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    private Attack insertAttack(Attack attack, boolean put) {
+    public void removeAttack(Attack attack) {
+        String attackName = attack.getName();
+
+        // DELETE
+        String deleteString = ""
+                + "PREFIX pre: <https://github.com/Stefans98/KnowledgeEngineering#> "
+                + "DELETE "
+                + "WHERE {"
+                + "    pre:" + attackName + " ?x ?y ."
+                + "}";
+        UpdateRequest updateRequest = UpdateFactory.create(deleteString);
+        System.setProperty("http.maxConnections", "10000");
+        UpdateProcessor updateProcessor = UpdateExecutionFactory.createRemote(updateRequest, UPDATE_URL);
+        updateProcessor.execute();
+    }
+
+    public Attack insertAttack(Attack attack, boolean put) {
 
         Random random = new Random();
         int id = random.nextInt(900) + 100;;
         while(doesIdExist(id)) {
             id = random.nextInt(900) + 100;
+        }
+
+        if(put) {
+            id = attack.getId();
         }
 
         String name = "attack_" + new SimpleDateFormat("yyyyMMddHHmmss").format(Calendar.getInstance().getTime());
@@ -209,7 +228,7 @@ public class AttackController {
 
         String prerequisitesName = "none";
         String prerequisitesContent = "None";
-        if(attack.getPrerequisites().getName() != "") {
+        if(!attack.getPrerequisites().getName().equals("")) {
             prerequisitesName = attack.getPrerequisites().getName();
             prerequisitesContent = "";
             String[] parts = attack.getPrerequisites().getName().split("__");
@@ -227,7 +246,7 @@ public class AttackController {
 
         String consequencesName = "unspecified_consequences";
         String consequencesContent = "Unspecified";
-        if(attack.getConsequences().getName() != "") {
+        if(!attack.getConsequences().getName().equals("")) {
             consequencesName = attack.getConsequences().getName();
             consequencesContent = "";
             String[] parts = attack.getConsequences().getName().split("__");
@@ -245,7 +264,7 @@ public class AttackController {
 
         String weaknessesName = "unspecified_weaknesses";
         String weaknessesContent = "Unspecified";
-        if(attack.getWeaknesses().getName() != "") {
+        if(!attack.getWeaknesses().getName().equals("")) {
             weaknessesName = attack.getWeaknesses().getName();
             weaknessesContent = "";
             String[] parts = attack.getWeaknesses().getName().split("__");
@@ -263,7 +282,7 @@ public class AttackController {
 
         String mitigationsName = "unspecified_mitigations";
         String mitigationsContent = "Unspecified";
-        if(attack.getMitigations().getName() != "") {
+        if(!attack.getMitigations().getName().equals("")) {
             mitigationsName = attack.getMitigations().getName();
             mitigationsContent = "";
             String[] parts = attack.getMitigations().getName().split("__");
