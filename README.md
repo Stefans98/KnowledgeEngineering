@@ -22,9 +22,9 @@ This project represents support system for information security department.
 4. Right click on pom.xml -> Add as Maven Project
 5. Wait for all dependencies to be reloaded
 6. Follow next steps to import lib 
-<img src="" />
-<img src="" />
-<img src="" />
+<img src="Images/1.png" />
+<img src="Images/2.png" />
+<img src="Images/3.png" />
 8. Right click on SpringBootInformationSecuritySystemApplication.java -> Run
 * NOTE: This project requires SDK 1.8
 
