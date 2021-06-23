@@ -111,7 +111,7 @@ weaknesses(signal_Strength_Tracking, [insertion_of_Sensitive_Information_Into_Se
 mitigations(signal_Strength_Tracking, [unspecified]).
 
 attack(tcp_SYN_Scan).
-likelihood(tcp_SYN_Scan, unspecified).
+likelihood(tcp_SYN_Scan, high).
 severity(tcp_SYN_Scan, low).
 prerequisites(tcp_SYN_Scan, [on_Unix_and_Linux_raw_socket_manipulations_require_root_privileges]).
 consequences(tcp_SYN_Scan, [bypass_protection_mechanism, hide_activities]).
@@ -119,7 +119,7 @@ weaknesses(tcp_SYN_Scan, [exposure_of_Sensitive_Information_to_an_Unauthorized_A
 mitigations(tcp_SYN_Sca, [unspecified]).
 
 attack(tcp_Connect_Scan).
-likelihood(tcp_Connect_Scan, unspecified).
+likelihood(tcp_Connect_Scan, high).
 severity(tcp_Connect_Scan, low).
 prerequisites(tcp_Connect_Scan, [adversary_needs_logical_access_to_the_target_network, requires_ability_to_connect_to_available_port_and_complete_three_way_handshake]).
 consequences(tcp_Connect_Scan, [read_data]).
